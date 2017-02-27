@@ -5,6 +5,10 @@ language: node_js
 node_js:
   - '4.5'
 
+addons:
+  sonarqube:
+    token: 833685839a1f8950c5f39aeb209e499f0baf7381
+
 install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
