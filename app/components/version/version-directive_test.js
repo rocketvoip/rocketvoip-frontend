@@ -1,7 +1,7 @@
 'use strict';
 
-describe('myApp.version module', function() {
-  beforeEach(module('myApp.version'));
+describe('rocketvoip.version module', function() {
+  beforeEach(module('rocketvoip.version'));
 
   describe('app-version directive', function() {
     it('should print current version', function() {
