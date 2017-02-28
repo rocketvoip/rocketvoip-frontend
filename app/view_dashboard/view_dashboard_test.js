@@ -1,8 +1,8 @@
 'use strict';
 
-describe('rocketvoip.dashboard module', function() {
+describe('rocketvoip.view_dashboard module', function() {
 
-  beforeEach(module('rocketvoip.dashboard'));
+  beforeEach(module('rocketvoip.view_dashboard'));
 
   describe('dashboard controller', function(){
 
