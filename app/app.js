@@ -4,7 +4,7 @@
 angular.module('rocketvoip', [
     'ngRoute',
     'ngMaterial',
-    'rocketvoip.dashboard',
+    'rocketvoip.view_dashboard',
     'rocketvoip.view2',
     'rocketvoip.version'
 ]).

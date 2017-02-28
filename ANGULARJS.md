@@ -91,8 +91,8 @@ app/                    --> all of the source files for the application
       interpolate-filter_test.js --> interpolate filter tests
   view1/                --> the view1 view template and logic
     view1.html            --> the partial template
-    dashboard.js              --> the controller logic
-    dashboard_test.js         --> tests of the controller
+    view_dashboard.js              --> the controller logic
+    view_dashboard_test.js         --> tests of the controller
   view2/                --> the view2 view template and logic
     view2.html            --> the partial template
     view2.js              --> the controller logic
@@ -118,7 +118,7 @@ which we run with the [Karma][karma] test runner. We provide a Karma configurati
 
 * The configuration is found at `karma.conf.js`.
 * The unit tests are found next to the code they are testing and have an `_test.js` suffix (e.g.
-  `dashboard_test.js`).
+  `view_dashboard_test.js`).
 
 The easiest way to run the unit tests is to use the supplied npm script:
 

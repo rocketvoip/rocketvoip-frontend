@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('rocketvoip.dashboard', ['ngRoute'])
+angular.module('rocketvoip.view_dashboard', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/dashboard', {
-    templateUrl: 'dashboard/dashboard.html',
+    templateUrl: 'view_dashboard/view_dashboard.html',
     controller: 'DashboardCtrl'
   });
 }])
