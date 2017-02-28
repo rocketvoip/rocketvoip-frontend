@@ -24,4 +24,4 @@ before_script:
 script:
   - npm run test-single-run
   - (npm start > /dev/null &) && (npm run protractor)
-  - sonar-scanner -x
+  - sonar-scanner -X
