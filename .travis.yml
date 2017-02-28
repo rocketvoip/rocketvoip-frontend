@@ -7,7 +7,8 @@ node_js:
 
 addons:
   sonarqube:
-    token: 833685839a1f8950c5f39aeb209e499f0baf7381
+    token:
+      secure: pzmi5w3IYo/jbQiE4Lo2Pcg3aMOJF7n9up5Xj6cUAAPX4HTt6cZXjjIZ2HvyIHT9fXe8TWynGAezoSw6QybmLqdUU8RTAvJfGA/f+Dnns2brgccTG9ZAdXRWXsDKUPFwWxIcsIH3f/FG4BZjutUUvQnULgLHlaQXNw6L8ZSYHAGZShNLAw5r52LEiwBYeCDZ7n6rfzuLY47YOHlhocl+4eq2JoxL2ZoWS95SWNZt7NtDJ6wjl2zkB8aRTn5ZDziH3piJj6hUp5FOw2CxBxGnNv0GNM6kLOUTEo/Qte1b6A8gObgvpoxroorioNKmvlpsaaV+jGycXcRVC1OFTaRh/ftk7Z2tM7YORkvk5rDaoOfSLiDOXZ/lI6amZZJyT4zgZEZTgK3lUpJ0ZLoS90KSZUaooambQFqVDre3vLeeU9xp4VHjTv/siH/zeyGTM7WaFd3imkakjXIuUinDqGjZyXjO78zkfUlRFkmxbwqjkv29nRG43BFYknKS5Ar5KtGCWK8KAb13YEff+2rqx38tujyfene/0ASjg46Q8a4ckALw7GdewcdkaZs154OP0jeGN0/i8VWSg58Yfx5h384J/4iwYx/Qu7kizeaCNS38rt2pMCoRy+X+ivenq/Cu9T760/nA6P/qcZ+plSdyPtxFEwS9BRqTFokdKpvxYjSfmkw=
 
 install:
   - export DISPLAY=:99.0
@@ -23,3 +24,4 @@ before_script:
 script:
   - npm run test-single-run
   - (npm start > /dev/null &) && (npm run protractor)
+  - sonar-scanner
