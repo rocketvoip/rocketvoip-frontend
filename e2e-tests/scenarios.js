@@ -20,7 +20,7 @@ describe('rocket voip', function() {
 
     it('should render dashboard when user navigates to /dashboard', function() {
       expect(element.all(by.css('[ng-view] p')).first().getText()).
-        toMatch(/dashboard/);
+        toMatch(/version of the dashboard/);
     });
 
   });
