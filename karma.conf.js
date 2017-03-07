@@ -32,7 +32,7 @@ module.exports = function(config) {
       suite: 'unit'
     },
 
-      reporters: ['coverage', 'coveralls'],
+      reporters: ['progress','coverage', 'coveralls'],
 
       preprocessors: {
           // source files, that you wanna generate coverage for
@@ -44,10 +44,10 @@ module.exports = function(config) {
 
       },
 
-
       coverageReporter: {
           type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
-          dir: 'coverage/'
+          dir: 'coverage/',
+          subdir : '.'
       }
 
   });
