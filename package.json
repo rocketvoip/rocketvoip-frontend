@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
+  "name": "rocketvoip-frontend",
   "private": true,
-  "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "version": "0.0.1",
+  "description": "A web interface for RocketVoIP",
+  "repository": "https://github.com/rocketvoip/rocketvoip-frontend",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.7.7",

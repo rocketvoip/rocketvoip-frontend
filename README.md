@@ -2,11 +2,12 @@
 
 ## Build Pipeline
 
-CI/CD: [travis-ci](https://travis-ci.org/rocketvoip/rocketvoip-frontend) Coverage/Code Quality: [SonarQube]((https://sonarqube.com/dashboard/index/ch.zhaw.psit4:rocketvoip-frontend))
+CI/CD: [travis-ci](https://travis-ci.org/rocketvoip/rocketvoip-frontend)
+
+Coverage/Code Quality: [SonarQube](https://sonarqube.com/dashboard/index/ch.zhaw.psit4:rocketvoip-frontend)
 
 ## Heroku
-
-## Deployment
+Deployment: [Heroku](https://rocketvoip-frontend.herokuapp.com/app)
 
 ## Build Status
 Master: [![Build Status](https://travis-ci.org/rocketvoip/rocketvoip-frontend.svg?branch=master)](https://travis-ci.org/rocketvoip/rocketvoip-frontend)
