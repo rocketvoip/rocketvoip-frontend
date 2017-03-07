@@ -10,5 +10,5 @@ angular.module('rocketvoip.view2', ['ngRoute'])
 }])
 
 .controller('View2Ctrl', [function() {
-
+    //just 4 demo
 }]);
