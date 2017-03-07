@@ -22,7 +22,6 @@ module.exports = function(config) {
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-jasmine',
-      'karma-coverage',
       'karma-junit-reporter'
     ],
 
@@ -31,14 +30,12 @@ module.exports = function(config) {
       suite: 'unit'
     },
 
-    reporters: ['coverage'],
-    preprocessors: {
-        "**/*js": "coverage"
-    },
-    coverageReporter: {
-        type: "lcov",
-        dir: "coverage/"
-    }
+      reporters: ['coverage', 'coveralls'],
+
+      coverageReporter: {
+          type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
+          dir: 'coverage/'
+      }
 
   });
 };
