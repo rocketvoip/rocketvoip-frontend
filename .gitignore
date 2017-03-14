@@ -6,3 +6,4 @@ tmp
 .DS_Store
 .idea
 .sonar
+app/coverage
