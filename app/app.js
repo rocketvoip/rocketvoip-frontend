@@ -7,9 +7,7 @@ angular.module('rocketvoip', [
     'rocketvoip.view_dashboard',
     'rocketvoip.view2',
     'rocketvoip.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: '/dashboard'});
+]).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+    $locationProvider.hashPrefix('!');
+    $routeProvider.otherwise({redirectTo: '/dashboard'});
 }]);

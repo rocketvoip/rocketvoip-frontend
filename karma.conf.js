@@ -1,54 +1,54 @@
 //jshint strict: false
-module.exports = function(config) {
-  config.set({
+module.exports = function (config) {
+    config.set({
 
-    basePath: './app',
+        basePath: './app',
 
-    files: [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-route/angular-route.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'components/**/*.js',
-      'view*/**/*.js'
-    ],
+        files: [
+            'bower_components/angular/angular.js',
+            'bower_components/angular-route/angular-route.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'components/**/*.js',
+            'view*/**/*.js'
+        ],
 
-    autoWatch: true,
+        autoWatch: true,
 
-    frameworks: ['jasmine'],
+        frameworks: ['jasmine'],
 
-    browsers: ['Chrome'],
+        browsers: ['Chrome'],
 
-    plugins: [
-      'karma-chrome-launcher',
-      'karma-firefox-launcher',
-      'karma-jasmine',
-      'karma-junit-reporter',
-        'karma-coverage',
-        'karma-coveralls'
-    ],
+        plugins: [
+            'karma-chrome-launcher',
+            'karma-firefox-launcher',
+            'karma-jasmine',
+            'karma-junit-reporter',
+            'karma-coverage',
+            'karma-coveralls'
+        ],
 
-    junitReporter: {
-      outputFile: 'test_out/unit.xml',
-      suite: 'unit'
-    },
+        junitReporter: {
+            outputFile: 'test_out/unit.xml',
+            suite: 'unit'
+        },
 
-      reporters: ['progress','coverage', 'coveralls'],
+        reporters: ['progress', 'coverage', 'coveralls'],
 
-      preprocessors: {
-          // source files, that you wanna generate coverage for
-          // do not include tests or libraries
-          // (these files will be instrumented by Istanbul)
-          'components/**/!(*_test).js': ['coverage'],
-          'view*/**/!(*_test).js': ['coverage'],
-          '!(*_test).js': ['coverage']
+        preprocessors: {
+            // source files, that you wanna generate coverage for
+            // do not include tests or libraries
+            // (these files will be instrumented by Istanbul)
+            'components/**/!(*_test).js': ['coverage'],
+            'view*/**/!(*_test).js': ['coverage'],
+            '!(*_test).js': ['coverage']
 
-      },
+        },
 
-      coverageReporter: {
-          type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
-          dir: 'coverage/',
-          subdir : '.'
-      }
+        coverageReporter: {
+            type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
+            dir: 'coverage/',
+            subdir: '.'
+        }
 
-  });
+    });
 };
