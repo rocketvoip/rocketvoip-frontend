@@ -14,8 +14,7 @@ module.exports = function (config) {
             'bower_components/angular-material/modules/js/**/*.js',
             'components/**/*.js',
             'view*/**/*.js',
-            'view*/**/*.html',
-            'app.js'
+            'view*/**/*.html'
         ],
 
         autoWatch: true,
