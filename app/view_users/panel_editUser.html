@@ -1,0 +1,34 @@
+<div role="dialog" aria-label="Edit User" layout="column" layout-align="center center">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{title}}</h2>
+        </div>
+    </md-toolbar>
+
+    <div>
+        <form name="userEditForm" flex layout="row" layout-wrap>
+            <md-input-container flex="100">
+                <label>Name</label>
+                <input ng-model="user.name">
+            </md-input-container>
+
+            <md-input-container flex="100">
+                <label>Phone Number</label>
+                <input ng-model="user.phone">
+            </md-input-container>
+        </form>
+    </div>
+
+    <div layout="row">
+        <md-button md-autofocus flex class="md-raised md-primary" ng-click="ctrl.saveUser()">
+            Save
+        </md-button>
+
+        <div layout="row">
+            <md-button flex class="md-primary" ng-click="ctrl.closeDialog()">
+                Close
+            </md-button>
+        </div>
+    </div>
+
+</div>

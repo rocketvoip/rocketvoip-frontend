@@ -1,0 +1,42 @@
+<div ng-controller="ViewUsersCtrl as ctrl">
+
+    <div flex layout="row">
+        <h1 flex>Manage your users</h1>
+        <md-button md-colors="::{background: 'primary-900'}"
+                   class="md-fab md-secondary"
+                   aria-label="Add Users"
+                   ng-click="ctrl.showDialog(null)">
+            <md-tooltip>Add User</md-tooltip>
+            <md-icon md-colors="::{color: 'primary-50'}">person_add</md-icon>
+        </md-button>
+    </div>
+
+    <md-subheader>
+        <div flex layout="row">
+            <div flex="30">Name</div>
+            <div flex="20">Phone Number</div>
+            <div flex layout="row" layout-align="end">Operations</div>
+        </div>
+
+    </md-subheader>
+
+    <md-divider></md-divider>
+
+    <md-list-item flex ng-repeat="sipUser in sipUsers">
+
+        <div flex layout="row">
+            <div flex="30">{{ sipUser.name }}</div>
+            <div flex="20">{{ sipUser.phone }}</div>
+        </div>
+
+        <md-button class="md-secondary md-icon-button" ng-click="ctrl.showDialog(sipUser)" aria-label="Edit Users">
+            <md-tooltip>Edit User</md-tooltip>
+            <md-icon aria-label="Edit">edit</md-icon>
+        </md-button>
+
+        <md-divider></md-divider>
+
+
+    </md-list-item>
+
+</div>

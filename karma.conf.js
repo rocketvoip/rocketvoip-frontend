@@ -6,10 +6,16 @@ module.exports = function (config) {
 
         files: [
             'bower_components/angular/angular.js',
+            'bower_components/angular-**/angular-*.js',
             'bower_components/angular-route/angular-route.js',
             'bower_components/angular-mocks/angular-mocks.js',
+            'bower_components/angular-animate/angular-animate.js',
+            'bower_components/angular-loader/angular-loader.js',
+            'bower_components/angular-material/modules/js/**/*.js',
             'components/**/*.js',
-            'view*/**/*.js'
+            'view*/**/*.js',
+            'view*/**/*.html',
+            'app.js'
         ],
 
         autoWatch: true,
@@ -24,7 +30,9 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-junit-reporter',
             'karma-coverage',
-            'karma-coveralls'
+            'karma-coveralls',
+            'karma-ng-html2js-preprocessor'
+
         ],
 
         junitReporter: {
@@ -35,17 +43,14 @@ module.exports = function (config) {
         reporters: ['progress', 'coverage', 'coveralls'],
 
         preprocessors: {
-            // source files, that you wanna generate coverage for
-            // do not include tests or libraries
-            // (these files will be instrumented by Istanbul)
             'components/**/!(*_test).js': ['coverage'],
             'view*/**/!(*_test).js': ['coverage'],
-            '!(*_test).js': ['coverage']
-
+            '!(*_test).js': ['coverage'],
+            'view*/**/*.html': 'ng-html2js'
         },
 
         coverageReporter: {
-            type: 'lcov', // lcov or lcovonly are required for generating lcov.info files
+            type: 'lcov',
             dir: 'coverage/',
             subdir: '.'
         }
