@@ -9,6 +9,9 @@ addons:
   sonarqube:
     token:
       secure: pLO5ikPf3Yd9J5ZF3UfdQoWqg9r/I1zzEpMxUUPIvcWiM9KuglY/08Mj5qG5KWoeJQnxBOiNhvVDt+HIrwv8li9ugpDwqCQ6rUQCb+u+uxKCIHaiT7pLSPHV2meA/XSt/aXN+yxaP2xz7YOD51abX5f3qhDTfzUcBjChpTy6tZrxOkZ8DfHxB6NqPz4UEZBd+uzk+r9Z/oP1HVhDwpSRPNbe9jOgav3aCkusbeZOZezhQTi8TXO+4Maio3NYFtOfwgE7g/X5LBlnHP7bIampknZvffUuOOoqK+TlyErzcFyKFjL9QEIgOLDwvHHfQgMy9U8Vjie+UUws7yh9GOyMB+p0ZB04t1SSBRChrfVgyW9Pg56AdyMwCY5wcpxaRmHn3fLNU7Pb0gJPyQNt6JVf99FyMzrIZPby3Le9JyVbL/6lS4H29I37Lwjyp2IjiaMrXaF/6Qsg/vaPMdm0GfXJ7cGSpXLVQZCATUC6FdreAoF41gmMvicG0GaFakHlhsSfCSoZeOyeRQGELD0+mhf4fxOCHIRivXNZFtNFgNmx5021Gny+n6LagdtzQ4R2pJbJPFtzz0tWgsNaUi2LR0CirfYHouP2y/zuf+A4nIcspwMipYZDCX4zrWYFsjJ+trK4IO168ozIOb/eEAWvn5ABSbkqTsQIGHq0VV+5mygty9A=
+    branches:
+      - master
+      - /.*/
 
 install:
   - export DISPLAY=:99.0
