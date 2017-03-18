@@ -90,5 +90,27 @@ describe('rocketvoip.view_users module', function () {
             expect(updateUserSpy).toHaveBeenCalled();
         }));
 
+
+        it('should not save user when name is empty', inject(function () {
+            scope.user = {id: 1, phone: "+41223334455"};
+            panelDialogCtrl.saveUser();
+            scope.$apply();
+            expect(updateUserSpy).toHaveBeenCalledTimes(0);
+        }));
+
+        it('should not save user when phone is empty', inject(function () {
+            scope.user = {id: 1, name: 'Marco Studerus'};
+            panelDialogCtrl.saveUser();
+            scope.$apply();
+            expect(updateUserSpy).toHaveBeenCalledTimes(0);
+        }));
+
+        it('should not save user when user is empty', inject(function () {
+            scope.user = null;
+            panelDialogCtrl.closeDialog = jasmine.createSpy();
+            panelDialogCtrl.saveUser();
+            scope.$apply();
+            expect(panelDialogCtrl.closeDialog).toHaveBeenCalledTimes(0);
+        }));
     });
 });

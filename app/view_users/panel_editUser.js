@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('rocketvoip.panel_editUser',[])
+angular.module('rocketvoip.panel_editUser', [])
     .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'user', 'updateUser', function ($scope, mdPanelRef, user, updateUser) {
 
         this.closeDialog = function () {
@@ -9,7 +9,7 @@ angular.module('rocketvoip.panel_editUser',[])
             });
         };
 
-        this.setPlaneTitle = function(){
+        this.setPlaneTitle = function () {
             if ($scope.user == null) {
                 $scope.title = "Add a new User"
             } else {
@@ -18,15 +18,16 @@ angular.module('rocketvoip.panel_editUser',[])
         };
 
         this.saveUser = function () {
-            //TODO: Persist User
-            if ($scope.user.id == undefined) {
-                //TODO: Set ID of User
-                $scope.user.id = Math.random() * (55555); //For Demo
+            if ($scope.user && $scope.user.name && $scope.user.phone) {
+                //TODO: Persist User
+                if ($scope.user.id == undefined) {
+                    //TODO: Set ID of User
+                    $scope.user.id = Math.random() * (55555); //For Demo
+                }
+                updateUser($scope.user);
+
+                this.closeDialog();
             }
-            updateUser($scope.user);
-
-            this.closeDialog();
-
         };
 
         $scope.user = angular.copy(user);
