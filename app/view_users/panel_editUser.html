@@ -1,7 +1,7 @@
 <div role="dialog" aria-label="Edit User" layout="column" layout-align="center center">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>{{title}}</h2>
+            <h2 class="plane-editUser-title">{{title}}</h2>
         </div>
     </md-toolbar>
 
@@ -9,23 +9,23 @@
         <form name="userEditForm" flex layout="row" layout-wrap>
             <md-input-container flex="100">
                 <label>Name</label>
-                <input ng-model="user.name">
+                <input ng-model="user.name" ng-required="true">
             </md-input-container>
 
             <md-input-container flex="100">
                 <label>Phone Number</label>
-                <input ng-model="user.phone">
+                <input ng-model="user.phone" ng-required="true">
             </md-input-container>
         </form>
     </div>
 
     <div layout="row">
-        <md-button md-autofocus flex class="md-raised md-primary" ng-click="ctrl.saveUser()">
+        <md-button class="plane-editUser-save" md-autofocus flex class="md-raised md-primary" ng-click="ctrl.saveUser()">
             Save
         </md-button>
 
         <div layout="row">
-            <md-button flex class="md-primary" ng-click="ctrl.closeDialog()">
+            <md-button class="plane-editUser-close" flex class="md-primary" ng-click="ctrl.closeDialog()">
                 Close
             </md-button>
         </div>

@@ -3,7 +3,7 @@
     <div flex layout="row">
         <h1 flex>Manage your users</h1>
         <md-button md-colors="::{background: 'primary-900'}"
-                   class="md-fab md-secondary"
+                   class="md-fab md-secondary button-add-user"
                    aria-label="Add Users"
                    ng-click="ctrl.showDialog(null)">
             <md-tooltip>Add User</md-tooltip>
@@ -25,11 +25,11 @@
     <md-list-item flex ng-repeat="sipUser in sipUsers">
 
         <div flex layout="row">
-            <div flex="30">{{ sipUser.name }}</div>
-            <div flex="20">{{ sipUser.phone }}</div>
+            <div class="view-user-sipUserName" flex="30">{{ sipUser.name }}</div>
+            <div class="view-user-sipUserPhone" flex="20">{{ sipUser.phone }}</div>
         </div>
 
-        <md-button class="md-secondary md-icon-button" ng-click="ctrl.showDialog(sipUser)" aria-label="Edit Users">
+        <md-button class="md-secondary md-icon-button view-user-edituser" ng-click="ctrl.showDialog(sipUser)" aria-label="Edit Users">
             <md-tooltip>Edit User</md-tooltip>
             <md-icon aria-label="Edit">edit</md-icon>
         </md-button>
