@@ -4,6 +4,7 @@ describe('rocketvoip.view_users module', function () {
 
     beforeEach(module('rocketvoip.panel_editUser'));
     beforeEach(module('ngMaterial'));
+    beforeEach(module('view_users/panel_editUser.html'));
 
     describe('PanelDialog controller', function () {
 
@@ -12,7 +13,7 @@ describe('rocketvoip.view_users module', function () {
         var _mdPanelRef = {};
         var updateUserSpy;
 
-        beforeEach(inject(function ($rootScope, $controller) {
+        beforeEach(inject(function ($rootScope, $controller, $templateCache, $compile) {
             scope = $rootScope.$new();
             _mdPanelRef = {};
             _mdPanelRef.close = jasmine.createSpy().and.callFake(function () {
@@ -32,6 +33,10 @@ describe('rocketvoip.view_users module', function () {
                 updateUser: updateUserSpy
             });
 
+            var templateHtml = $templateCache.get('view_users/panel_editUser.html');
+            var formElement = angular.element(templateHtml);
+            $compile(formElement)(scope);
+            scope.$apply()
         }));
 
         it('should be Defined', inject(function () {
@@ -57,20 +62,22 @@ describe('rocketvoip.view_users module', function () {
         it('should set id of new Users', inject(function () {
 
             scope.user = {name: 'Marco Studerus', phone: "+41223334455"};
+            scope.$apply();
             panelDialogCtrl.saveUser();
-
             expect(scope.user.id).toBeDefined();
         }));
 
         it('should not change id of existing Users', inject(function () {
 
             scope.user = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
+            scope.$apply();
             panelDialogCtrl.saveUser();
             expect(scope.user.id).toBe(1);
         }));
 
         it('should call mdPanelRef.close() on save', inject(function () {
             scope.user = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
+            scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
             expect(_mdPanelRef.close).toHaveBeenCalled();
@@ -78,6 +85,7 @@ describe('rocketvoip.view_users module', function () {
 
         it('should call mdPanelRef.destroy() on save', inject(function () {
             scope.user = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
+            scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
             expect(_mdPanelRef.destroy).toHaveBeenCalled();
@@ -85,6 +93,7 @@ describe('rocketvoip.view_users module', function () {
 
         it('should call updateUser() on save', inject(function () {
             scope.user = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
+            scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
             expect(updateUserSpy).toHaveBeenCalled();
@@ -93,6 +102,7 @@ describe('rocketvoip.view_users module', function () {
 
         it('should not save user when name is empty', inject(function () {
             scope.user = {id: 1, phone: "+41223334455"};
+            scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
             expect(updateUserSpy).toHaveBeenCalledTimes(0);
@@ -100,6 +110,7 @@ describe('rocketvoip.view_users module', function () {
 
         it('should not save user when phone is empty', inject(function () {
             scope.user = {id: 1, name: 'Marco Studerus'};
+            scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
             expect(updateUserSpy).toHaveBeenCalledTimes(0);
@@ -108,6 +119,7 @@ describe('rocketvoip.view_users module', function () {
         it('should not save user when user is empty', inject(function () {
             scope.user = null;
             panelDialogCtrl.closeDialog = jasmine.createSpy();
+            scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
             expect(panelDialogCtrl.closeDialog).toHaveBeenCalledTimes(0);

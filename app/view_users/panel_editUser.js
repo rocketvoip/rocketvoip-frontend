@@ -18,7 +18,7 @@ angular.module('rocketvoip.panel_editUser', [])
         };
 
         this.saveUser = function () {
-            if ($scope.user && $scope.user.name && $scope.user.phone) {
+            if(!($scope.userEditForm.$invalid)){
                 //TODO: Persist User
                 if ($scope.user.id == undefined) {
                     //TODO: Set ID of User
@@ -27,6 +27,12 @@ angular.module('rocketvoip.panel_editUser', [])
                 updateUser($scope.user);
 
                 this.closeDialog();
+            }else{
+                angular.forEach($scope.userEditForm.$error, function (field) {
+                    angular.forEach(field, function(errorField){
+                        errorField.$setTouched();
+                    });
+                });
             }
         };
 

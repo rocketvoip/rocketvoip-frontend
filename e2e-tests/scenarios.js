@@ -37,7 +37,7 @@ describe('rocket voip', function () {
 
     describe('view_users', function () {
 
-        function addUser(){
+        function addUser() {
             expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(0);
             element(by.className('button-add-user')).click();
             element(by.model('user.name')).sendKeys('Marco Studerus');
@@ -96,6 +96,33 @@ describe('rocket voip', function () {
             element(by.className('plane-editUser-close')).click();
             expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(1);
             expect(element(by.className('view-user-sipUserPhone')).getText()).toEqual('+410000000');
+        });
+
+        it('should not save and close when input is empty', function () {
+            element(by.className('button-add-user')).click();
+            var plane = element.all(by.className('md-panel user-dialog'));
+            expect(plane.count()).toEqual(1);
+            var invalid = element.all(by.className('ng-invalid ng-invalid-required ng-touched'));
+            expect(invalid.count()).toEqual(0);
+            element(by.className('plane-editUser-save')).click();
+            invalid = element.all(by.className('ng-invalid ng-invalid-required ng-touched'));
+            expect(invalid.count()).toEqual(2);
+            plane = element.all(by.className('md-panel user-dialog'));
+            expect(plane.count()).toEqual(1);
+        });
+
+        it('should not save and close when input is not complete', function () {
+            element(by.className('button-add-user')).click();
+            var plane = element.all(by.className('md-panel user-dialog'));
+            expect(plane.count()).toEqual(1);
+            element(by.model('user.phone')).sendKeys("+413333333");
+            var invalid = element.all(by.className('ng-invalid ng-invalid-required ng-touched'));
+            expect(invalid.count()).toEqual(0);
+            element(by.className('plane-editUser-save')).click();
+            invalid = element.all(by.className('ng-invalid ng-invalid-required ng-touched'));
+            expect(invalid.count()).toEqual(1);
+            plane = element.all(by.className('md-panel user-dialog'));
+            expect(plane.count()).toEqual(1);
         });
 
 
