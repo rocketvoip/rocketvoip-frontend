@@ -43,7 +43,7 @@ describe('rocketvoip.view_users module', function () {
             expect(panelDialogCtrl).toBeDefined();
         }));
 
-        it('should set title of panel to "Edit User"', inject(function () {
+        it('should set title of panel to "Add a new User"', inject(function () {
             panelDialogCtrl.setPlaneTitle();
             expect(scope.title).toEqual("Add a new User");
         }));

@@ -13,6 +13,9 @@ angular.module('rocketvoip.view_users', ['ngRoute'])
 		
 		$scope.sipUsers = [];
 
+        $scope.sortType     = 'name';
+        $scope.sortReverse  = false;
+
         this.updateUser = function (user) {
             if (typeof user !== 'undefined') {
 

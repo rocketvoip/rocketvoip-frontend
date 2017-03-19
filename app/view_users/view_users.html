@@ -1,7 +1,14 @@
 <div ng-controller="ViewUsersCtrl as ctrl">
 
     <div flex layout="row">
-        <h1 flex>Manage your users</h1>
+        <h1 flex>Manage Users</h1>
+
+        <md-input-container class="md-icon-float md-block view-user-filter">
+            <label>Search</label>
+            <md-icon aria-label="Filter">search</md-icon>
+            <input id="view-user-filter-input" ng-model="filter" type="text">
+        </md-input-container>
+
         <md-button md-colors="::{background: 'primary-900'}"
                    class="md-fab md-secondary button-add-user"
                    aria-label="Add Users"
@@ -13,8 +20,30 @@
 
     <md-subheader>
         <div flex layout="row">
-            <div flex="30">Name</div>
-            <div flex="20">Phone Number</div>
+            <div flex="30">
+                <a id="view-user-sort-name" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    Name
+                    <span ng-show="sortType == 'name' && !sortReverse">
+                        <md-icon aria-label="Sort Down">keyboard_arrow_down</md-icon>
+                    </span>
+                    <span ng-show="sortType == 'name' && sortReverse">
+                        <md-icon aria-label="Sort Up">keyboard_arrow_up</md-icon>
+                    </span>
+                </a>
+            </div>
+
+            <div flex="20">
+                <a id="view-user-sort-phone" ng-click="sortType = 'phone'; sortReverse = !sortReverse">
+                    Phone Number
+                    <span ng-show="sortType == 'phone' && !sortReverse">
+                        <md-icon aria-label="Sort Down">keyboard_arrow_down</md-icon>
+                    </span>
+                    <span ng-show="sortType == 'phone' && sortReverse">
+                        <md-icon aria-label="Sort Up">keyboard_arrow_up</md-icon>
+                    </span>
+                </a>
+            </div>
+
             <div flex layout="row" layout-align="end">Operations</div>
         </div>
 
@@ -22,20 +51,20 @@
 
     <md-divider></md-divider>
 
-    <md-list-item flex ng-repeat="sipUser in sipUsers">
+    <md-list-item flex ng-repeat="sipUser in sipUsers | orderBy:sortType:sortReverse | filter:filter">
 
         <div flex layout="row">
             <div class="view-user-sipUserName" flex="30">{{ sipUser.name }}</div>
             <div class="view-user-sipUserPhone" flex="20">{{ sipUser.phone }}</div>
         </div>
 
-        <md-button class="md-secondary md-icon-button view-user-edituser" ng-click="ctrl.showDialog(sipUser)" aria-label="Edit Users">
+        <md-button class="md-secondary md-icon-button view-user-edituser" ng-click="ctrl.showDialog(sipUser)"
+                   aria-label="Edit Users">
             <md-tooltip>Edit User</md-tooltip>
             <md-icon aria-label="Edit">edit</md-icon>
         </md-button>
 
         <md-divider></md-divider>
-
 
     </md-list-item>
 
