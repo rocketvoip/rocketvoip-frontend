@@ -6,7 +6,6 @@ angular.module('rocketvoip', [
     'ngMaterial',
     'rocketvoip.panel_editUser',
     'rocketvoip.view_dashboard',
-    'rocketvoip.view2',
     'rocketvoip.version',
     'rocketvoip.view_users'
 ]).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {

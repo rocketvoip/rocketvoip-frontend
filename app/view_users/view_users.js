@@ -12,7 +12,6 @@ angular.module('rocketvoip.view_users', ['ngRoute'])
     .controller('ViewUsersCtrl', ['$scope', '$mdPanel', function ($scope, $mdPanel) {
 		
 		$scope.sipUsers = [];
-
         $scope.sortType     = 'name';
         $scope.sortReverse  = false;
 

@@ -6,7 +6,7 @@ describe('rocket voip', function () {
 
         function addSipUser(sipUser) {
             if (sipUser == undefined) {
-                var sipUser = {
+                sipUser = {
                     name: 'Marco Studerus',
                     phone: '+410000000'
                 }
