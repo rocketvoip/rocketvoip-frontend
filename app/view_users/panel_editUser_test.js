@@ -5,6 +5,8 @@ describe('rocketvoip.view_users module', function () {
     beforeEach(module('rocketvoip.panel_editUser'));
     beforeEach(module('ngMaterial'));
     beforeEach(module('view_users/panel_editUser.html'));
+    beforeEach(module('rocketvoip'));
+
 
     describe('PanelDialog controller', function () {
 
@@ -12,6 +14,8 @@ describe('rocketvoip.view_users module', function () {
         var panelDialogCtrl;
         var _mdPanelRef = {};
         var updateUserSpy;
+        var testSipUser = {id: 1, name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
+        var _appConfig;
 
         beforeEach(inject(function ($rootScope, $controller, $templateCache, $compile) {
             scope = $rootScope.$new();
@@ -25,12 +29,16 @@ describe('rocketvoip.view_users module', function () {
             });
             _mdPanelRef.destroy = jasmine.createSpy();
             updateUserSpy = jasmine.createSpy();
+            _appConfig = {
+                "PASSWORD_LENGTH": 11
+            };
 
             panelDialogCtrl = $controller("PanelDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: _mdPanelRef,
                 user: null,
-                updateUser: updateUserSpy
+                updateUser: updateUserSpy,
+                appConfig: _appConfig
             });
 
             var templateHtml = $templateCache.get('view_users/panel_editUser.html');
@@ -52,7 +60,7 @@ describe('rocketvoip.view_users module', function () {
             panelDialogCtrl = $controller("PanelDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: _mdPanelRef,
-                user: {id: 1, name: 'Marco Studerus', phone: "+41223334455"},
+                user: testSipUser,
                 updateUser: {}
             });
             panelDialogCtrl.setPlaneTitle();
@@ -61,7 +69,7 @@ describe('rocketvoip.view_users module', function () {
 
         it('should set id of new Users', inject(function () {
 
-            scope.user = {name: 'Marco Studerus', phone: "+41223334455"};
+            scope.user = {name: 'Marco Studerus', phone: "+41223334455", secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.saveUser();
             expect(scope.user.id).toBeDefined();
@@ -69,14 +77,14 @@ describe('rocketvoip.view_users module', function () {
 
         it('should not change id of existing Users', inject(function () {
 
-            scope.user = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
+            scope.user = testSipUser;
             scope.$apply();
             panelDialogCtrl.saveUser();
             expect(scope.user.id).toBe(1);
         }));
 
         it('should call mdPanelRef.close() on save', inject(function () {
-            scope.user = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
+            scope.user = testSipUser;
             scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
@@ -84,7 +92,7 @@ describe('rocketvoip.view_users module', function () {
         }));
 
         it('should call mdPanelRef.destroy() on save', inject(function () {
-            scope.user = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
+            scope.user = testSipUser;
             scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
@@ -92,7 +100,7 @@ describe('rocketvoip.view_users module', function () {
         }));
 
         it('should call updateUser() on save', inject(function () {
-            scope.user = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
+            scope.user = testSipUser;
             scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
@@ -101,7 +109,7 @@ describe('rocketvoip.view_users module', function () {
 
 
         it('should not save user when name is empty', inject(function () {
-            scope.user = {id: 1, phone: "+41223334455"};
+            scope.user = {id: 1, phone: "+41223334455", secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
@@ -109,7 +117,7 @@ describe('rocketvoip.view_users module', function () {
         }));
 
         it('should not save user when phone is empty', inject(function () {
-            scope.user = {id: 1, name: 'Marco Studerus'};
+            scope.user = {id: 1, name: 'Marco Studerus', secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.saveUser();
             scope.$apply();
@@ -123,6 +131,10 @@ describe('rocketvoip.view_users module', function () {
             panelDialogCtrl.saveUser();
             scope.$apply();
             expect(panelDialogCtrl.closeDialog).toHaveBeenCalledTimes(0);
+        }));
+
+        it('should generate password', inject(function () {
+            expect(panelDialogCtrl.generatePassword().length).toBe(_appConfig.PASSWORD_LENGTH);
         }));
     });
 });

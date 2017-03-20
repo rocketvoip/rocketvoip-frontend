@@ -1,6 +1,5 @@
 'use strict';
-
-angular.module('rocketvoip.view_users', ['ngRoute'])
+angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/view_users', {
@@ -9,11 +8,13 @@ angular.module('rocketvoip.view_users', ['ngRoute'])
         });
     }])
 
-    .controller('ViewUsersCtrl', ['$scope', '$mdPanel', function ($scope, $mdPanel) {
-		
-		$scope.sipUsers = [];
-        $scope.sortType     = 'name';
-        $scope.sortReverse  = false;
+    .controller('ViewUsersCtrl', ['$scope', '$mdPanel', 'appConfig', 'SipClientService', function ($scope, $mdPanel, appConfig, SipClientService) {
+
+        //$scope.sipUsers = SipClientService.query();
+
+        $scope.sipUsers = [];
+        $scope.sortType = 'name';
+        $scope.sortReverse = false;
 
         this.updateUser = function (user) {
             if (typeof user !== 'undefined') {
@@ -23,6 +24,7 @@ angular.module('rocketvoip.view_users', ['ngRoute'])
                     if (sipUser.id === user.id) {
                         sipUser.name = user.name;
                         sipUser.phone = user.phone;
+                        sipUser.secret = user.secret;
                         found = true;
                         return true;
                     }
@@ -34,14 +36,14 @@ angular.module('rocketvoip.view_users', ['ngRoute'])
         };
 
         this.showDialog = function ($user) {
-            var position = $mdPanel.newPanelPosition()
+            var planePosition = $mdPanel.newPanelPosition()
                 .absolute()
                 .center();
-            var config = {
+            var planeConfig = {
                 attachTo: angular.element(document.body),
                 controller: 'PanelDialogCtrl',
                 controllerAs: 'ctrl',
-                position: position,
+                position: planePosition,
                 templateUrl: 'view_users/panel_editUser.html',
                 hasBackdrop: true,
                 panelClass: 'user-dialog',
@@ -51,13 +53,17 @@ angular.module('rocketvoip.view_users', ['ngRoute'])
                 escapeToClose: true,
                 locals: {
                     "user": $user,
-                    "updateUser": this.updateUser
+                    "updateUser": this.updateUser,
+                    "appConfig": appConfig
                 },
                 focusOnOpen: true
             };
 
-            this._mdPanel = $mdPanel.create(config);
+            this._mdPanel = $mdPanel.create(planeConfig);
             this._mdPanel.open();
             return this._mdPanel;
         };
+    }])
+    .factory('SipClientService', ['$resource', 'appConfig', function ($resource, appConfig) {
+        return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/sipclient/:sipclient', {sipclient: "@sipclient"});
     }]);

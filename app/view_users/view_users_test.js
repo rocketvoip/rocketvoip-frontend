@@ -5,8 +5,8 @@ describe('rocketvoip.view_users module', function () {
     beforeEach(angular.mock.module('rocketvoip.view_users'));
     beforeEach(module('ngMaterial'));
     beforeEach(module('rocketvoip.panel_editUser'));
-
     beforeEach(module('view_users/panel_editUser.html'));
+    beforeEach(module('rocketvoip'));
 
     describe('view_users controller', function () {
 
@@ -16,13 +16,15 @@ describe('rocketvoip.view_users module', function () {
         var testUsers;
         var mdPanel;
 
-        beforeEach(inject(function ($rootScope, $controller, _$mdPanel_) {
+        beforeEach(inject(function ($rootScope, $controller, _$mdPanel_, appConfig) {
             mdPanel = _$mdPanel_;
             scope = $rootScope.$new();
             rootScope = $rootScope;
+
             viewUserCtrl = $controller("ViewUsersCtrl", {
                 $scope: scope,
-                $mdPanel: _$mdPanel_
+                $mdPanel: _$mdPanel_,
+                appConfig: appConfig
             });
             testUsers = [
                 {id: 1, name: 'Marco Studerus', phone: "+41223334455"},

@@ -4,17 +4,36 @@ describe('rocket voip', function () {
 
     describe('view_users', function () {
 
+        var sipUser1 = {
+            name: "Z",
+            phone: "+41711234567",
+            secret: "12345678"
+        };
+        var sipUser2 = {
+            name: "M",
+            phone: "+41711234568",
+            secret: "12345678"
+        };
+        var sipUser3 = {
+            name: "A",
+            phone: "+41711234568",
+            secret: "12345678"
+        };
+
+
         function addSipUser(sipUser) {
             if (sipUser == undefined) {
                 sipUser = {
                     name: 'Marco Studerus',
-                    phone: '+410000000'
+                    phone: '+410000000',
+                    secret: '12345678'
                 }
             }
 
             element(by.className('button-add-user')).click();
             element(by.model('user.name')).sendKeys(sipUser.name);
             element(by.model('user.phone')).sendKeys(sipUser.phone);
+            element(by.model('user.secret')).sendKeys(sipUser.secret);
             element(by.className('plane-editUser-save')).click();
         }
 
@@ -81,7 +100,7 @@ describe('rocket voip', function () {
             expect(invalid.count()).toEqual(0);
             element(by.className('plane-editUser-save')).click();
             invalid = element.all(by.className('ng-invalid ng-invalid-required ng-touched'));
-            expect(invalid.count()).toEqual(2);
+            expect(invalid.count()).toEqual(3);
             plane = element.all(by.className('md-panel user-dialog'));
             expect(plane.count()).toEqual(1);
         });
@@ -91,6 +110,7 @@ describe('rocket voip', function () {
             var plane = element.all(by.className('md-panel user-dialog'));
             expect(plane.count()).toEqual(1);
             element(by.model('user.phone')).sendKeys("+413333333");
+            element(by.model('user.secret')).sendKeys("dfasdffdadf");
             var invalid = element.all(by.className('ng-invalid ng-invalid-required ng-touched'));
             expect(invalid.count()).toEqual(0);
             element(by.className('plane-editUser-save')).click();
@@ -101,18 +121,7 @@ describe('rocket voip', function () {
         });
 
         it('should sort table by name by default', function () {
-            var sipUser1 = {
-                name: "Z",
-                phone: "+41711234567"
-            };
-            var sipUser2 = {
-                name: "M",
-                phone: "+41711234568"
-            };
-            var sipUser3 = {
-                name: "A",
-                phone: "+41711234568"
-            };
+
             addSipUser(sipUser1);
             addSipUser(sipUser2);
             addSipUser(sipUser3);
@@ -121,18 +130,6 @@ describe('rocket voip', function () {
         });
 
         it('should change sort table by name on change', function () {
-            var sipUser1 = {
-                name: "Z",
-                phone: "+41711234567"
-            };
-            var sipUser2 = {
-                name: "M",
-                phone: "+43711234568"
-            };
-            var sipUser3 = {
-                name: "A",
-                phone: "+41711234568"
-            };
             addSipUser(sipUser1);
             addSipUser(sipUser2);
             addSipUser(sipUser3);
@@ -148,17 +145,20 @@ describe('rocket voip', function () {
         });
 
         it('should change sort table by phone on change', function () {
-            var sipUser1 = {
+            sipUser1 = {
                 name: "Z",
-                phone: "+41711234567"
+                phone: "+41711234567",
+                secret: "12345678"
             };
-            var sipUser2 = {
+            sipUser2 = {
                 name: "M",
-                phone: "+43711234568"
+                phone: "+43711234568",
+                secret: "12345678"
             };
-            var sipUser3 = {
+            sipUser3 = {
                 name: "A",
-                phone: "+41711234568"
+                phone: "+41711234568",
+                secret: "12345678"
             };
             addSipUser(sipUser1);
             addSipUser(sipUser2);
@@ -179,15 +179,18 @@ describe('rocket voip', function () {
         it('should filter table ', function () {
             var sipUser1 = {
                 name: "Z-000000",
-                phone: "+41711234568"
+                phone: "+41711234568",
+                secret: "12345678"
             };
             var sipUser2 = {
                 name: "M",
-                phone: "+41710000000"
+                phone: "+41710000000",
+                secret: "12345678"
             };
             var sipUser3 = {
                 name: "A",
-                phone: "+41711234568"
+                phone: "+41711234568",
+                secret: "12345678"
             };
             addSipUser(sipUser1);
             addSipUser(sipUser2);
@@ -199,6 +202,19 @@ describe('rocket voip', function () {
             expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser1.name);
             element(by.id('view-user-filter-input')).clear();
             expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(3);
+        });
+
+        it('should generate secret', function () {
+            element(by.className('button-add-user')).click();
+            element(by.id('plane-editUser-generatePW')).click();
+            expect(element.all(by.model('user.secret')).first().getText() != "").toBeTruthy();
+        });
+
+        it('should show secrets on switch enable', function () {
+            addSipUser(sipUser1);
+            expect(element.all(by.className('view-user-sipUserSecret')).first().isDisplayed()).toBeFalsy();
+            element(by.id('view-user-show-secrets')).click();
+            expect(element.all(by.className('view-user-sipUserSecret')).first().isDisplayed()).toBeTruthy();
         });
     });
 });

@@ -45,3 +45,7 @@ md-input-container {
 .view-user-filter{
     margin: 20px;
 }
+
+md-switch{
+    margin: 0px;
+}
