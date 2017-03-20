@@ -16,6 +16,7 @@
     "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.8",
     "karma-junit-reporter": "^0.4.1",
+    "karma-ng-html2js-preprocessor": "*",
     "protractor": "^4.0.9"
   },
   "scripts": {
