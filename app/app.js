@@ -8,7 +8,13 @@ angular.module('rocketvoip', [
     'rocketvoip.view_dashboard',
     'rocketvoip.version',
     'rocketvoip.view_users'
-]).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
-    $locationProvider.hashPrefix('!');
-    $routeProvider.otherwise({redirectTo: '/dashboard'});
-}]);
+]).constant('appConfig',  {
+    'BACKEND_BASE_URL' : 'https://rocketvoip.herokuapp.com',
+    'API_ENDPOINT': '/v1',
+    'PASSWORD_LENGTH': 16
+})
+    .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+        $locationProvider.hashPrefix('!');
+        $routeProvider.otherwise({redirectTo: '/dashboard'});
+    }]);
+

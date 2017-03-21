@@ -19,7 +19,7 @@
     </div>
 
     <md-subheader>
-        <div flex layout="row">
+        <div flex layout="row" layout-align="none center">
             <div flex="30">
                 <a id="view-user-sort-name" ng-click="sortType = 'name'; sortReverse = !sortReverse">
                     Name
@@ -32,7 +32,7 @@
                 </a>
             </div>
 
-            <div flex="20">
+            <div flex="30">
                 <a id="view-user-sort-phone" ng-click="sortType = 'phone'; sortReverse = !sortReverse">
                     Phone Number
                     <span ng-show="sortType == 'phone' && !sortReverse">
@@ -42,6 +42,12 @@
                         <md-icon aria-label="Sort Up">keyboard_arrow_up</md-icon>
                     </span>
                 </a>
+            </div>
+
+            <div flex="30">
+                <md-switch id="view-user-show-secrets" ng-model="showSecrets" aria-label="Show Secrets" class="md-warn">
+                    Secrets
+                </md-switch>
             </div>
 
             <div flex layout="row" layout-align="end">Operations</div>
@@ -55,7 +61,9 @@
 
         <div flex layout="row">
             <div class="view-user-sipUserName" flex="30">{{ sipUser.name }}</div>
-            <div class="view-user-sipUserPhone" flex="20">{{ sipUser.phone }}</div>
+            <div class="view-user-sipUserPhone" flex="30">{{ sipUser.phone }}</div>
+            <div ng-show="showSecrets" class="view-user-sipUserSecret" flex="20">{{ sipUser.secret }}</div>
+
         </div>
 
         <md-button class="md-secondary md-icon-button view-user-edituser" ng-click="ctrl.showDialog(sipUser)"

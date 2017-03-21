@@ -12,6 +12,7 @@ module.exports = function (config) {
             'bower_components/angular-animate/angular-animate.js',
             'bower_components/angular-loader/angular-loader.js',
             'bower_components/angular-material/modules/js/**/*.js',
+            'app.js',
             'components/**/*.js',
             'view*/**/*.js',
             'view*/**/*.html'
@@ -44,7 +45,6 @@ module.exports = function (config) {
         preprocessors: {
             'components/**/!(*_test).js': ['coverage'],
             'view*/**/!(*_test).js': ['coverage'],
-            '!(*_test).js': ['coverage'],
             'view*/**/*.html': 'ng-html2js'
         },
 
