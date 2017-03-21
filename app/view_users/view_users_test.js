@@ -16,14 +16,14 @@ describe('rocketvoip.view_users module', function () {
         var testUsers;
         var mdPanel;
 
-        beforeEach(inject(function ($rootScope, $controller, _$mdPanel_, appConfig) {
-            mdPanel = _$mdPanel_;
+        beforeEach(inject(function ($rootScope, $controller, $mdPanel, appConfig) {
+            mdPanel = $mdPanel;
             scope = $rootScope.$new();
             rootScope = $rootScope;
 
             viewUserCtrl = $controller("ViewUsersCtrl", {
                 $scope: scope,
-                $mdPanel: _$mdPanel_,
+                $mdPanel: $mdPanel,
                 appConfig: appConfig
             });
             testUsers = [

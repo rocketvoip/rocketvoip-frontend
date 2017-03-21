@@ -134,7 +134,7 @@ describe('rocketvoip.view_users module', function () {
         }));
 
         it('should generate password', inject(function () {
-            expect(panelDialogCtrl.generatePassword().length).toBe(_appConfig.PASSWORD_LENGTH);
+            expect(panelDialogCtrl.generateSecret().length).toBe(_appConfig.PASSWORD_LENGTH);
         }));
     });
 });

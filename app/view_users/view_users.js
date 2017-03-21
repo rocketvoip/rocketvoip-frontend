@@ -1,4 +1,8 @@
 'use strict';
+/*
+    Module View Users shows all users
+    Author: Marco Studerus
+ */
 angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
 
     .config(['$routeProvider', function ($routeProvider) {
@@ -8,7 +12,8 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewUsersCtrl', ['$scope', '$mdPanel', 'appConfig', 'SipClientService', function ($scope, $mdPanel, appConfig, SipClientService) {
+    .controller('ViewUsersCtrl', ['$scope', '$mdPanel', 'appConfig', 'SipClientService',
+        function ($scope, $mdPanel,appConfig, SipClientService) {
 
         //$scope.sipUsers = SipClientService.query();
 
@@ -22,9 +27,7 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
                 var found = false;
                 $scope.sipUsers.some(function (sipUser) {
                     if (sipUser.id === user.id) {
-                        sipUser.name = user.name;
-                        sipUser.phone = user.phone;
-                        sipUser.secret = user.secret;
+                        angular.copy(user,sipUser);
                         found = true;
                         return true;
                     }
@@ -65,5 +68,6 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
         };
     }])
     .factory('SipClientService', ['$resource', 'appConfig', function ($resource, appConfig) {
-        return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/sipclient/:sipclient', {sipclient: "@sipclient"});
+        return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/sipclient/:sipclient',
+            {sipclient: "@sipclient"});
     }]);

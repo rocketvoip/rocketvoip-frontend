@@ -1,7 +1,11 @@
 'use strict';
-
+/*
+    Module panel_edit is a dialog for adding oder editing a Sip User
+    Author: Marco Studerus
+ */
 angular.module('rocketvoip.panel_editUser', [])
-    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'user', 'updateUser', 'appConfig', function ($scope, mdPanelRef, user, updateUser, appConfig) {
+    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'user', 'updateUser', 'appConfig',
+        function ($scope, mdPanelRef, user, updateUser, appConfig) {
 
         this.closeDialog = function () {
             mdPanelRef.close().then(function () {
@@ -36,16 +40,16 @@ angular.module('rocketvoip.panel_editUser', [])
             }
         };
 
-        this.generatePassword = function () {
-            var lowerCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
-                upperCharacters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-                numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-            var finalCharacters = lowerCharacters.concat(upperCharacters).concat(numbers);
-            var finalPassword = [];
+        this.generateSecret = function () {
+            var characters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+                's', 't', 'u', 'v', 'w', 'x', 'y', 'z','A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z','0', '1', '2', '3', '4', '5', '6', '7',
+                '8', '9'];
+            var secret = [];
             for (var i = 0; i < appConfig.PASSWORD_LENGTH; i++) {
-                finalPassword.push(finalCharacters[Math.floor(Math.random() * finalCharacters.length)]);
+                secret.push(characters[Math.floor(Math.random() * characters.length)]);
             }
-            return finalPassword.join('');
+            return secret.join('');
         };
 
         $scope.user = angular.copy(user);
