@@ -67,13 +67,10 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
             };
         }])
     .factory('SipClientService', ['$resource', 'appConfig', function ($resource, appConfig) {
-        //return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/sipclient/:id',
-        //    {id: "@id"});
-        return $resource('http://jsonplaceholder.typicode.com/users/:id', {id: "@id"}, {
+        return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/sipclients/:id', {id: "@id"}, {
                 update: {
                     method: 'PUT'
                 }
             }
         );
-
     }]);

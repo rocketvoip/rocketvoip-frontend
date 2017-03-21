@@ -1,8 +1,31 @@
 'use strict';
 
-describe('rocket voip', function () {
+describe('rocketvoip', function () {
 
     describe('view_users', function () {
+
+        beforeEach(function () {
+            var mockFunction = function () {
+                angular.module('httpBackendMock', ['ngMockE2E'])
+                    .run(function ($httpBackend) {
+                        $httpBackend.whenGET(/\/sipclients\//).respond(function () {
+                            return [200, []];
+                        });
+                        $httpBackend.whenPOST(/\/sipclients/).respond(function (method, url, data) {
+                            var sipClient = angular.fromJson(data);
+                            sipClient.id = Math.floor((Math.random() * 30000) + 100);
+                            return [200, sipClient, {}];
+                        });
+                        $httpBackend.whenPUT(/\/sipclients\//).respond(function (method, url, data) {
+                            var sipClient = angular.fromJson(data);
+                            return [200, sipClient, {}];
+                        });
+                        $httpBackend.whenGET(/.*/).passThrough();
+                    });
+            }
+            browser.addMockModule('httpBackendMock', mockFunction);
+            browser.get('index.html#!/view_users');
+        });
 
         var sipUser1 = {
             name: "Z",
@@ -36,10 +59,6 @@ describe('rocket voip', function () {
             element(by.model('user.secret')).sendKeys(sipUser.secret);
             element(by.className('plane-editUser-save')).click();
         }
-
-        beforeEach(function () {
-            browser.get('index.html#!/view_users');
-        });
 
         it('should open plane view for new user', function () {
             var plane = element.all(by.className('md-panel user-dialog'));
