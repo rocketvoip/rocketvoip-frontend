@@ -18,27 +18,31 @@
     <link rel="shortcut icon" href="favicon.ico"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body style="height: 100%; overflow-y: auto">
-<md-toolbar layout="row" layout-align="bottom">
-    <div flex>
-        <h1>Rocket VOIP
-            <small>Phone Management</small>
-        </h1>
-    </div>
-</md-toolbar>
-<md-content class="md-padding">
-    <md-nav-bar aria-label="navigation">
-        <md-nav-item md-nav-href="#!/dashboard">dashboard</md-nav-item>
-        <md-nav-item md-nav-href="#!/view_users">Users</md-nav-item>
-    </md-nav-bar>
+<body>
+<div style="height: 100%; overflow-y: auto">
+    <md-toolbar layout="row" layout-align="bottom">
+        <div flex>
+            <h1>Rocket VOIP
+                <small>Phone Management</small>
+            </h1>
+        </div>
+    </md-toolbar>
+    <md-content class="md-padding">
+        <md-nav-bar aria-label="navigation">
+            <md-nav-item md-nav-href="#!/dashboard">dashboard</md-nav-item>
+            <md-nav-item md-nav-href="#!/view_users">Users</md-nav-item>
+        </md-nav-bar>
 
-    <!--[if lt IE 7]>
-    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-        your browser</a> to improve your experience.</p>
-    <![endif]-->
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a
+                href="http://browsehappy.com/">upgrade
+            your browser</a> to improve your experience.</p>
+        <![endif]-->
 
-    <div ng-view></div>
-</md-content>
+        <div ng-view></div>
+    </md-content>
+</div>
+
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/angular-material/angular-material.js"></script>
@@ -52,5 +56,7 @@
 <script src="components/version/version.js"></script>
 <script src="components/version/version-directive.js"></script>
 <script src="components/version/interpolate-filter.js"></script>
+<script src="bower_components/angular-mocks/angular-mocks.js"></script>
+
 </body>
 </html>
