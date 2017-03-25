@@ -1,6 +1,6 @@
 'use strict';
 /*
- Module View Users shows all users
+ Module View Users shows all Sip Clients
  Author: Marco Studerus
  */
 angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
@@ -15,29 +15,29 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
     .controller('ViewUsersCtrl', ['$scope', '$mdPanel', 'appConfig', 'SipClientService',
         function ($scope, $mdPanel, appConfig, SipClientService) {
 
-            $scope.sipUsers = SipClientService.query();
+            $scope.sipClients = SipClientService.query();
 
             $scope.sortType = 'name';
             $scope.sortReverse = false;
 
-            this.updateUser = function (user) {
-                if (typeof user !== 'undefined') {
+            this.updateSipClient = function (updatedSipClient) {
+                if (typeof updatedSipClient !== 'undefined') {
 
                     var found = false;
-                    $scope.sipUsers.some(function (sipUser) {
-                        if (sipUser.id === user.id) {
-                            angular.copy(user, sipUser);
+                    $scope.sipClients.some(function (sipClient) {
+                        if (sipClient.id === updatedSipClient.id) {
+                            angular.copy(updatedSipClient, sipClient);
                             found = true;
                             return true;
                         }
                     });
                     if (!found) {
-                        $scope.sipUsers.push(user);
+                        $scope.sipClients.push(updatedSipClient);
                     }
                 }
             };
 
-            this.showDialog = function ($user) {
+            this.showDialog = function ($sipClient) {
                 var planePosition = $mdPanel.newPanelPosition()
                     .absolute()
                     .center();
@@ -54,8 +54,8 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
                     clickOutsideToClose: true,
                     escapeToClose: true,
                     locals: {
-                        "user": $user,
-                        "updateUser": this.updateUser,
+                        "sipClient": $sipClient,
+                        "updateSipClient": this.updateSipClient,
                         "appConfig": appConfig
                     },
                     focusOnOpen: true

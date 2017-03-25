@@ -57,16 +57,16 @@
 
     <md-divider></md-divider>
 
-    <md-list-item flex ng-repeat="sipUser in sipUsers | orderBy:sortType:sortReverse | filter:filter">
+    <md-list-item flex ng-repeat="sipClient in sipClients | orderBy:sortType:sortReverse | filter:filter">
 
         <div flex layout="row">
-            <div class="view-user-sipUserName" flex="30">{{ sipUser.name }}</div>
-            <div class="view-user-sipUserPhone" flex="30">{{ sipUser.phone }}</div>
-            <div ng-show="showSecrets" class="view-user-sipUserSecret" flex="20">{{ sipUser.secret }}</div>
+            <div class="view-user-sipUserName" flex="30">{{ sipClient.name }}</div>
+            <div class="view-user-sipUserPhone" flex="30">{{ sipClient.phone }}</div>
+            <div ng-show="showSecrets" class="view-user-sipUserSecret" flex="20">{{ sipClient.secret }}</div>
 
         </div>
 
-        <md-button class="md-secondary md-icon-button view-user-edituser" ng-click="ctrl.showDialog(sipUser)"
+        <md-button class="md-secondary md-icon-button view-user-edituser" ng-click="ctrl.showDialog(sipClient)"
                    aria-label="Edit Users">
             <md-tooltip>Edit User</md-tooltip>
             <md-icon aria-label="Edit">edit</md-icon>
