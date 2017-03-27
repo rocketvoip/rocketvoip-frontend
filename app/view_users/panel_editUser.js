@@ -4,8 +4,9 @@
  Author: Marco Studerus
  */
 angular.module('rocketvoip.panel_editUser', [])
-    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient', 'updateSipClient', 'appConfig', 'SipClientService',
-        function ($scope, mdPanelRef, sipClient, updateSipClient, appConfig, SipClientService) {
+    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient', 'updateSipClient', 'appConfig',
+        'SipClientService', 'deleteSipClient',
+        function ($scope, mdPanelRef, sipClient, updateSipClient, appConfig, SipClientService, deleteSipClient) {
 
             this.closeDialog = function () {
                 mdPanelRef.close().then(function () {
@@ -16,8 +17,10 @@ angular.module('rocketvoip.panel_editUser', [])
             this.setPlaneTitle = function () {
                 if ($scope.sipClient == null) {
                     $scope.title = "Add a new User"
+                    $scope.isNewSipClient = true;
                 } else {
                     $scope.title = "Edit User '" + $scope.sipClient.name + "'";
+                    $scope.isNewSipClient = false;
                 }
             };
 
@@ -43,6 +46,15 @@ angular.module('rocketvoip.panel_editUser', [])
                 }
             };
 
+            this.deleteSipClient = function () {
+                if ($scope.sipClient.id) {
+                    SipClientService.delete($scope.sipClient).$promise.then(function () {
+                        deleteSipClient($scope.sipClient);
+                    });
+                    this.closeDialog();
+                }
+            };
+
             this.generateSecret = function () {
                 var characters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
                     's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -57,5 +69,4 @@ angular.module('rocketvoip.panel_editUser', [])
 
             $scope.sipClient = angular.copy(sipClient);
             this.setPlaneTitle();
-
         }]);

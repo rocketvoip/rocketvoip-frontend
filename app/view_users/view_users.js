@@ -37,6 +37,16 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
                 }
             };
 
+            this.deleteSipClient = function (deletedSipClient) {
+                if (typeof deletedSipClient !== 'undefined') {
+                    for (var i = $scope.sipClients.length - 1; i >= 0; i--) {
+                        if ($scope.sipClients[i].id == deletedSipClient.id) {
+                            $scope.sipClients.splice(i, 1);
+                        }
+                    }
+                }
+            };
+
             this.showDialog = function ($sipClient) {
                 var planePosition = $mdPanel.newPanelPosition()
                     .absolute()
@@ -56,7 +66,8 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
                     locals: {
                         "sipClient": $sipClient,
                         "updateSipClient": this.updateSipClient,
-                        "appConfig": appConfig
+                        "appConfig": appConfig,
+                        "deleteSipClient": this.deleteSipClient
                     },
                     focusOnOpen: true
                 };
