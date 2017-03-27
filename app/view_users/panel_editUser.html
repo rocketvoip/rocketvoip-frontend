@@ -10,22 +10,22 @@
 
             <md-input-container layout="row" flex="90">
                 <label>Name</label>
-                <input type="text" ng-model="user.name" ng-required="true">
+                <input type="text" ng-model="sipClient.name" ng-required="true">
             </md-input-container>
 
             <md-input-container layout="row" flex="90">
                 <label>Phone Number</label>
-                <input type="text" ng-model="user.phone" ng-required="true">
+                <input type="text" ng-model="sipClient.phone" ng-required="true">
             </md-input-container>
 
             <div layout="row" flex="90">
                 <md-input-container flex="90" layout="row">
                     <label>Secret</label>
-                    <input type="text" ng-model="user.secret" ng-required="true">
+                    <input type="text" ng-model="sipClient.secret" ng-required="true">
                 </md-input-container>
 
                 <md-button id="plane-editUser-generatePW" md-mini flex="10" layout="row"
-                           ng-click="user.secret=ctrl.generateSecret()">
+                           ng-click="sipClient.secret=ctrl.generateSecret()">
                     Generate
                 </md-button>
             </div>
@@ -35,7 +35,7 @@
 
     <div layout="row">
         <md-button class="plane-editUser-save" md-autofocus flex class="md-raised md-primary"
-                   ng-click="ctrl.saveUser()">
+                   ng-click="ctrl.saveSipClient()">
             Save
         </md-button>
 

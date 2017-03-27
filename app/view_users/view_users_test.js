@@ -27,7 +27,7 @@ describe('rocketvoip.view_users module', function () {
             scope = $rootScope.$new();
             rootScope = $rootScope;
             SipClientServiceMock = {
-                query: function(){
+                query: function () {
                     return testUsers;
                 }
             };
@@ -46,23 +46,23 @@ describe('rocketvoip.view_users module', function () {
 
         it('should update the SIP Client in the array after adding a new sip client', function () {
             var newUser = {id: 111, name: 'Jakob Test', phone: "+4935124353345"};
-            expect(scope.sipUsers.length).toBe(4);
-            viewUserCtrl.updateUser(newUser);
-            expect(scope.sipUsers.length).toBe(5);
+            expect(scope.sipClients.length).toBe(4);
+            viewUserCtrl.updateSipClient(newUser);
+            expect(scope.sipClients.length).toBe(5);
         });
 
         it('should not create SIP Client after editing an existing sip client', function () {
             var newUser = {id: 1, name: 'Marco Studerus', phone: "+41223334455"};
-            expect(scope.sipUsers.length).toBe(4);
-            viewUserCtrl.updateUser(newUser);
-            expect(scope.sipUsers.length).toBe(4);
+            expect(scope.sipClients.length).toBe(4);
+            viewUserCtrl.updateSipClient(newUser);
+            expect(scope.sipClients.length).toBe(4);
         });
 
         it('should not add undefined sip client to array', function () {
             var newUser = undefined;
-            expect(scope.sipUsers.length).toBe(4);
-            viewUserCtrl.updateUser(newUser);
-            expect(scope.sipUsers.length).toBe(4);
+            expect(scope.sipClients.length).toBe(4);
+            viewUserCtrl.updateSipClient(newUser);
+            expect(scope.sipClients.length).toBe(4);
         });
 
 

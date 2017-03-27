@@ -27,26 +27,26 @@ describe('rocketvoip', function () {
             browser.get('index.html#!/view_users');
         });
 
-        var sipUser1 = {
+        var sipClient1 = {
             name: "Z",
             phone: "+41711234567",
             secret: "12345678"
         };
-        var sipUser2 = {
+        var sipClient2 = {
             name: "M",
             phone: "+41711234568",
             secret: "12345678"
         };
-        var sipUser3 = {
+        var sipClient3 = {
             name: "A",
             phone: "+41711234568",
             secret: "12345678"
         };
 
 
-        function addSipUser(sipUser) {
-            if (sipUser == undefined) {
-                sipUser = {
+        function addTestSipClient(sipClient) {
+            if (sipClient == undefined) {
+                sipClient = {
                     name: 'Marco Studerus',
                     phone: '+410000000',
                     secret: '12345678'
@@ -54,13 +54,13 @@ describe('rocketvoip', function () {
             }
 
             element(by.className('button-add-user')).click();
-            element(by.model('user.name')).sendKeys(sipUser.name);
-            element(by.model('user.phone')).sendKeys(sipUser.phone);
-            element(by.model('user.secret')).sendKeys(sipUser.secret);
+            element(by.model('sipClient.name')).sendKeys(sipClient.name);
+            element(by.model('sipClient.phone')).sendKeys(sipClient.phone);
+            element(by.model('sipClient.secret')).sendKeys(sipClient.secret);
             element(by.className('plane-editUser-save')).click();
         }
 
-        it('should open plane view for new user', function () {
+        it('should open plane view for new sip client', function () {
             var plane = element.all(by.className('md-panel user-dialog'));
             expect(plane.count()).toEqual(0);
             element(by.className('button-add-user')).click();
@@ -69,45 +69,45 @@ describe('rocketvoip', function () {
             expect(element(by.className('plane-editUser-title')).getText()).toEqual('Add a new User');
         });
 
-        it('should save new user', function () {
-            expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(0);
-            addSipUser();
-            expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(1);
+        it('should save new sip client', function () {
+            expect(element.all(by.repeater('sipClient in sipClients')).count()).toEqual(0);
+            addTestSipClient();
+            expect(element.all(by.repeater('sipClient in sipClients')).count()).toEqual(1);
 
         });
 
-        it('should not save new user when close plane', function () {
-            expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(0);
+        it('should not save new sip client when close plane', function () {
+            expect(element.all(by.repeater('sipClient in sipClients')).count()).toEqual(0);
             element(by.className('button-add-user')).click();
             var plane = element.all(by.className('md-panel user-dialog'));
             expect(plane.count()).toEqual(1);
             element(by.className('plane-editUser-close')).click();
             plane = element.all(by.className('md-panel user-dialog'));
             expect(plane.count()).toEqual(0);
-            expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(0);
+            expect(element.all(by.repeater('sipClient in sipClients')).count()).toEqual(0);
         });
 
-        it('should save user when click save plane (edit User)', function () {
-            addSipUser();
+        it('should save sip client when click save plane (edit User)', function () {
+            addTestSipClient();
             var newPhone = '+411111111';
-            expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(1);
+            expect(element.all(by.repeater('sipClient in sipClients')).count()).toEqual(1);
             expect(element(by.className('view-user-sipUserPhone')).getText()).toEqual('+410000000');
             element(by.className('view-user-edituser')).click();
-            element(by.model('user.phone')).clear().sendKeys(newPhone);
+            element(by.model('sipClient.phone')).clear().sendKeys(newPhone);
             element(by.className('plane-editUser-save')).click();
-            expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(1);
+            expect(element.all(by.repeater('sipClient in sipClients')).count()).toEqual(1);
             expect(element(by.className('view-user-sipUserPhone')).getText()).toEqual(newPhone);
         });
 
-        it('should not save user when click close plane (edit User)', function () {
-            addSipUser();
+        it('should not save sip client when click close plane (edit sip client)', function () {
+            addTestSipClient();
             var newPhone = '+411111111';
-            expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(1);
+            expect(element.all(by.repeater('sipClient in sipClients')).count()).toEqual(1);
             expect(element(by.className('view-user-sipUserPhone')).getText()).toEqual('+410000000');
             element(by.className('view-user-edituser')).click();
-            element(by.model('user.phone')).clear().sendKeys(newPhone);
+            element(by.model('sipClient.phone')).clear().sendKeys(newPhone);
             element(by.className('plane-editUser-close')).click();
-            expect(element.all(by.repeater('sipUser in sipUsers')).count()).toEqual(1);
+            expect(element.all(by.repeater('sipClient in sipClients')).count()).toEqual(1);
             expect(element(by.className('view-user-sipUserPhone')).getText()).toEqual('+410000000');
         });
 
@@ -128,8 +128,8 @@ describe('rocketvoip', function () {
             element(by.className('button-add-user')).click();
             var plane = element.all(by.className('md-panel user-dialog'));
             expect(plane.count()).toEqual(1);
-            element(by.model('user.phone')).sendKeys("+413333333");
-            element(by.model('user.secret')).sendKeys("dfasdffdadf");
+            element(by.model('sipClient.phone')).sendKeys("+413333333");
+            element(by.model('sipClient.secret')).sendKeys("dfasdffdadf");
             var invalid = element.all(by.className('ng-invalid ng-invalid-required ng-touched'));
             expect(invalid.count()).toEqual(0);
             element(by.className('plane-editUser-save')).click();
@@ -141,84 +141,84 @@ describe('rocketvoip', function () {
 
         it('should sort table by name by default', function () {
 
-            addSipUser(sipUser1);
-            addSipUser(sipUser2);
-            addSipUser(sipUser3);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipUser3.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser1.name);
+            addTestSipClient(sipClient1);
+            addTestSipClient(sipClient2);
+            addTestSipClient(sipClient3);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
         });
 
         it('should change sort table by name on change', function () {
-            addSipUser(sipUser1);
-            addSipUser(sipUser2);
-            addSipUser(sipUser3);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipUser3.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser1.name);
+            addTestSipClient(sipClient1);
+            addTestSipClient(sipClient2);
+            addTestSipClient(sipClient3);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
 
             element(by.id('view-user-sort-name')).click();
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser3.name);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipUser1.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient1.name);
             element(by.id('view-user-sort-name')).click();
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipUser3.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
         });
 
         it('should change sort table by phone on change', function () {
-            sipUser1 = {
+            sipClient1 = {
                 name: "Z",
                 phone: "+41711234567",
                 secret: "12345678"
             };
-            sipUser2 = {
+            sipClient2 = {
                 name: "M",
                 phone: "+43711234568",
                 secret: "12345678"
             };
-            sipUser3 = {
+            sipClient3 = {
                 name: "A",
                 phone: "+41711234568",
                 secret: "12345678"
             };
-            addSipUser(sipUser1);
-            addSipUser(sipUser2);
-            addSipUser(sipUser3);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipUser3.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser1.name);
+            addTestSipClient(sipClient1);
+            addTestSipClient(sipClient2);
+            addTestSipClient(sipClient3);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
 
             element(by.id('view-user-sort-phone')).click();
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipUser2.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient2.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
 
             element(by.id('view-user-sort-phone')).click();
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipUser1.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser2.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient2.name);
 
         });
 
         it('should filter table ', function () {
-            var sipUser1 = {
+            sipClient1 = {
                 name: "Z-000000",
                 phone: "+41711234568",
                 secret: "12345678"
             };
-            var sipUser2 = {
+            sipClient2 = {
                 name: "M",
                 phone: "+41710000000",
                 secret: "12345678"
             };
-            var sipUser3 = {
+            sipClient3 = {
                 name: "A",
                 phone: "+41711234568",
                 secret: "12345678"
             };
-            addSipUser(sipUser1);
-            addSipUser(sipUser2);
-            addSipUser(sipUser3);
+            addTestSipClient(sipClient1);
+            addTestSipClient(sipClient2);
+            addTestSipClient(sipClient3);
             expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(3);
             element(by.id('view-user-filter-input')).sendKeys('00000');
             expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(2);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipUser2.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipUser1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient2.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
             element(by.id('view-user-filter-input')).clear();
             expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(3);
         });
@@ -226,11 +226,11 @@ describe('rocketvoip', function () {
         it('should generate secret', function () {
             element(by.className('button-add-user')).click();
             element(by.id('plane-editUser-generatePW')).click();
-            expect(element.all(by.model('user.secret')).first().getText() != "").toBeTruthy();
+            expect(element.all(by.model('sipClient.secret')).first().getText() != "").toBeTruthy();
         });
 
         it('should show secrets on switch enable', function () {
-            addSipUser(sipUser1);
+            addTestSipClient(sipClient1);
             expect(element.all(by.className('view-user-sipUserSecret')).first().isDisplayed()).toBeFalsy();
             element(by.id('view-user-show-secrets')).click();
             expect(element.all(by.className('view-user-sipUserSecret')).first().isDisplayed()).toBeTruthy();

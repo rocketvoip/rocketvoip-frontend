@@ -7,28 +7,27 @@ describe('rocketvoip.view_users module', function () {
     beforeEach(module('view_users/panel_editUser.html'));
     beforeEach(module('rocketvoip'));
 
-
     describe('PanelDialog controller', function () {
 
         var scope;
         var panelDialogCtrl;
         var _mdPanelRef = {};
-        var updateUserSpy;
-        var testSipUser;
+        var updateSipClientSpy;
+        var testSipClient;
         var _appConfig;
         var SipClientServiceMock;
-        var nextUserID = 1000;
+        var nextID = 1000;
         var $q;
         var deferred;
 
         beforeEach(inject(function ($rootScope, $controller, $templateCache, $compile,$q) {
-            testSipUser = {id: 1, name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
+            testSipClient = {id: 1, name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
             $q = $q;
             deferred = $q.defer();
 
             SipClientServiceMock = {
                 save: function(sipClient){
-                    sipClient.id = nextUserID++;
+                    sipClient.id = nextID++;
                     var ret = {};
                     deferred.resolve(sipClient);
                     ret.$promise = deferred.promise;
@@ -53,7 +52,7 @@ describe('rocketvoip.view_users module', function () {
                 };
             });
             _mdPanelRef.destroy = jasmine.createSpy();
-            updateUserSpy = jasmine.createSpy();
+            updateSipClientSpy = jasmine.createSpy();
             _appConfig = {
                 "PASSWORD_LENGTH": 11
             };
@@ -61,8 +60,8 @@ describe('rocketvoip.view_users module', function () {
             panelDialogCtrl = $controller("PanelDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: _mdPanelRef,
-                user: null,
-                updateUser: updateUserSpy,
+                sipClient: null,
+                updateSipClient: updateSipClientSpy,
                 appConfig: _appConfig,
                 SipClientService: SipClientServiceMock
             });
@@ -86,83 +85,83 @@ describe('rocketvoip.view_users module', function () {
             panelDialogCtrl = $controller("PanelDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: _mdPanelRef,
-                user: testSipUser,
-                updateUser: {}
+                sipClient: testSipClient,
+                updateSipClient: {}
             });
             panelDialogCtrl.setPlaneTitle();
             expect(scope.title).toEqual("Edit User 'Marco Studerus'");
         }));
 
-        it('should set id of new Users', inject(function () {
+        it('should set id of new sip client', inject(function () {
 
-            scope.user = {name: 'Marco Studerus', phone: "+41223334455", secret: "12345678"};
+            scope.sipClient = {name: 'Marco Studerus', phone: "+41223334455", secret: "12345678"};
             scope.$apply();
-            panelDialogCtrl.saveUser();
-            expect(scope.user.id).toBeDefined();
+            panelDialogCtrl.saveSipClient();
+            expect(scope.sipClient.id).toBeDefined();
         }));
 
-        it('should not change id of existing Users', inject(function () {
+        it('should not change id of existing sip client', inject(function () {
 
-            scope.user = testSipUser;
+            scope.sipClient = testSipClient;
             scope.$apply();
-            panelDialogCtrl.saveUser();
-            expect(scope.user.id).toBe(1);
+            panelDialogCtrl.saveSipClient();
+            expect(scope.sipClient.id).toBe(1);
         }));
 
         it('should call mdPanelRef.close() on save', inject(function () {
-            scope.user = testSipUser;
+            scope.sipClient = testSipClient;
             scope.$apply();
-            panelDialogCtrl.saveUser();
+            panelDialogCtrl.saveSipClient();
             scope.$apply();
             expect(_mdPanelRef.close).toHaveBeenCalled();
         }));
 
         it('should call mdPanelRef.destroy() on save', inject(function () {
-            scope.user = testSipUser;
+            scope.sipClient = testSipClient;
             scope.$apply();
-            panelDialogCtrl.saveUser();
+            panelDialogCtrl.saveSipClient();
             scope.$apply();
             expect(_mdPanelRef.destroy).toHaveBeenCalled();
         }));
 
-        it('should call updateUser() on save (edit User)', inject(function () {
-            scope.user = testSipUser;
+        it('should call updateSipClient() on save (edit sip client)', inject(function () {
+            scope.sipClient = testSipClient;
             scope.$apply();
-            panelDialogCtrl.saveUser();
+            panelDialogCtrl.saveSipClient();
             scope.$apply();
-            expect(updateUserSpy).toHaveBeenCalled();
+            expect(updateSipClientSpy).toHaveBeenCalled();
         }));
 
-        it('should call updateUser() on save (add User)', inject(function () {
-            scope.user = {name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
+        it('should call updateSipClient() on save (add sip client)', inject(function () {
+            scope.sipClient = {name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
             scope.$apply();
-            panelDialogCtrl.saveUser();
+            panelDialogCtrl.saveSipClient();
             scope.$apply();
-            expect(updateUserSpy).toHaveBeenCalled();
+            expect(updateSipClientSpy).toHaveBeenCalled();
         }));
 
 
-        it('should not save user when name is empty', inject(function () {
-            scope.user = {id: 1, phone: "+41223334455", secret: "12345678"};
+        it('should not save sip client when name is empty', inject(function () {
+            scope.sipClient = {id: 1, phone: "+41223334455", secret: "12345678"};
             scope.$apply();
-            panelDialogCtrl.saveUser();
+            panelDialogCtrl.saveSipClient();
             scope.$apply();
-            expect(updateUserSpy).toHaveBeenCalledTimes(0);
+            expect(updateSipClientSpy).toHaveBeenCalledTimes(0);
         }));
 
-        it('should not save user when phone is empty', inject(function () {
-            scope.user = {id: 1, name: 'Marco Studerus', secret: "12345678"};
+        it('should not save sip client when phone is empty', inject(function () {
+            scope.sipClient = {id: 1, name: 'Marco Studerus', secret: "12345678"};
             scope.$apply();
-            panelDialogCtrl.saveUser();
+            panelDialogCtrl.saveSipClient();
             scope.$apply();
-            expect(updateUserSpy).toHaveBeenCalledTimes(0);
+            expect(updateSipClientSpy).toHaveBeenCalledTimes(0);
         }));
 
-        it('should not save user when user is empty', inject(function () {
-            scope.user = null;
+        it('should not save sip client when sip client is null', inject(function () {
+            scope.sipClient = null;
             panelDialogCtrl.closeDialog = jasmine.createSpy();
             scope.$apply();
-            panelDialogCtrl.saveUser();
+            panelDialogCtrl.saveSipClient();
             scope.$apply();
             expect(panelDialogCtrl.closeDialog).toHaveBeenCalledTimes(0);
         }));
