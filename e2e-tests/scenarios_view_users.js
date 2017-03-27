@@ -8,7 +8,7 @@ describe('rocketvoip', function () {
             var mockFunction = function () {
                 angular.module('httpBackendMock', ['ngMockE2E'])
                     .run(function ($httpBackend) {
-                        $httpBackend.whenGET(/\/sipclients\//).respond(function () {
+                        $httpBackend.whenGET(/\/sipclients/).respond(function () {
                             return [200, []];
                         });
                         $httpBackend.whenPOST(/\/sipclients/).respond(function (method, url, data) {
