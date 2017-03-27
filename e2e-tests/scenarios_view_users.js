@@ -8,7 +8,7 @@ describe('rocketvoip', function () {
             var mockFunction = function () {
                 angular.module('httpBackendMock', ['ngMockE2E'])
                     .run(function ($httpBackend) {
-                        $httpBackend.whenGET(/\/sipclients\//).respond(function () {
+                        $httpBackend.whenGET(/\/sipclients/).respond(function () {
                             return [200, []];
                         });
                         $httpBackend.whenPOST(/\/sipclients/).respond(function (method, url, data) {
@@ -19,6 +19,9 @@ describe('rocketvoip', function () {
                         $httpBackend.whenPUT(/\/sipclients\//).respond(function (method, url, data) {
                             var sipClient = angular.fromJson(data);
                             return [200, sipClient, {}];
+                        });
+                        $httpBackend.whenDELETE(/\/sipclients\//).respond(function () {
+                            return [200, {}, {}];
                         });
                         $httpBackend.whenGET(/.*/).passThrough();
                     });
@@ -59,6 +62,21 @@ describe('rocketvoip', function () {
             element(by.model('sipClient.secret')).sendKeys(sipClient.secret);
             element(by.className('plane-editUser-save')).click();
         }
+
+        it('should refresh table after deleting a sip client', function () {
+            addTestSipClient(sipClient1);
+            addTestSipClient(sipClient2);
+            addTestSipClient(sipClient3);
+            expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(3);
+            element.all(by.className('view-user-edituser')).first().click();
+            element(by.id('plane-editUser-deleteUser')).click();
+            expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(2);
+        });
+
+        it('should not show delete button (add sip client)', function () {
+            element(by.className('button-add-user')).click();
+            expect(element(By.id("plane-editUser-deleteUser")).isDisplayed()).toBeFalsy();
+        });
 
         it('should open plane view for new sip client', function () {
             var plane = element.all(by.className('md-panel user-dialog'));
@@ -235,5 +253,6 @@ describe('rocketvoip', function () {
             element(by.id('view-user-show-secrets')).click();
             expect(element.all(by.className('view-user-sipUserSecret')).first().isDisplayed()).toBeTruthy();
         });
+
     });
 });

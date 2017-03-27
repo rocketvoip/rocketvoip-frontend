@@ -1,8 +1,14 @@
 <div role="dialog" aria-label="Edit User" layout="column" layout-align="center center">
-    <md-toolbar>
+    <md-toolbar layout="row" layout-align="none center">
         <div class="md-toolbar-tools">
             <h2 class="plane-editUser-title">{{title}}</h2>
         </div>
+
+        <md-button id="plane-editUser-deleteUser" ng-show="!isNewSipClient" class="md-raised md-warn md-mini"
+                   aria-label="Delete User" ng-click="ctrl.deleteSipClient()">
+            delete
+        </md-button>
+
     </md-toolbar>
 
     <div>
