@@ -3,10 +3,10 @@
     <div flex layout="row">
         <h1 flex>Manage Companies</h1>
 
-        <md-input-container class="md-icon-float md-block view-user-filter">
+        <md-input-container class="md-icon-float md-block view-companies-filter">
             <label>Search</label>
             <md-icon aria-label="Filter">search</md-icon>
-            <input id="view-company-filter-input" ng-model="filter" type="text"/>
+            <input id="view-companies-filter-input" ng-model="filter" type="text"/>
         </md-input-container>
 
         <md-button md-colors="::{background: 'primary-900'}"
@@ -48,7 +48,7 @@
             <div flex layout="row">
                 <div class="view-companies-companyName" flex>{{company.name}}</div>
             </div>
-            <md-button class="md-secondary md-icon-button view-company-editcompany"
+            <md-button class="md-secondary md-icon-button view-companies-editcompany"
                        ng-click="ctrl.showDialog(
                        'PanelCompanyDialogCtrl',
                        'view_companies/panel_editCompany.html',
