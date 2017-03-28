@@ -4,17 +4,30 @@
 angular.module('rocketvoip', [
     'ngRoute',
     'ngMaterial',
+    'ngStorage',
+    'rocketvoip.login',
     'rocketvoip.panel_editUser',
     'rocketvoip.view_dashboard',
     'rocketvoip.version',
-    'rocketvoip.view_users'
-]).constant('appConfig',  {
-    'BACKEND_BASE_URL' : 'https://rocketvoip.herokuapp.com',
+    'rocketvoip.view_users',
+    'rocketvoip.view_login'
+]).constant('appConfig', {
+    'BACKEND_BASE_URL': 'https://rocketvoip.herokuapp.com',
     'API_ENDPOINT': '/v1',
     'PASSWORD_LENGTH': 16
-})
-    .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
-        $locationProvider.hashPrefix('!');
-        $routeProvider.otherwise({redirectTo: '/dashboard'});
-    }]);
+}).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+    $locationProvider.hashPrefix('!');
+    $routeProvider.otherwise({redirectTo: '/dashboard'});
+}]).run(function ($rootScope, $http, $location, $localStorage) {
+    if ($localStorage.currentUser) {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+    }
+    $rootScope.$on('$locationChangeStart', function () {
+        var publicPages = ['/login'];
+        var restrictedPage = publicPages.indexOf($location.path()) === -1;
+        if (restrictedPage && !$localStorage.currentUser) {
+            $location.path('/login');
+        }
+    });
+});
 

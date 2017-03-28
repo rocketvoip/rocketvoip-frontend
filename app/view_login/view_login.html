@@ -1,0 +1,18 @@
+<div ng-controller="ViewLoginCtrl as ctrl" layout="row" layout-align="center">
+    <form name="viewLoginForm" md-whiteframe="4" layout="row" layout-wrap layout-align="center center">
+        <md-toolbar class="md-hue-2" style="text-align:center">
+            <h3>Login</h3>
+        </md-toolbar>
+        <div id="view-login-content" layout="column" flex="90">
+            <md-input-container layout="row" flex="100">
+                <label>Email address</label>
+                <input id="username" type="email" name="username" ng-model="ctrl.username" required>
+            </md-input-container>
+            <md-input-container layout="row" flex="100">
+                <label>Password</label>
+                <input id="password" type="password" name="password" ng-model="ctrl.password" required>
+            </md-input-container>
+            <md-button class="md-raised" layout="column" ng-click="ctrl.login()">Sign In</md-button>
+        </div>
+    </form>
+</div>

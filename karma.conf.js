@@ -12,6 +12,7 @@ module.exports = function (config) {
             'bower_components/angular-animate/angular-animate.js',
             'bower_components/angular-loader/angular-loader.js',
             'bower_components/angular-material/modules/js/**/*.js',
+            'bower_components/ngstorage/ngStorage.js',
             'app.js',
             'components/**/*.js',
             'view*/**/*.js',
