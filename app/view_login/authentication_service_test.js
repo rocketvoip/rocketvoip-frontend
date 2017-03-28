@@ -6,25 +6,16 @@ describe('rocketvoip.login module', function () {
     beforeEach(module('rocketvoip'));
 
     describe('AuthenticationService', function () {
-        var http, q, deferred, service, url, httpBackend,scope;
+        var http, q, deferred, service, url, httpBackend, scope;
 
 
-        beforeEach(inject(function ($rootScope,$injector,$q,AuthenticationService,appConfig,$httpBackend) {
+        beforeEach(inject(function ($rootScope, $injector, $q, AuthenticationService, appConfig, $httpBackend) {
             scope = $rootScope.$new();
             q = $q;
             deferred = q.defer();
             service = AuthenticationService;
             url = appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/login';
-
             http = $injector.get('$http');
-
-            http.post = function(){
-                var respone = {};
-                respone.token = "Test-Token";
-                deferred.resolve(respone);
-                return deferred.promise;
-            };
-
             httpBackend = $httpBackend;
         }));
 
@@ -46,21 +37,33 @@ describe('rocketvoip.login module', function () {
             expect(http.defaults.headers.common.Authorization).toEqual('');
         }));
 
-        it('should call callback after POST Request', inject(function () {
-            httpBackend.when('POST', /login/).respond(200, { data: 'value' });
+        it('should call callback with Auth failed message', inject(function () {
+            httpBackend.when('POST', /login/).respond(200);
             var callback = jasmine.createSpy();
-            service.Login({},{},callback);
-            scope.$apply();
+            service.Login({}, {}, callback);
+            httpBackend.flush();
+            expect(callback).toHaveBeenCalledWith("Email Address or password is incorrect");
+        }));
+
+        it('should call callback after HTTP 404 Status', inject(function () {
+            httpBackend.when('POST', /login/).respond(404)
+            var callback = jasmine.createSpy();
+            service.Login({}, {}, callback);
+            httpBackend.flush();
+            expect(callback).toHaveBeenCalledWith("Could not reach the server...");
+        }));
+
+        it('should call callback after successful authentication', inject(function () {
+            httpBackend.when('POST', /login/).respond(200, {token: 'fake-jwt-token'}, {});
+            var callback = jasmine.createSpy();
+            service.Login({}, {}, callback);
+            httpBackend.flush();
             expect(callback).toHaveBeenCalledWith(true);
         }));
 
-        it('should call callback after POST Request', inject(function () {
-            httpBackend.when('POST', /login/).respond(400, {});
-            var callback = jasmine.createSpy();
-            service.Login({},{},callback);
-            scope.$apply();
-
-            //expect(callback).toHaveBeenCalledWith(tr);
-        }));
+        afterEach(function () {
+            httpBackend.verifyNoOutstandingExpectation();
+            httpBackend.verifyNoOutstandingRequest();
+        });
     });
 });

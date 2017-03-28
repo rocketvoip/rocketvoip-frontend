@@ -12,8 +12,8 @@ angular.module('rocketvoip.view_login', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewLoginCtrl', ['$scope', '$location', 'AuthenticationService', '$mdToast',
-        function ($scope, $location, AuthenticationService, $mdToast) {
+    .controller('ViewLoginCtrl', ['$scope', '$location', 'AuthenticationService', 'UtilityService',
+        function ($scope, $location, AuthenticationService, UtilityService) {
             var viewLoginCtrl = this;
             this.login = function () {
                 if ($scope.viewLoginForm.$valid) {
@@ -37,14 +37,7 @@ angular.module('rocketvoip.view_login', ['ngRoute', 'ngResource'])
                 }
             };
 
-            //TODO: Define Global!
-            $scope.showToast = function (message) {
-                $mdToast.show(
-                    $mdToast.simple()
-                        .textContent(message)
-                        .hideDelay(3000)
-                );
-            };
+            $scope.showToast = UtilityService.showToast;
 
             // reset login status while initializing this controller
             AuthenticationService.Logout();

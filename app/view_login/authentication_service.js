@@ -13,15 +13,15 @@ angular.module('rocketvoip.login', [])
                     username: username,
                     password: password
                 }).then(function successCallback(response) {
-                    if (response.token) {
-                        $localStorage.currentUser = {username: username, token: response.token};
-                        $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
+                    if (response.data && response.data.token) {
+                        $localStorage.currentUser = {username: username, token: response.data.token};
+                        $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
                         callback(true);
                     } else {
                         callback('Email Address or password is incorrect');
                     }
-                }, function errorCallback(response) {
-                    callback('Could not reach the Server...');
+                }, function errorCallback() {
+                    callback('Could not reach the server...');
                 });
             },
             Logout: function () {
