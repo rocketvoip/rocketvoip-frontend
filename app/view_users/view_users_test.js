@@ -44,5 +44,9 @@ describe('rocketvoip.view_users module', function () {
             expect(viewUserCtrl).toBeDefined();
         }));
 
+        if('should call SipClientService to query clients', inject(function () {
+            viewUserCtrl.queryUsers();
+            expect(scope.sipClients).toEqual(testSipClients);
+        }));
     });
 });

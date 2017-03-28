@@ -7,7 +7,9 @@ angular.module('rocketvoip', [
     'rocketvoip.panel_editUser',
     'rocketvoip.view_dashboard',
     'rocketvoip.version',
-    'rocketvoip.view_users'
+    'rocketvoip.view_users',
+    'rocketvoip.view_companies',
+    'rocketvoip.panel_editCompany'
 ])
     .constant('appConfig',  {
         'BACKEND_BASE_URL' : 'https://rocketvoip.herokuapp.com',

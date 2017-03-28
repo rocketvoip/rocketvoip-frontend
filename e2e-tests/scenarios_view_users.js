@@ -3,24 +3,36 @@
 describe('rocketvoip', function () {
 
     describe('view_users', function () {
+        var testSipClients;
+        var nextId;
+
 
         beforeEach(function () {
+            testSipClients = [];
+            nextId = 0;
             var mockFunction = function () {
                 angular.module('httpBackendMock', ['ngMockE2E'])
                     .run(function ($httpBackend) {
                         $httpBackend.whenGET(/\/sipclients/).respond(function () {
-                            return [200, []];
+                            return [200, testSipClients];
                         });
                         $httpBackend.whenPOST(/\/sipclients/).respond(function (method, url, data) {
                             var sipClient = angular.fromJson(data);
-                            sipClient.id = Math.floor((Math.random() * 30000) + 100);
+                            sipClient.id = nextId++;
+                            testSipClients.push(sipClient);
                             return [200, sipClient, {}];
                         });
                         $httpBackend.whenPUT(/\/sipclients\//).respond(function (method, url, data) {
                             var sipClient = angular.fromJson(data);
+                            angular.forEach(testSipClients, function (client, key) {
+                                if(client.id == sipClient.id) {
+                                    testSipClients[key] = sipClient;
+                                }
+                            });
                             return [200, sipClient, {}];
                         });
                         $httpBackend.whenDELETE(/\/sipclients\//).respond(function () {
+                            testSipClients.pop();
                             return [200, {}, {}];
                         });
                         $httpBackend.whenGET(/.*/).passThrough();
