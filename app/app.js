@@ -37,9 +37,9 @@ angular.module('rocketvoip', [
                 onRemoving: callback
             };
 
-            this._mdPanel = $mdPanel.create(planeConfig);
-            this._mdPanel.open();
-            return this._mdPanel;
+            var _mdPanel = $mdPanel.create(planeConfig);
+            _mdPanel.open();
+            return _mdPanel;
         };
     }])
     .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {

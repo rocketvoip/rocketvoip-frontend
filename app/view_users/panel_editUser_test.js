@@ -58,7 +58,6 @@ describe('rocketvoip.view_users module', function () {
                     }
                 };
             });
-            _mdPanelRef.destroy = jasmine.createSpy();
 
             _appConfig = {
                 "PASSWORD_LENGTH": 11

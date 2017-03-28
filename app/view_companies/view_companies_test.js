@@ -5,7 +5,6 @@ describe('rocketvoip.view_companies module', function () {
     beforeEach(angular.mock.module('rocketvoip.view_companies'));
     beforeEach(module('ngMaterial'));
     beforeEach(module('rocketvoip.panel_editCompany'));
-    /*beforeEach(module('view_users/panel_editCompany.html'));*/
     beforeEach(module('rocketvoip'));
 
     describe('view_companies controller', function () {

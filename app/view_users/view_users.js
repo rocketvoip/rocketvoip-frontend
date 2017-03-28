@@ -24,7 +24,14 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
             $scope.sortType = 'name';
             $scope.sortReverse = false;
 
-            this.showDialog = Dialog;
+            this.showDialog = function(sipClient, ctrl) {
+                Dialog(
+                    'PanelDialogCtrl',
+                    'view_users/panel_editUser.html',
+                    'user-dialog',
+                    {'sipClient': sipClient },
+                    ctrl.queryUsers);
+            }
         }])
     .factory('SipClientService', ['$resource', 'appConfig', function ($resource, appConfig) {
         return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/sipclients/:id', {id: "@id"}, {

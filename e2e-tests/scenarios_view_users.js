@@ -30,7 +30,6 @@ describe('rocketvoip', function () {
                         });
                         $httpBackend.whenDELETE(/\/sipclients\//).respond(function () {
                             testSipClients.pop();
-                            testSipClients.pop();
                             return [200, {}, {}];
                         });
                         $httpBackend.whenGET(/.*/).passThrough();

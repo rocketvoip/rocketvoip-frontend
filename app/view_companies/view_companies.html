@@ -12,12 +12,7 @@
         <md-button md-colors="::{background: 'primary-900'}"
                    class="md-fab md-secondary button-add-company"
                    aria-label="Add Company"
-                   ng-click="ctrl.showDialog(
-                   'PanelCompanyDialogCtrl',
-                   'view_companies/panel_editCompany.html',
-                   'company-dialog',
-                   { 'company': null },
-                   ctrl.queryCompanies)">
+                   ng-click="ctrl.showDialog(null,ctrl)">
             <md-tooltip>Add Company</md-tooltip>
             <md-icon md-colors="::{color: 'primary-50'}">person_add</md-icon>
         </md-button>
@@ -49,12 +44,7 @@
                 <div class="view-companies-companyName" flex>{{company.name}}</div>
             </div>
             <md-button class="md-secondary md-icon-button view-companies-editcompany"
-                       ng-click="ctrl.showDialog(
-                       'PanelCompanyDialogCtrl',
-                       'view_companies/panel_editCompany.html',
-                       'company-dialog',
-                       { 'company': company},
-                       ctrl.queryCompanies)"
+                       ng-click="ctrl.showDialog(company,ctrl)"
                        aria-label="Edit Company">
                 <md-tooltip>Edit Company</md-tooltip>
                 <md-icon aria-label="Edit Company">edit</md-icon>

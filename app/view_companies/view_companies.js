@@ -24,7 +24,14 @@ angular.module('rocketvoip.view_companies', ['ngRoute', 'ngResource'])
         $scope.sortType = 'name';
         $scope.sortReverse = false;
 
-        this.showDialog = Dialog;
+        this.showDialog = function (company, ctrl) {
+            Dialog(
+                'PanelCompanyDialogCtrl',
+                'view_companies/panel_editCompany.html',
+                'company-dialog',
+                { 'company': company},
+                ctrl.queryCompanies);
+        }
     }
 ])
 
