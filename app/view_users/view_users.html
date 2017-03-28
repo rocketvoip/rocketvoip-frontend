@@ -12,7 +12,12 @@
         <md-button md-colors="::{background: 'primary-900'}"
                    class="md-fab md-secondary button-add-user"
                    aria-label="Add Users"
-                   ng-click="ctrl.showDialog(null)">
+                   ng-click="ctrl.showDialog(
+                    'PanelDialogCtrl',
+                    'view_users/panel_editUser.html',
+                    'user-dialog',
+                    { 'sipClient': null },
+                    ctrl.queryUsers)">
             <md-tooltip>Add User</md-tooltip>
             <md-icon md-colors="::{color: 'primary-50'}">person_add</md-icon>
         </md-button>
@@ -66,7 +71,13 @@
 
         </div>
 
-        <md-button class="md-secondary md-icon-button view-user-edituser" ng-click="ctrl.showDialog(sipClient)"
+        <md-button class="md-secondary md-icon-button view-user-edituser"
+                   ng-click="ctrl.showDialog(
+                    'PanelDialogCtrl',
+                    'view_users/panel_editUser.html',
+                    'user-dialog',
+                    {'sipClient': sipClient },
+                    ctrl.queryUsers)"
                    aria-label="Edit Users">
             <md-tooltip>Edit User</md-tooltip>
             <md-icon aria-label="Edit">edit</md-icon>
