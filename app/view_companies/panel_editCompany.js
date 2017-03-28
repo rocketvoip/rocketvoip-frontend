@@ -16,7 +16,7 @@ angular.module('rocketvoip.panel_editCompany', [])
                     $scope.title = "Add a new Company";
                     $scope.isNewCompany = true;
                 } else {
-                    $scope.title = "Edit User '"+$scope.company.name +"'";
+                    $scope.title = "Edit Company '"+$scope.company.name +"'";
                     $scope.isNewCompany = false;
                 }
             };

@@ -96,7 +96,7 @@ describe('rocketvoip.view_companies module', function () {
                 deleteSipClient: {}
             });
             panelCompanyDialogCtrl.setPlaneTitle();
-            expect(scope.title).toEqual("Edit User 'Testcompany1'");
+            expect(scope.title).toEqual("Edit Company 'Testcompany1'");
             expect(scope.isNewCompany).toBeFalsy();
         }));
 
@@ -154,5 +154,6 @@ describe('rocketvoip.view_companies module', function () {
             scope.$apply();
             expect(panelCompanyDialogCtrl.closeDialog).toHaveBeenCalledTimes(0);
         }));
+
     });
 });

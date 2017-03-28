@@ -16,6 +16,7 @@ describe('rocketvoip.view_users module', function () {
         var testSipClients;
         var mdPanel;
         var SipClientServiceMock;
+        var controller;
 
         beforeEach(inject(function ($rootScope, $controller, $mdPanel, appConfig) {
             testSipClients = [
@@ -26,6 +27,7 @@ describe('rocketvoip.view_users module', function () {
             mdPanel = $mdPanel;
             scope = $rootScope.$new();
             rootScope = $rootScope;
+            controller = $controller;
             SipClientServiceMock = {
                 query: function () {
                     return testSipClients;
@@ -47,6 +49,16 @@ describe('rocketvoip.view_users module', function () {
         if('should call SipClientService to query clients', inject(function () {
             viewUserCtrl.queryUsers();
             expect(scope.sipClients).toEqual(testSipClients);
+        }));
+
+        it('should open Dialog', inject(function () {
+            var Dialog = jasmine.createSpy();
+            viewUserCtrl = controller("ViewUsersCtrl", {
+                $scope: scope,
+                Dialog: Dialog
+            });
+            viewUserCtrl.showDialog(null,viewUserCtrl);
+            expect(Dialog).toHaveBeenCalled();
         }));
     });
 });

@@ -23,14 +23,20 @@ describe('rocketvoip', function () {
                         $httpBackend.whenPUT(/\/companies\//).respond(function (method, url, data) {
                             var company = angular.fromJson(data);
                             angular.forEach(testCompanies, function (cmpny, key) {
-                                if(cmpny.id == company.id) {
+                                if (cmpny.id == company.id) {
                                     testCompanies[key] = company;
                                 }
                             });
                             return [200, company, {}];
                         });
-                        $httpBackend.whenDELETE(/\/companies\//).respond(function () {
-                            testCompanies.pop();
+                        $httpBackend.whenDELETE(/\/companies/).respond(function (method, url) {
+                            var split = url.split("/")
+                            var id = split[split.length-1].split("?")[0]
+                            for (var i = testCompanies.length - 1; i >= 0; i--) {
+                                if (testCompanies[i].id == id) {
+                                    testCompanies.splice(i, 1);
+                                }
+                            }
                             return [200, {}, {}];
                         });
                         $httpBackend.whenGET(/.*/).passThrough();
@@ -54,7 +60,7 @@ describe('rocketvoip', function () {
         function addTestCompanies(company) {
             if (company == undefined) {
                 company = {
-                    name: 'Marco Studerus'
+                    name: 'Test-Company'
                 }
             }
 
@@ -70,8 +76,7 @@ describe('rocketvoip', function () {
             expect(element.all(by.className('view-companies-companyName')).count()).toEqual(3);
             element.all(by.className('view-companies-editcompany')).first().click();
             element(by.id('plane-editCompany-deleteCompany')).click();
-            // Mock problem
-            //expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(2);
+            expect(element.all(by.className('view-companies-companyName')).count()).toEqual(2);
         });
 
         it('should not show delete button (add company)', function () {
@@ -110,7 +115,7 @@ describe('rocketvoip', function () {
             addTestCompanies();
             var name = '+411111111';
             expect(element.all(by.repeater('company in companies')).count()).toEqual(1);
-            expect(element(by.className('view-companies-companyName')).getText()).toEqual('Marco Studerus');
+            expect(element(by.className('view-companies-companyName')).getText()).toEqual('Test-Company');
             element(by.className('view-companies-editcompany')).click();
             element(by.model('company.name')).clear().sendKeys(name);
             element(by.className('plane-editCompany-save')).click();
@@ -122,12 +127,12 @@ describe('rocketvoip', function () {
             addTestCompanies();
             var name = '+411111111';
             expect(element.all(by.repeater('company in companies')).count()).toEqual(1);
-            expect(element(by.className('view-companies-companyName')).getText()).toEqual('Marco Studerus');
+            expect(element(by.className('view-companies-companyName')).getText()).toEqual('Test-Company');
             element(by.className('view-companies-editcompany')).click();
             element(by.model('company.name')).clear().sendKeys(name);
             element(by.className('plane-editCompany-close')).click();
             expect(element.all(by.repeater('company in companies')).count()).toEqual(1);
-            expect(element(by.className('view-companies-companyName')).getText()).toEqual('Marco Studerus');
+            expect(element(by.className('view-companies-companyName')).getText()).toEqual('Test-Company');
         });
 
         it('should not save and close when input is empty', function () {

@@ -15,6 +15,7 @@ describe('rocketvoip.view_companies module', function () {
         var testCompanies;
         var mdPanel;
         var CompanyServiceMock;
+        var controller;
 
         beforeEach(inject(function ($rootScope, $controller, $mdPanel, appConfig) {
             testCompanies = [
@@ -25,6 +26,7 @@ describe('rocketvoip.view_companies module', function () {
             mdPanel = $mdPanel;
             scope = $rootScope.$new();
             rootScope = $rootScope;
+            controller = $controller;
             CompanyServiceMock = {
                 query: function () {
                     return testCompanies;
@@ -46,6 +48,18 @@ describe('rocketvoip.view_companies module', function () {
         it('should call CompanyService to query companies', inject(function () {
             viewCompanyCtrl.queryCompanies();
             expect(scope.companies).toEqual(testCompanies);
-        }))
+        }));
+
+        it('should open Dialog', inject(function () {
+            var Dialog = jasmine.createSpy();
+            viewCompanyCtrl = controller("ViewCompaniesCtrl", {
+                $scope: scope,
+                $mdPanel: mdPanel,
+                Dialog: Dialog,
+                CompanyService: CompanyServiceMock
+            });
+            viewCompanyCtrl.showDialog(null,viewCompanyCtrl);
+            expect(Dialog).toHaveBeenCalled();
+        }));
     });
 });

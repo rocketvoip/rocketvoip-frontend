@@ -15,7 +15,7 @@ describe('rocketvoip', function () {
                         });
                         $httpBackend.whenPOST(/\/sipclients/).respond(function (method, url, data) {
                             var sipClient = angular.fromJson(data);
-                            sipClient.id = nextId;
+                            sipClient.id = ++nextId;
                             testSipClients.push(sipClient);
                             return [200, sipClient, {}];
                         });
@@ -28,8 +28,14 @@ describe('rocketvoip', function () {
                             });
                             return [200, sipClient, {}];
                         });
-                        $httpBackend.whenDELETE(/\/sipclients\//).respond(function () {
-                            testSipClients.pop();
+                        $httpBackend.whenDELETE(/\/sipclients/).respond(function (method, url) {
+                            var split = url.split("/")
+                            var id = split[split.length-1].split("?")[0]
+                            for (var i = testSipClients.length - 1; i >= 0; i--) {
+                                if (testSipClients[i].id == id) {
+                                    testSipClients.splice(i, 1);
+                                }
+                            }
                             return [200, {}, {}];
                         });
                         $httpBackend.whenGET(/.*/).passThrough();
@@ -79,8 +85,7 @@ describe('rocketvoip', function () {
             expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(3);
             element.all(by.className('view-user-edituser')).first().click();
             element(by.id('plane-editUser-deleteUser')).click();
-            // Mock problem
-            //expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(2);
+            expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(2);
         });
 
         it('should not show delete button (add sip client)', function () {
