@@ -1,0 +1,55 @@
+<div ng-controller="ViewCompaniesCtrl as ctrl">
+
+    <div flex layout="row">
+        <h1 flex>Manage Companies</h1>
+
+        <md-input-container class="md-icon-float md-block view-companies-filter">
+            <label>Search</label>
+            <md-icon aria-label="Filter">search</md-icon>
+            <input id="view-companies-filter-input" ng-model="filter" type="text"/>
+        </md-input-container>
+
+        <md-button md-colors="::{background: 'primary-900'}"
+                   class="md-fab md-secondary button-add-company"
+                   aria-label="Add Company"
+                   ng-click="ctrl.showDialog(null,ctrl)">
+            <md-tooltip>Add Company</md-tooltip>
+            <md-icon md-colors="::{color: 'primary-50'}">person_add</md-icon>
+        </md-button>
+    </div>
+
+    <md-subheader>
+        <div flex layout="row" layout-align="none center">
+            <div flex="80">
+                <a id="view-companies-sort-name" ng-click="sortReverse = !sortReverse">
+                    Name
+                    <span ng-show="!sortReverse">
+                        <md-icon aria-label="Sort Down">keyboard_arrow_down</md-icon>
+                    </span>
+                    <span ng-show="sortReverse">
+                        <md-icon aria-label="Sort Up">keyboard_arrow_up</md-icon>
+                    </span>
+                </a>
+            </div>
+
+            <div flex layout="row" layout-align="end">Actions</div>
+        </div>
+    </md-subheader>
+
+    <md-divider></md-divider>
+
+    <md-list>
+        <md-list-item flex ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:filter">
+            <div flex layout="row">
+                <div class="view-companies-companyName" flex>{{company.name}}</div>
+            </div>
+            <md-button class="md-secondary md-icon-button view-companies-editcompany"
+                       ng-click="ctrl.showDialog(company,ctrl)"
+                       aria-label="Edit Company">
+                <md-tooltip>Edit Company</md-tooltip>
+                <md-icon aria-label="Edit Company">edit</md-icon>
+            </md-button>
+            <md-divider></md-divider>
+        </md-list-item>
+    </md-list>
+</div>

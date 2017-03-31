@@ -10,19 +10,34 @@ describe('rocketvoip', function () {
             var mockFunction = function () {
                 angular.module('httpBackendMock', ['ngMockE2E'])
                     .run(function ($httpBackend) {
+                        var testSipClients = [];
+                        var nextId = 0;
                         $httpBackend.whenGET(/\/sipclients/).respond(function () {
-                            return [200, []];
+                            return [200, testSipClients, {}];
                         });
                         $httpBackend.whenPOST(/\/sipclients/).respond(function (method, url, data) {
                             var sipClient = angular.fromJson(data);
-                            sipClient.id = Math.floor((Math.random() * 30000) + 100);
+                            sipClient.id = ++nextId;
+                            testSipClients.push(sipClient);
                             return [200, sipClient, {}];
                         });
                         $httpBackend.whenPUT(/\/sipclients\//).respond(function (method, url, data) {
                             var sipClient = angular.fromJson(data);
+                            angular.forEach(testSipClients, function (client, key) {
+                                if(client.id == sipClient.id) {
+                                    testSipClients[key] = sipClient;
+                                }
+                            });
                             return [200, sipClient, {}];
                         });
-                        $httpBackend.whenDELETE(/\/sipclients\//).respond(function () {
+                        $httpBackend.whenDELETE(/\/sipclients/).respond(function (method, url) {
+                            var split = url.split("/")
+                            var id = split[split.length-1].split("?")[0]
+                            for (var i = testSipClients.length - 1; i >= 0; i--) {
+                                if (testSipClients[i].id == id) {
+                                    testSipClients.splice(i, 1);
+                                }
+                            }
                             return [200, {}, {}];
                         });
                         $httpBackend.whenPOST(/login/).respond(function () {
@@ -30,7 +45,7 @@ describe('rocketvoip', function () {
                         });
                         $httpBackend.whenGET(/.*/).passThrough();
                     });
-            }
+            };
             browser.addMockModule('httpBackendMock', mockFunction);
 
             browser.driver.isElementPresent(by.id('username')).then(function (isPresent) {

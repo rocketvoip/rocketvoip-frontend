@@ -4,19 +4,17 @@
  Author: Marco Studerus
  */
 angular.module('rocketvoip.panel_editUser', [])
-    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient', 'updateSipClient', 'appConfig',
-        'SipClientService', 'deleteSipClient',
-        function ($scope, mdPanelRef, sipClient, updateSipClient, appConfig, SipClientService, deleteSipClient) {
+    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient', 'appConfig',
+        'SipClientService',
+        function ($scope, mdPanelRef, sipClient, appConfig, SipClientService) {
 
-            this.closeDialog = function () {
-                mdPanelRef.close().then(function () {
-                    mdPanelRef.destroy();
-                });
+            this.closeDialog = function() {
+                mdPanelRef && mdPanelRef.close();
             };
 
             this.setPlaneTitle = function () {
                 if ($scope.sipClient == null) {
-                    $scope.title = "Add a new User"
+                    $scope.title = "Add a new User";
                     $scope.isNewSipClient = true;
                 } else {
                     $scope.title = "Edit User '" + $scope.sipClient.name + "'";
@@ -26,15 +24,10 @@ angular.module('rocketvoip.panel_editUser', [])
 
             this.saveSipClient = function () {
                 if ($scope.userEditForm.$valid) {
-                    var callback = function (sipClient) {
-                        updateSipClient(sipClient);
-                    };
                     if ($scope.sipClient.id == undefined) {
-                        SipClientService.save($scope.sipClient).$promise.then(callback);
-                        this.closeDialog();
+                        SipClientService.save($scope.sipClient).$promise.then(this.closeDialog);
                     } else {
-                        SipClientService.update($scope.sipClient).$promise.then(callback);
-                        this.closeDialog();
+                        SipClientService.update($scope.sipClient).$promise.then(this.closeDialog);
                     }
 
                 } else {
@@ -48,10 +41,7 @@ angular.module('rocketvoip.panel_editUser', [])
 
             this.deleteSipClient = function () {
                 if ($scope.sipClient.id) {
-                    SipClientService.delete($scope.sipClient).$promise.then(function () {
-                        deleteSipClient($scope.sipClient);
-                    });
-                    this.closeDialog();
+                    SipClientService.delete($scope.sipClient).$promise.then(this.closeDialog);
                 }
             };
 

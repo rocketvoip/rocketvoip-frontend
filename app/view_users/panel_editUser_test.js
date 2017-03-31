@@ -58,9 +58,6 @@ describe('rocketvoip.view_users module', function () {
                     }
                 };
             });
-            _mdPanelRef.destroy = jasmine.createSpy();
-            updateSipClientSpy = jasmine.createSpy();
-            deleteSipClientSpy = jasmine.createSpy();
 
             _appConfig = {
                 "PASSWORD_LENGTH": 11
@@ -128,60 +125,36 @@ describe('rocketvoip.view_users module', function () {
             expect(_mdPanelRef.close).toHaveBeenCalled();
         }));
 
-        it('should call mdPanelRef.destroy() on save', inject(function () {
-            scope.sipClient = testSipClient;
-            scope.$apply();
-            panelDialogCtrl.saveSipClient();
-            scope.$apply();
-            expect(_mdPanelRef.destroy).toHaveBeenCalled();
-        }));
-
-        it('should call updateSipClient() on save (edit sip client)', inject(function () {
-            scope.sipClient = testSipClient;
-            scope.$apply();
-            panelDialogCtrl.saveSipClient();
-            scope.$apply();
-            expect(updateSipClientSpy).toHaveBeenCalled();
-        }));
-
-        it('should call updateSipClient() on save (add sip client)', inject(function () {
-            scope.sipClient = {name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
-            scope.$apply();
-            panelDialogCtrl.saveSipClient();
-            scope.$apply();
-            expect(updateSipClientSpy).toHaveBeenCalled();
-        }));
-
-        it('should call deleteSipClient() on delete (edit sip client)', inject(function () {
+        it('should call mdPanelRef.close() on delete (edit sip client)', inject(function () {
             scope.sipClient = {id: 1, name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.deleteSipClient();
             scope.$apply();
-            expect(deleteSipClientSpy).toHaveBeenCalled();
+            expect(_mdPanelRef.close).toHaveBeenCalled();
         }));
 
-        it('should not delete sip client when id is not defined', inject(function () {
+        it('should not delete & close sip client when id is not defined', inject(function () {
             scope.sipClient = {name: "Marco", phone: "+41223334455", secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.deleteSipClient();
             scope.$apply();
-            expect(deleteSipClientSpy).toHaveBeenCalledTimes(0);
+            expect(_mdPanelRef.close).toHaveBeenCalledTimes(0);
         }));
 
-        it('should not save sip client when name is empty', inject(function () {
+        it('should not close sip client when name is empty', inject(function () {
             scope.sipClient = {id: 1, phone: "+41223334455", secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.saveSipClient();
             scope.$apply();
-            expect(updateSipClientSpy).toHaveBeenCalledTimes(0);
+            expect(_mdPanelRef.close).toHaveBeenCalledTimes(0);
         }));
 
-        it('should not save sip client when phone is empty', inject(function () {
+        it('should not close sip client when phone is empty', inject(function () {
             scope.sipClient = {id: 1, name: 'Marco Studerus', secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.saveSipClient();
             scope.$apply();
-            expect(updateSipClientSpy).toHaveBeenCalledTimes(0);
+            expect(_mdPanelRef.close).toHaveBeenCalledTimes(0);
         }));
 
         it('should not save sip client when sip client is null', inject(function () {

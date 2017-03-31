@@ -6,6 +6,11 @@ describe('rocketvoip', function () {
         expect(browser.getLocationAbsUrl()).toMatch("/dashboard");
     });
 
+    it('should automatically redirect to /dashboard when location does not exist', function () {
+        browser.get('index.html#!/fdgdfgdfghngdfg');
+        expect(browser.getLocationAbsUrl()).toMatch("/dashboard");
+    });
+
     describe('dashboard', function () {
         beforeEach(function () {
             browser.get('index.html#!/dashboard');
