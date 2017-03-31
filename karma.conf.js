@@ -34,7 +34,6 @@ module.exports = function (config) {
             'karma-coverage',
             'karma-coveralls',
             'karma-ng-html2js-preprocessor'
-
         ],
 
         junitReporter: {
@@ -48,7 +47,7 @@ module.exports = function (config) {
             'components/**/!(*_test).js': ['coverage'],
             'view*/**/!(*_test).js': ['coverage'],
             'service*/**/!(*_test).js': ['coverage'],
-            'view*/**/*.html': 'ng-html2js'
+            '**/**/*.html': 'ng-html2js'
         },
 
         coverageReporter: {

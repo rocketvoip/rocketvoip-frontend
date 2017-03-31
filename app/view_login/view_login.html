@@ -6,13 +6,13 @@
         <div id="view-login-content" layout="column" flex="90">
             <md-input-container layout="row" flex="100">
                 <label>Email address</label>
-                <input id="username" type="email" name="username" ng-model="ctrl.username" required>
+                <input id="username" type="email" name="username" ng-model="username" required>
             </md-input-container>
             <md-input-container layout="row" flex="100">
                 <label>Password</label>
-                <input id="password" type="password" name="password" ng-model="ctrl.password" required>
+                <input id="password" type="password" name="password" ng-model="password" required>
             </md-input-container>
-            <md-button class="md-raised" layout="column" ng-click="ctrl.login()">Sign In</md-button>
+            <md-button id="viewLoginForm-login" class="md-raised" layout="column" ng-click="ctrl.login()">Sign In</md-button>
         </div>
     </form>
 </div>

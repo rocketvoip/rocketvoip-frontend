@@ -18,17 +18,16 @@ angular.module('rocketvoip.view_login', ['ngRoute', 'ngResource'])
             this.login = function () {
                 if ($scope.viewLoginForm.$valid) {
                     viewLoginCtrl.loading = true;
-                    AuthenticationService.Login(viewLoginCtrl.username, viewLoginCtrl.password, function (result) {
+                    AuthenticationService.Login($scope.username, $scope.password, function (result) {
                         if (result === true) {
                             $location.path('/');
                         } else {
                             $scope.showToast(result);
-                            viewLoginCtrl.loading = false;
                         }
                     });
                 }
                 else {
-                    //TODO: Refactor Global Function!
+                    //TODO: Refactor Global Function! - Deduplicated Code
                     angular.forEach($scope.viewLoginForm.$error, function (field) {
                         angular.forEach(field, function (errorField) {
                             errorField.$setTouched();
