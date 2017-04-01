@@ -12,8 +12,8 @@ angular.module('rocketvoip.view_companies', ['ngRoute', 'ngResource'])
     });
 }])
 
-.controller('ViewCompaniesCtrl', ['$scope', '$mdPanel', 'appConfig', 'CompanyService', 'Dialog',
-    function ($scope, $mdPanel, appConfig, CompanyService, Dialog) {
+.controller('ViewCompaniesCtrl', ['$scope', '$mdPanel', 'appConfig', 'CompanyService', 'UtilityService',
+    function ($scope, $mdPanel, appConfig, CompanyService, UtilityService) {
 
         this.queryCompanies = function () {
             $scope.companies = CompanyService.query();
@@ -25,7 +25,7 @@ angular.module('rocketvoip.view_companies', ['ngRoute', 'ngResource'])
         $scope.sortReverse = false;
 
         this.showDialog = function (company, ctrl) {
-            Dialog(
+            UtilityService.showDialog(
                 'PanelCompanyDialogCtrl',
                 'view_companies/panel_editCompany.html',
                 'company-dialog',

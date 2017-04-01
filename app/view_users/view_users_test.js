@@ -51,14 +51,16 @@ describe('rocketvoip.view_users module', function () {
             expect(scope.sipClients).toEqual(testSipClients);
         }));
 
-        it('should open Dialog', inject(function () {
-            var Dialog = jasmine.createSpy();
+        it('should open UtilityService', inject(function () {
+            var UtilityService = {
+                showDialog: jasmine.createSpy()
+            };
             viewUserCtrl = controller("ViewUsersCtrl", {
                 $scope: scope,
-                Dialog: Dialog
+                UtilityService: UtilityService
             });
             viewUserCtrl.showDialog(null,viewUserCtrl);
-            expect(Dialog).toHaveBeenCalled();
+            expect(UtilityService.showDialog).toHaveBeenCalled();
         }));
     });
 });
