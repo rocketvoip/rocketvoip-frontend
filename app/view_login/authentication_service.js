@@ -27,7 +27,7 @@ angular.module('rocketvoip.login', [])
             },
             Logout: function () {
                 delete $localStorage.currentUser;
-                $http.defaults.headers.common.Authorization = '';
+                $http.defaults.headers.common['X-Auth-Token'] = '';
             }
         };
     });

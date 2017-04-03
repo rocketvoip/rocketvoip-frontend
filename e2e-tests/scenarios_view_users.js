@@ -41,7 +41,7 @@ describe('rocketvoip', function () {
                             return [200, {}, {}];
                         });
                         $httpBackend.whenPOST(/login/).respond(function () {
-                            return [200, {token: 'test-token'}];
+                            return [200, {},{'X-Auth-Token' : 'Test-Token'}];
                         });
                         $httpBackend.whenGET(/.*/).passThrough();
                     });

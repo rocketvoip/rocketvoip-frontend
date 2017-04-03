@@ -32,9 +32,9 @@ describe('rocketvoip.login module', function () {
         }));
 
         it('should clear Authorization on Logout', inject(function () {
-            http.defaults.headers.common.Authorization = "------";
+            http.defaults.headers.common['X-Auth-Token'] = "------";
             service.Logout();
-            expect(http.defaults.headers.common.Authorization).toEqual('');
+            expect(http.defaults.headers.common['X-Auth-Token']).toEqual('');
         }));
 
         it('should call callback with Auth failed message', inject(function () {
@@ -54,7 +54,7 @@ describe('rocketvoip.login module', function () {
         }));
 
         it('should call callback after successful authentication', inject(function () {
-            httpBackend.when('POST', /login/).respond(200, {token: 'fake-jwt-token'}, {});
+            httpBackend.when('POST', /login/).respond(200, {}, {'X-Auth-Token': 'Test-Token'});
             var callback = jasmine.createSpy();
             service.Login({}, {}, callback);
             httpBackend.flush();
