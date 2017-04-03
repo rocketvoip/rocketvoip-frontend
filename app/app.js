@@ -23,7 +23,7 @@ angular.module('rocketvoip', [
     $routeProvider.otherwise({redirectTo: '/dashboard'});
 }]).run(function ($rootScope, $http, $location, $localStorage) {
     if ($localStorage.currentUser) {
-        $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+        $http.defaults.headers.common['x-auth-token'] = $localStorage.currentUser.token;
     }
     $rootScope.$on('$locationChangeStart', function () {
         var publicPages = ['/login'];

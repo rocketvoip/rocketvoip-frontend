@@ -13,9 +13,10 @@ angular.module('rocketvoip.login', [])
                     username: username,
                     password: password
                 }).then(function successCallback(response) {
-                    if (response.data && response.data.token) {
-                        $localStorage.currentUser = {username: username, token: response.data.token};
-                        $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
+                    if (response.headers('x-auth-token')) {
+                        var token = response.headers('x-auth-token');
+                        $localStorage.currentUser = {username: username, token: token};
+                        $http.defaults.headers.common['X-Auth-Token'] = token;
                         callback(true);
                     } else {
                         callback('Email Address or password is incorrect');
