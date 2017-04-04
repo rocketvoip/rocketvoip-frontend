@@ -1,5 +1,17 @@
 # README
 
+## Usage
+
+Run Unit Tests (Karma): `npm test`
+
+Run Unit Tests single run (Karma): `npm run test-single-run`
+
+Run E2E Tests (Protractor): `npm run protractor`
+
+Run Webserver: `npm start`
+
+Run Sonar Scanner: `sonar-scanner` (You have to install sonar-scanner and SonarQube local)
+
 ## Build Pipeline
 
 CI/CD: [travis-ci](https://travis-ci.org/rocketvoip/rocketvoip-frontend)
