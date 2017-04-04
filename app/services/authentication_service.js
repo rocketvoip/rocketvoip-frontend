@@ -6,7 +6,7 @@
 'use strict';
 angular.module('rocketvoip.login', [])
     .factory('AuthenticationService', function Service($rootScope, $http, $localStorage, appConfig, $location) {
-        var url = appConfig.BACKEND_BASE_URL + appConfig.API_LOGIN_ENDPOINT;
+        var url = appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/login';
         return {
             Login: function (username, password, callback) {
                 $http.post(url, {
