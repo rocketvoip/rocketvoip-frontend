@@ -14,14 +14,21 @@
     <div>
         <form name="userEditForm" flex layout="row" layout-wrap layout-align="center">
 
-            <md-input-container layout="row" flex="90">
+            <md-input-container layout="column" flex="90">
                 <label>Name</label>
-                <input type="text" ng-model="sipClient.name" ng-required="true">
+                <input type="text" name="name" ng-model="sipClient.name" ng-pattern='/^[a-zA-Z][a-zA-Z0-9]*$/' ng-required="true">
+                <div ng-messages="userEditForm.name.$error">
+                    <div ng-message="pattern">First character must be a letter. Only letters and numbers allowed!</div>
+                </div>
             </md-input-container>
 
-            <md-input-container layout="row" flex="90">
+
+            <md-input-container layout="column" flex="90">
                 <label>Phone Number</label>
-                <input type="text" ng-model="sipClient.phone" ng-required="true">
+                <input type="text" name="phone" ng-model="sipClient.phone" ng-pattern='/^((\+[0-9]+)|([0-9]+))$/' ng-required="true">
+                <div ng-messages="userEditForm.phone.$error">
+                    <div ng-message="pattern">Format: +41711234567, 0711234567 or 123</div>
+                </div>
             </md-input-container>
 
             <div layout="row" flex="90">
