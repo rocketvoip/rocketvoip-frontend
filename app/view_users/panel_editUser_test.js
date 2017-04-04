@@ -70,7 +70,11 @@ describe('rocketvoip.view_users module', function () {
                 updateSipClient: updateSipClientSpy,
                 deleteSipClient: deleteSipClientSpy,
                 appConfig: _appConfig,
-                SipClientService: SipClientServiceMock
+                SipClientService: SipClientServiceMock,
+                company: {
+                    id: 5,
+                    name: "UnitTestAG"
+                }
             });
 
             var templateHtml = $templateCache.get('view_users/panel_editUser.html');
@@ -96,7 +100,11 @@ describe('rocketvoip.view_users module', function () {
                 mdPanelRef: _mdPanelRef,
                 sipClient: testSipClient,
                 updateSipClient: {},
-                deleteSipClient: {}
+                deleteSipClient: {},
+                company: {
+                    id: 5,
+                    name: "UnitTestAG"
+                }
             });
             panelDialogCtrl.setPlaneTitle();
             expect(scope.title).toEqual("Edit User 'Marco Studerus'");

@@ -43,7 +43,7 @@ md-input-container {
 }
 
 .view-user-filter {
-    margin: 20px;
+    margin: 0 40px 0 40px;
 }
 
 md-switch {
@@ -64,4 +64,9 @@ form[name="viewLoginForm"] {
 
 #header-right {
     margin-right: 10px;
+}
+
+/* Source: https://github.com/angular/material/issues/6214 */
+md-input-container .md-errors-spacer {
+    min-height: 0;
 }

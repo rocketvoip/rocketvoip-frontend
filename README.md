@@ -8,6 +8,8 @@ Run Unit Tests single run (Karma): `npm run test-single-run`
 
 Run E2E Tests (Protractor): `npm run protractor`
 
+Run single E2E Test Specs (Protractor): `protractor e2e-tests/protractor.conf.js --specs e2e-tests/scenarios_view_name.js`
+
 Run Webserver: `npm start`
 
 Run Sonar Scanner: `sonar-scanner` (You have to install sonar-scanner and SonarQube local)
