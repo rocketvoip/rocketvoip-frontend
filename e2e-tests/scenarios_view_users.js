@@ -15,6 +15,9 @@ describe('rocketvoip', function () {
                         $httpBackend.whenGET(/\/sipclients/).respond(function () {
                             return [200, testSipClients, {}];
                         });
+                        $httpBackend.whenGET(/\/companies/).respond(function () {
+                            return [200, [{id: 1, name: 'test1'}, {id: 99, name: 'test2'}], {}];
+                        });
                         $httpBackend.whenPOST(/\/sipclients/).respond(function (method, url, data) {
                             var sipClient = angular.fromJson(data);
                             sipClient.id = ++nextId;
@@ -24,7 +27,7 @@ describe('rocketvoip', function () {
                         $httpBackend.whenPUT(/\/sipclients\//).respond(function (method, url, data) {
                             var sipClient = angular.fromJson(data);
                             angular.forEach(testSipClients, function (client, key) {
-                                if(client.id == sipClient.id) {
+                                if (client.id == sipClient.id) {
                                     testSipClients[key] = sipClient;
                                 }
                             });
@@ -32,7 +35,7 @@ describe('rocketvoip', function () {
                         });
                         $httpBackend.whenDELETE(/\/sipclients/).respond(function (method, url) {
                             var split = url.split("/")
-                            var id = split[split.length-1].split("?")[0]
+                            var id = split[split.length - 1].split("?")[0]
                             for (var i = testSipClients.length - 1; i >= 0; i--) {
                                 if (testSipClients[i].id == id) {
                                     testSipClients.splice(i, 1);
@@ -41,7 +44,7 @@ describe('rocketvoip', function () {
                             return [200, {}, {}];
                         });
                         $httpBackend.whenPOST(/login/).respond(function () {
-                            return [200, {},{'X-Auth-Token' : 'Test-Token'}];
+                            return [200, {}, {'X-Auth-Token': 'Test-Token'}];
                         });
                         $httpBackend.whenGET(/.*/).passThrough();
                     });
@@ -90,6 +93,15 @@ describe('rocketvoip', function () {
             element(by.model('sipClient.secret')).sendKeys(sipClient.secret);
             element(by.className('plane-editUser-save')).click();
         }
+
+        it('should switch company', function () {
+            addTestSipClient(sipClient1);
+            addTestSipClient(sipClient2);
+            expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(2);
+            element(by.className('md-select-icon')).click();
+            element.all(by.css('.md-select-menu-container.md-active md-option')).first().click();
+            expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(0);
+        });
 
         it('should refresh table after deleting a sip client', function () {
             addTestSipClient(sipClient1);
