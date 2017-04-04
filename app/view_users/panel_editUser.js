@@ -4,9 +4,9 @@
  Author: Marco Studerus
  */
 angular.module('rocketvoip.panel_editUser', [])
-    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient', 'appConfig',
+    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient','company', 'appConfig',
         'SipClientService',
-        function ($scope, mdPanelRef, sipClient, appConfig, SipClientService) {
+        function ($scope, mdPanelRef, sipClient, company, appConfig, SipClientService) {
 
             this.closeDialog = function() {
                 mdPanelRef && mdPanelRef.close();
@@ -25,6 +25,7 @@ angular.module('rocketvoip.panel_editUser', [])
             this.saveSipClient = function () {
                 if ($scope.userEditForm.$valid) {
                     if ($scope.sipClient.id == undefined) {
+                        $scope.sipClient.company = company;
                         SipClientService.save($scope.sipClient).$promise.then(this.closeDialog);
                     } else {
                         SipClientService.update($scope.sipClient).$promise.then(this.closeDialog);

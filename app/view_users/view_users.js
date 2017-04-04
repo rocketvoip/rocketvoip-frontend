@@ -1,7 +1,7 @@
 'use strict';
 /*
  Module View Users shows all Sip Clients
- Author: Marco Studerus
+ Author: Marco Studerus, Martin Wittwer
  */
 angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
 
@@ -12,26 +12,36 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewUsersCtrl', ['$scope', '$mdPanel', 'appConfig', 'SipClientService', 'UtilityService',
-        function ($scope, $mdPanel, appConfig, SipClientService, UtilityService) {
+    .controller('ViewUsersCtrl', ['$scope', '$mdPanel', 'appConfig', 'SipClientService', 'UtilityService', 'CompanyService',
+        function ($scope, $mdPanel, appConfig, SipClientService, UtilityService, CompanyService) {
+            var ctrl = this;
 
             this.queryUsers = function () {
                 $scope.sipClients = SipClientService.query();
             };
 
-            this.queryUsers();
+            CompanyService.query().$promise.then(function (companyies) {
+                $scope.companies = companyies;
+                if (companyies.length > 0) {
+                    $scope.currentCompany = companyies[0];
+                    ctrl.queryUsers();
+                }
+            });
 
             $scope.sortType = 'name';
             $scope.sortReverse = false;
 
-            this.showDialog = function(sipClient, ctrl) {
+            this.showDialog = function (sipClient) {
                 UtilityService.showDialog(
                     'PanelDialogCtrl',
                     'view_users/panel_editUser.html',
                     'user-dialog',
-                    {'sipClient': sipClient },
+                    {
+                        'sipClient': sipClient,
+                        'company': $scope.currentCompany
+                    },
                     ctrl.queryUsers);
-            }
+            };
         }])
     .factory('SipClientService', ['$resource', 'appConfig', function ($resource, appConfig) {
         return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/sipclients/:id', {id: "@id"}, {
