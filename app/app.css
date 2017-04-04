@@ -33,7 +33,7 @@
     width: 500px;
 }
 
-form[name="userEditForm"] {
+form[name="userEditForm"], form[name="companyEditForm"] {
     padding-top: 25px;
     padding-bottom: 25px;
 }
@@ -42,10 +42,26 @@ md-input-container {
     margin: 9px 0;
 }
 
-.view-user-filter{
+.view-user-filter {
     margin: 20px;
 }
 
-md-switch{
+md-switch {
     margin: 0px;
+}
+
+form[name="viewLoginForm"] {
+    margin: 40px;
+}
+
+#view-login-content {
+    margin: 15px;
+}
+
+#header-title {
+    margin-left: 20px;
+}
+
+#header-right {
+    margin-right: 10px;
 }

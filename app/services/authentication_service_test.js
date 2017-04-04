@@ -37,12 +37,12 @@ describe('rocketvoip.login module', function () {
             expect(http.defaults.headers.common['X-Auth-Token']).toEqual('');
         }));
 
-        it('should call callback with Auth failed message', inject(function () {
+        it('should call callback with server error message', inject(function () {
             httpBackend.when('POST', /login/).respond(200);
             var callback = jasmine.createSpy();
             service.Login({}, {}, callback);
             httpBackend.flush();
-            expect(callback).toHaveBeenCalledWith("Email Address or password is incorrect");
+            expect(callback).toHaveBeenCalledWith("Server Error...");
         }));
 
         it('should call callback after HTTP 404 Status', inject(function () {
@@ -51,6 +51,14 @@ describe('rocketvoip.login module', function () {
             service.Login({}, {}, callback);
             httpBackend.flush();
             expect(callback).toHaveBeenCalledWith("Could not reach the server...");
+        }));
+
+        it('should call callback after HTTP 401 Status', inject(function () {
+            httpBackend.when('POST', /login/).respond(401)
+            var callback = jasmine.createSpy();
+            service.Login({}, {}, callback);
+            httpBackend.flush();
+            expect(callback).toHaveBeenCalledWith("Email Address or password is incorrect");
         }));
 
         it('should call callback after successful authentication', inject(function () {

@@ -5,25 +5,41 @@ angular.module('rocketvoip', [
     'ngRoute',
     'ngMaterial',
     'ngStorage',
-    'rocketvoip.utility_service',
     'rocketvoip.login',
+    'rocketvoip.utility_service',
     'rocketvoip.panel_editUser',
     'rocketvoip.view_dashboard',
     'rocketvoip.version',
     'rocketvoip.view_users',
     'rocketvoip.view_login',
     'rocketvoip.view_companies',
-    'rocketvoip.panel_editCompany'
+    'rocketvoip.panel_editCompany',
+    'rocketvoip.view_header'
 ]).constant('appConfig', {
-    'BACKEND_BASE_URL': 'https://rocketvoip.herokuapp.com',
+    'BACKEND_BASE_URL': 'http://localhost:8080',
     'API_ENDPOINT': '/v1',
-    'PASSWORD_LENGTH': 16
-}).config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
+    'PASSWORD_LENGTH': 16,
+    'API_LOGIN_ENDPOINT': '/v1/login'
+}).config(function ($locationProvider, $routeProvider, $httpProvider) {
     $locationProvider.hashPrefix('!');
     $routeProvider.otherwise({redirectTo: '/dashboard'});
-}]).run(function ($rootScope, $http, $location, $localStorage) {
+
+    $httpProvider.interceptors.push(function ($q, $injector) {
+        return {
+            responseError: function (rejection) {
+                if (rejection.status === 401) {
+                    //Inject in the place to avoid circular dependency
+                    var AuthenticationService = $injector.get('AuthenticationService');
+                    AuthenticationService.Logout();
+                }
+                return $q.reject(rejection);
+            }
+        };
+    });
+}).run(function ($rootScope, $http, $location, $localStorage) {
     if ($localStorage.currentUser) {
         $http.defaults.headers.common['x-auth-token'] = $localStorage.currentUser.token;
+        $rootScope.isLoggedIn = true;
     }
     $rootScope.$on('$locationChangeStart', function () {
         var publicPages = ['/login'];

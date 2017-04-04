@@ -44,10 +44,6 @@ describe('rocketvoip.view_login module', function () {
             expect(loginViewCtrl.login).toBeDefined();
         }));
 
-        it('should call Logout while initializing the controller', inject(function () {
-            expect(AuthenticationService.Logout).toHaveBeenCalledTimes(1);
-        }));
-
         it('should show Toast when error', inject(function () {
             mdToast.show = jasmine.createSpy();
             scope.showToast();
@@ -114,24 +110,17 @@ describe('rocketvoip.view_login module', function () {
                 },
                 $location: $location
             });
-
             loadHTML();
             scope.username = 'test@test.ch';
             scope.password = '5698gfdk$--ggfds';
             spyOn(scope, 'showToast');
             spyOn($location, 'path');
-
             scope.$apply();
             loginViewCtrl.login();
             scope.$apply();
             expect(auth.Login).toHaveBeenCalledTimes(1);
             expect(scope.showToast).toHaveBeenCalledTimes(0);
             expect($location.path).toHaveBeenCalledWith('/');
-
-        }));
-
-        it('should call Logout while loading controller', inject(function () {
-            expect(AuthenticationService.Logout).toHaveBeenCalledTimes(1);
         }));
 
     });

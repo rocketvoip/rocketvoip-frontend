@@ -23,6 +23,7 @@ angular.module('rocketvoip.view_login', ['ngRoute', 'ngResource'])
                             $location.path('/');
                         } else {
                             $scope.showToast(result);
+                            $scope.password = '';
                         }
                     });
                 }
@@ -37,7 +38,4 @@ angular.module('rocketvoip.view_login', ['ngRoute', 'ngResource'])
             };
 
             $scope.showToast = UtilityService.showToast;
-
-            // reset login status while initializing this controller
-            AuthenticationService.Logout();
         }]);

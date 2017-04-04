@@ -5,8 +5,8 @@
  */
 'use strict';
 angular.module('rocketvoip.login', [])
-    .factory('AuthenticationService', function Service($http, $localStorage,appConfig) {
-        var url = appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/login';
+    .factory('AuthenticationService', function Service($rootScope, $http, $localStorage, appConfig, $location) {
+        var url = appConfig.BACKEND_BASE_URL + appConfig.API_LOGIN_ENDPOINT;
         return {
             Login: function (username, password, callback) {
                 $http.post(url, {
@@ -17,17 +17,24 @@ angular.module('rocketvoip.login', [])
                         var token = response.headers('x-auth-token');
                         $localStorage.currentUser = {username: username, token: token};
                         $http.defaults.headers.common['X-Auth-Token'] = token;
+                        $rootScope.isLoggedIn = true;
                         callback(true);
                     } else {
-                        callback('Email Address or password is incorrect');
+                        callback('Server Error...');
                     }
-                }, function errorCallback() {
-                    callback('Could not reach the server...');
+                }, function errorCallback(response) {
+                    if (response.status == 401) {
+                        callback('Email Address or password is incorrect');
+                    } else {
+                        callback('Could not reach the server...');
+                    }
                 });
             },
             Logout: function () {
                 delete $localStorage.currentUser;
                 $http.defaults.headers.common['X-Auth-Token'] = '';
+                $rootScope.isLoggedIn = false;
+                $location.path('/login');
             }
         };
     });
