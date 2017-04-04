@@ -4,46 +4,47 @@
 angular.module('rocketvoip', [
     'ngRoute',
     'ngMaterial',
+    'ngStorage',
+    'rocketvoip.login',
+    'rocketvoip.utility_service',
     'rocketvoip.panel_editUser',
     'rocketvoip.view_dashboard',
     'rocketvoip.version',
     'rocketvoip.view_users',
+    'rocketvoip.view_login',
     'rocketvoip.view_companies',
-    'rocketvoip.panel_editCompany'
-])
-    .constant('appConfig',  {
-        'BACKEND_BASE_URL' : 'https://rocketvoip.herokuapp.com',
-        'API_ENDPOINT': '/v1',
-        'PASSWORD_LENGTH': 16
-    })
-    .factory('Dialog', ['$mdPanel', function ($mdPanel) {
-        return function (ctrl, templateUrl, panelClass, locals, callback) {
-            var planePosition = $mdPanel.newPanelPosition().absolute().center();
+    'rocketvoip.panel_editCompany',
+    'rocketvoip.view_header'
+]).constant('appConfig', {
+    'BACKEND_BASE_URL': 'https://rocketvoip.herokuapp.com',
+    'API_ENDPOINT': '/v1',
+    'PASSWORD_LENGTH': 16
+}).config(function ($locationProvider, $routeProvider, $httpProvider) {
+    $locationProvider.hashPrefix('!');
+    $routeProvider.otherwise({redirectTo: '/dashboard'});
 
-            var planeConfig = {
-                attachTo: angular.element(document.body),
-                controller: ctrl,
-                controllerAs: 'ctrl',
-                position: planePosition,
-                templateUrl: templateUrl,
-                hasBackdrop: true,
-                panelClass: panelClass,
-                trapFocus: true,
-                zIndex: 150,
-                clickOutsideToClose: true,
-                escapeToClose: true,
-                locals: locals,
-                focusOnOpen: true,
-                onRemoving: callback
-            };
-
-            var _mdPanel = $mdPanel.create(planeConfig);
-            _mdPanel.open();
-            return _mdPanel;
+    $httpProvider.interceptors.push(function ($q, $injector) {
+        return {
+            responseError: function (rejection) {
+                if (rejection.status === 401) {
+                    //Inject in the place to avoid circular dependency
+                    var AuthenticationService = $injector.get('AuthenticationService');
+                    AuthenticationService.Logout();
+                }
+                return $q.reject(rejection);
+            }
         };
-    }])
-    .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
-        $locationProvider.hashPrefix('!');
-        $routeProvider.otherwise({redirectTo: '/dashboard'});
-    }]);
-
+    });
+}).run(function ($rootScope, $http, $location, $localStorage) {
+    if ($localStorage.currentUser) {
+        $http.defaults.headers.common['x-auth-token'] = $localStorage.currentUser.token;
+        $rootScope.isLoggedIn = true;
+    }
+    $rootScope.$on('$locationChangeStart', function () {
+        var publicPages = ['/login'];
+        var restrictedPage = publicPages.indexOf($location.path()) === -1;
+        if (restrictedPage && !$localStorage.currentUser) {
+            $location.path('/login');
+        }
+    });
+});

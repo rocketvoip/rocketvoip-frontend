@@ -12,8 +12,8 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewUsersCtrl', ['$scope', '$mdPanel', 'appConfig', 'SipClientService', 'Dialog',
-        function ($scope, $mdPanel, appConfig, SipClientService, Dialog) {
+    .controller('ViewUsersCtrl', ['$scope', '$mdPanel', 'appConfig', 'SipClientService', 'UtilityService',
+        function ($scope, $mdPanel, appConfig, SipClientService, UtilityService) {
 
             this.queryUsers = function () {
                 $scope.sipClients = SipClientService.query();
@@ -25,7 +25,7 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
             $scope.sortReverse = false;
 
             this.showDialog = function(sipClient, ctrl) {
-                Dialog(
+                UtilityService.showDialog(
                     'PanelDialogCtrl',
                     'view_users/panel_editUser.html',
                     'user-dialog',

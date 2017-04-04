@@ -39,11 +39,23 @@ describe('rocketvoip', function () {
                             }
                             return [200, {}, {}];
                         });
+                        $httpBackend.whenPOST(/login/).respond(function () {
+                            return [200, {},{'X-Auth-Token' : 'Test-Token'}];
+                        });
                         $httpBackend.whenGET(/.*/).passThrough();
                     });
             };
             browser.addMockModule('httpBackendMock', mockFunction);
             browser.get('index.html#!/view_companies');
+            browser.driver.isElementPresent(by.id('username')).then(function (isPresent) {
+                if (isPresent) {
+                    element(by.id('username')).clear().sendKeys("test@test.ch");
+                    element(by.id('password')).clear().sendKeys("password");
+                    element(by.id('viewLoginForm-login')).click();
+                    browser.get('index.html#!/view_companies');
+
+                }
+            });
         });
 
         var company1 = {

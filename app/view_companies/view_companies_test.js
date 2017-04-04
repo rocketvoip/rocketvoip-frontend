@@ -51,15 +51,17 @@ describe('rocketvoip.view_companies module', function () {
         }));
 
         it('should open Dialog', inject(function () {
-            var Dialog = jasmine.createSpy();
+            var UtilityService = {
+                showDialog: jasmine.createSpy()
+            };
             viewCompanyCtrl = controller("ViewCompaniesCtrl", {
                 $scope: scope,
                 $mdPanel: mdPanel,
-                Dialog: Dialog,
+                UtilityService: UtilityService,
                 CompanyService: CompanyServiceMock
             });
-            viewCompanyCtrl.showDialog(null,viewCompanyCtrl);
-            expect(Dialog).toHaveBeenCalled();
+            viewCompanyCtrl.showDialog(null, viewCompanyCtrl);
+            expect(UtilityService.showDialog).toHaveBeenCalled();
         }));
     });
 });

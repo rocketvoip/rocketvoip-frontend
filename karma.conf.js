@@ -12,9 +12,11 @@ module.exports = function (config) {
             'bower_components/angular-animate/angular-animate.js',
             'bower_components/angular-loader/angular-loader.js',
             'bower_components/angular-material/modules/js/**/*.js',
+            'bower_components/ngstorage/ngStorage.js',
             'app.js',
             'components/**/*.js',
             'view*/**/*.js',
+            'services/**/*.js',
             'view*/**/*.html'
         ],
 
@@ -32,7 +34,6 @@ module.exports = function (config) {
             'karma-coverage',
             'karma-coveralls',
             'karma-ng-html2js-preprocessor'
-
         ],
 
         junitReporter: {
@@ -45,7 +46,8 @@ module.exports = function (config) {
         preprocessors: {
             'components/**/!(*_test).js': ['coverage'],
             'view*/**/!(*_test).js': ['coverage'],
-            'view*/**/*.html': 'ng-html2js'
+            'service*/**/!(*_test).js': ['coverage'],
+            '**/**/*.html': 'ng-html2js'
         },
 
         coverageReporter: {

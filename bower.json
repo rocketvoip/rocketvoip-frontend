@@ -12,6 +12,7 @@
     "angular-route": "^1.6.2",
     "angular-loader": "^1.6.2",
     "angular-mocks": "^1.6.3",
-    "angular-resource": "^1.6.3"
+    "angular-resource": "^1.6.3",
+    "ngstorage": "^0.3.11"
   }
 }
