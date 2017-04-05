@@ -81,7 +81,7 @@ describe('rocketvoip', function () {
         function addTestSipClient(sipClient) {
             if (sipClient == undefined) {
                 sipClient = {
-                    name: 'Marco Studerus',
+                    name: 'MarcoStuderus',
                     phone: '+410000000',
                     secret: '12345678'
                 }
@@ -182,6 +182,20 @@ describe('rocketvoip', function () {
             expect(plane.count()).toEqual(1);
         });
 
+        it('should not save and close when input is invalid', function () {
+            element(by.className('button-add-user')).click();
+            var plane = element.all(by.className('md-panel user-dialog'));
+            expect(plane.count()).toEqual(1);
+            element(by.model('sipClient.name')).sendKeys("-5");
+            element(by.model('sipClient.phone')).sendKeys("sdfasfsd");
+            element(by.model('sipClient.secret')).sendKeys("dfasdffdadf");
+            element(by.className('plane-editUser-save')).click();
+            var invalid = element.all(by.className('ng-invalid'));
+            expect(invalid.count()).toEqual(3);
+            plane = element.all(by.className('md-panel user-dialog'));
+            expect(plane.count()).toEqual(1);
+        });
+
         it('should not save and close when input is not complete', function () {
             element(by.className('button-add-user')).click();
             var plane = element.all(by.className('md-panel user-dialog'));
@@ -255,7 +269,7 @@ describe('rocketvoip', function () {
 
         it('should filter table ', function () {
             sipClient1 = {
-                name: "Z-000000",
+                name: "Z000000",
                 phone: "+41711234568",
                 secret: "12345678"
             };

@@ -22,7 +22,7 @@ describe('rocketvoip.view_users module', function () {
         var deleteSipClientSpy;
 
         beforeEach(inject(function ($rootScope, $controller, $templateCache, $compile, $q) {
-            testSipClient = {id: 1, name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
+            testSipClient = {id: 1, name: 'MarcoStuderus', phone: "+41710000000", secret: "12345678"};
             $q = $q;
             deferred = $q.defer();
 
@@ -107,12 +107,12 @@ describe('rocketvoip.view_users module', function () {
                 }
             });
             panelDialogCtrl.setPlaneTitle();
-            expect(scope.title).toEqual("Edit User 'Marco Studerus'");
+            expect(scope.title).toEqual("Edit User 'MarcoStuderus'");
             expect(scope.isNewSipClient).toBeFalsy();
         }));
 
         it('should set id of new sip client', inject(function () {
-            scope.sipClient = {name: 'Marco Studerus', phone: "+41223334455", secret: "12345678"};
+            scope.sipClient = {name: 'MarcoStuderus', phone: "+41223334455", secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.saveSipClient();
             expect(scope.sipClient.id).toBeDefined();
@@ -134,7 +134,7 @@ describe('rocketvoip.view_users module', function () {
         }));
 
         it('should call mdPanelRef.close() on delete (edit sip client)', inject(function () {
-            scope.sipClient = {id: 1, name: 'Marco Studerus', phone: "+41710000000", secret: "12345678"};
+            scope.sipClient = {id: 1, name: 'MarcoStuderus', phone: "+41710000000", secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.deleteSipClient();
             scope.$apply();
@@ -158,7 +158,7 @@ describe('rocketvoip.view_users module', function () {
         }));
 
         it('should not close sip client when phone is empty', inject(function () {
-            scope.sipClient = {id: 1, name: 'Marco Studerus', secret: "12345678"};
+            scope.sipClient = {id: 1, name: 'MarcoStuderus', secret: "12345678"};
             scope.$apply();
             panelDialogCtrl.saveSipClient();
             scope.$apply();

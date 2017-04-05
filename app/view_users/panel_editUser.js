@@ -3,7 +3,7 @@
  Module panel_edit is a dialog for adding oder editing a Sip Client
  Author: Marco Studerus
  */
-angular.module('rocketvoip.panel_editUser', [])
+angular.module('rocketvoip.panel_editUser', ['ngMessages'])
     .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient','company', 'appConfig',
         'SipClientService',
         function ($scope, mdPanelRef, sipClient, company, appConfig, SipClientService) {
