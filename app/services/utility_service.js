@@ -36,6 +36,13 @@ angular.module('rocketvoip.utility_service', [])
                 var _mdPanel = $mdPanel.create(planeConfig);
                 _mdPanel.open();
                 return _mdPanel;
+            },
+            setAllFieldsTouched: function(form){
+                angular.forEach(form.$error, function (field) {
+                    angular.forEach(field, function (errorField) {
+                        errorField.$setTouched();
+                    });
+                });
             }
         };
     });

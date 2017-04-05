@@ -5,8 +5,8 @@
  */
 angular.module('rocketvoip.panel_editUser', ['ngMessages'])
     .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient','company', 'appConfig',
-        'SipClientService',
-        function ($scope, mdPanelRef, sipClient, company, appConfig, SipClientService) {
+        'SipClientService','UtilityService',
+        function ($scope, mdPanelRef, sipClient, company, appConfig, SipClientService,UtilityService) {
 
             this.closeDialog = function() {
                 mdPanelRef && mdPanelRef.close();
@@ -32,11 +32,7 @@ angular.module('rocketvoip.panel_editUser', ['ngMessages'])
                     }
 
                 } else {
-                    angular.forEach($scope.userEditForm.$error, function (field) {
-                        angular.forEach(field, function (errorField) {
-                            errorField.$setTouched();
-                        });
-                    });
+                    UtilityService.setAllFieldsTouched($scope.userEditForm);
                 }
             };
 
