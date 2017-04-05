@@ -28,12 +28,7 @@ angular.module('rocketvoip.view_login', ['ngRoute', 'ngResource'])
                     });
                 }
                 else {
-                    //TODO: Refactor Global Function! - Deduplicated Code
-                    angular.forEach($scope.viewLoginForm.$error, function (field) {
-                        angular.forEach(field, function (errorField) {
-                            errorField.$setTouched();
-                        });
-                    });
+                    UtilityService.setAllFieldsTouched($scope.viewLoginForm);
                 }
             };
 

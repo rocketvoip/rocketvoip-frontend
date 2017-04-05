@@ -5,8 +5,8 @@
  */
 angular.module('rocketvoip.panel_editCompany', [])
     .controller('PanelCompanyDialogCtrl', ['$scope', 'mdPanelRef', 'company', 'appConfig',
-        'CompanyService',
-        function ($scope, mdPanelRef, company, appConfig, CompanyService) {
+        'CompanyService','UtilityService',
+        function ($scope, mdPanelRef, company, appConfig, CompanyService,UtilityService) {
             this.closeDialog = function() {
                 mdPanelRef && mdPanelRef.close();
             };
@@ -29,11 +29,7 @@ angular.module('rocketvoip.panel_editCompany', [])
                         CompanyService.update($scope.company).$promise.then(this.closeDialog);
                     }
                 } else {
-                    angular.forEach($scope.companyEditForm.$error, function (field) {
-                        angular.forEach(field, function (errorField) {
-                            errorField.$setTouched();
-                        });
-                    });
+                    UtilityService.setAllFieldsTouched($scope.companyEditForm);
                 }
             };
 
