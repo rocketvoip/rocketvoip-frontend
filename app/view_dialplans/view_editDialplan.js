@@ -60,11 +60,6 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                 }
             };
 
-            $scope.delete = function (action) {
-                //TODO
-                console.log('Delete: ' + action);
-            };
-
             $scope.edit = function (action) {
                 //TODO
                 console.log('Edit: ' + action);

@@ -2,7 +2,6 @@
     <div ng-show="dialplan">
         <h1 ng-show="isNewDialplan" flex>Create new Dialplan</h1>
         <h1 ng-show="!isNewDialplan" flex>Edit Dialplan "{{dialplan.name}}"</h1>
-
         <div flex layout="row">
             <div flex="40" layout-align="start center">
                 <div layout="row" layout-align="center center">
@@ -13,27 +12,21 @@
                     <md-list-item flex="100" ng-repeat="action in actions">
                         <p> {{ action.name }} </p>
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit"
-                                   ng-click="edit(action)"
-                                   aria-label="Edit">
+                                   ng-click="edit(action)" aria-label="Edit">
                             <md-icon aria-label="Edit">edit</md-icon>
                         </md-button>
-                        <md-button class="md-secondary md-icon-button view-editDialplan-edit"
-                                   ng-click="delete(action)"
-                                   aria-label="Delete">
-                            <md-icon aria-label="Delete">delete</md-icon>
-                        </md-button>
-
                         <md-checkbox class="md-secondary" ng-model="action.selected"></md-checkbox>
                         <md-divider></md-divider>
                     </md-list-item>
                 </md-list>
             </div>
             <div flex="20" layout-align="center center" layout="column">
-                <md-button class="view-editDialplan-button-large md-raised" ng-click="moveSelectedActions(dialplan.actions,actions)">
+                <md-button class="view-editDialplan-button-large md-raised"
+                           ng-click="moveSelectedActions(dialplan.actions,actions)">
                     <md-icon aria-label="left" class="material-icons step md-48">keyboard_arrow_left</md-icon>
                 </md-button>
-
-                <md-button class="view-editDialplan-button-large md-raised" ng-click="moveSelectedActions(actions,dialplan.actions)">
+                <md-button class="view-editDialplan-button-large md-raised"
+                           ng-click="moveSelectedActions(actions,dialplan.actions)">
                     <md-icon aria-label="left" class="material-icons step md-48">keyboard_arrow_right</md-icon>
                 </md-button>
             </div>
@@ -45,24 +38,16 @@
                     <md-divider></md-divider>
                     <md-list-item flex="100" ng-repeat="action in dialplan.actions">
                         <p> {{ action.name }} </p>
-
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit reservespace"
-                                   ng-hide="$last"
-                                   ng-click="swap(action,+1)"
-                                   aria-label="Edit">
+                                   ng-hide="$last" ng-click="swap(action,+1)" aria-label="Edit">
                             <md-icon aria-label="Edit">expand_more</md-icon>
                         </md-button>
-
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit reservespace"
-                                   ng-hide="$first"
-                                   ng-click="swap(action,-1)"
-                                   aria-label="Edit">
+                                   ng-hide="$first" ng-click="swap(action,-1)" aria-label="Edit">
                             <md-icon aria-label="Edit">expand_less</md-icon>
                         </md-button>
-
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit"
-                                   ng-click="edit(action)"
-                                   aria-label="Edit">
+                                   ng-click="edit(action)" aria-label="Edit">
                             <md-icon aria-label="Edit">edit</md-icon>
                         </md-button>
                         <md-checkbox class="md-secondary" ng-model="action.selected"></md-checkbox>
@@ -73,13 +58,4 @@
         </div>
 
     </div>
-
-    <div class="glyph" ng-repeat="font in fonts" layout="row">
-        <div ng-repeat="it in sizes" flex layout-align="center center" style="text-align: center;" layout="column">
-            <div flex></div>
-            <div class="preview-glyphs">
-            </div>
-        </div>
-    </div>
-
 </div>

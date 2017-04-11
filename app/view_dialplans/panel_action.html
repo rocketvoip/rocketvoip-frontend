@@ -1,0 +1,34 @@
+<md-card  style="width: 500px;" role="dialog" aria-label="Edit action" layout="column" layout-align="center center">
+    <md-toolbar layout="row" layout-align="none center">
+        <div class="md-toolbar-tools">
+            <h2 class="plane-action-title" ng-if="isNewDialplan">Add a new Action</h2>
+            <h2 class="plane-action-title" ng-if="!isNewDialplan">Edit Action {{nameCopy}}</h2>
+
+        </div>
+
+        <md-button id="plane-action-delete"
+                   ng-show="!isNewDialplan"
+                   class="md-raised md-warn md-mini"
+                   aria-label="Delete Action"
+                   ng-click="deleteAction()">
+            delete
+        </md-button>
+    </md-toolbar>
+
+    <div>
+        <form name="editActionForm" flex layout="row" layout-wrap layout-align="center">
+            <md-input-container layout="row" flex="90">
+                <label>Action Name</label>
+                <input type="text" ng-model="action.name" ng-required="true"/>
+            </md-input-container>
+        </form>
+        <div layout="row">
+            <md-button md-auto-focus flex class="md-raised md-primary plane-action-save" ng-click="saveAction()">
+                Save
+            </md-button>
+            <md-button class="md-primary plane-action-close" flex ng-click="closeDialog()">
+                Cancel
+            </md-button>
+        </div>
+    </div>
+</md-card>
