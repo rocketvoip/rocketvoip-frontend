@@ -14,6 +14,7 @@ angular.module('rocketvoip', [
     'rocketvoip.view_login',
     'rocketvoip.view_companies',
     'rocketvoip.view_dialplans',
+    'rocketvoip.view_editDialplan',
     'rocketvoip.panel_editCompany',
     'rocketvoip.view_header'
 ]).constant('appConfig', {

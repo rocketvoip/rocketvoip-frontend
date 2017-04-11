@@ -70,3 +70,25 @@ form[name="viewLoginForm"] {
 md-input-container .md-errors-spacer {
     min-height: 0;
 }
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+.view-editDialplan-button-large{
+    min-width: 1%;
+    width: 60px;
+    height: 50px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.view-editDialplan-button-large md-icon{
+    width: 48px;
+    height: 48px;
+}
+
+.reservespace.ng-hide {
+    display: block!important;
+    visibility: hidden;
+}

@@ -1,3 +1,77 @@
 <div ng-controller="ViewDialplansCtrl as ctrl">
 
+    <div flex layout="row" layout-align=" center">
+        <h1 flex>Manage Dialplans</h1>
+
+        <md-select ng-model="currentCompany" required placeholder="Select a company" ng-change="ctrl.queryDialplans()"
+                   style="min-width: 300px;" class="view-dialplans-select">
+            <md-option ng-value="company" ng-repeat="company in companies | orderBy:name:true">{{company.name}}
+            </md-option>
+        </md-select>
+
+        <md-input-container class="md-errors-spacer md-icon-float view-dialplans-filter">
+            <label>Search</label>
+            <md-icon aria-label="Filter">search</md-icon>
+            <input id="view-dialplans-filter-input" ng-model="filter" type="text">
+        </md-input-container>
+
+        <md-button md-colors="::{background: 'primary-900'}"
+                   class="md-fab md-secondary button-add-user"
+                   aria-label="Add Users"
+                   ng-click="ctrl.showDialplan(null)">
+            <md-tooltip>Add Dialplan</md-tooltip>
+            <md-icon md-colors="::{color: 'primary-50'}">add</md-icon>
+        </md-button>
+    </div>
+
+    <md-subheader>
+        <div flex layout="row" layout-align="none center">
+            <div flex="30">
+                <a id="view-dialplans-sort-name" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+                    Name
+                    <span ng-show="sortType == 'name' && !sortReverse">
+                        <md-icon aria-label="Sort Down">keyboard_arrow_down</md-icon>
+                    </span>
+                    <span ng-show="sortType == 'name' && sortReverse">
+                        <md-icon aria-label="Sort Up">keyboard_arrow_up</md-icon>
+                    </span>
+                </a>
+            </div>
+
+            <div flex="30">
+                <a id="view-dialplans-sort-phone" ng-click="sortType = 'phone'; sortReverse = !sortReverse">
+                    Phone Number
+                    <span ng-show="sortType == 'phone' && !sortReverse">
+                        <md-icon aria-label="Sort Down">keyboard_arrow_down</md-icon>
+                    </span>
+                    <span ng-show="sortType == 'phone' && sortReverse">
+                        <md-icon aria-label="Sort Up">keyboard_arrow_up</md-icon>
+                    </span>
+                </a>
+            </div>
+
+            <div flex layout="row" layout-align="end">Operations</div>
+        </div>
+
+    </md-subheader>
+
+    <md-divider></md-divider>
+
+    <md-list-item flex
+                  ng-repeat="dialplan in dialplans | orderBy:sortType:sortReverse | filter:filter | filter:{company:{id: currentCompany.id}}">
+
+        <div flex layout="row">
+            <div class="view-dialplans-name" flex="30">{{ dialplan.name }}</div>
+            <div class="view-dialplans-phone" flex="30">{{ dialplan.phone }}</div>
+        </div>
+
+        <md-button class="md-secondary md-icon-button view-dialplan-editdialplan"
+                   ng-click="ctrl.showDialplan(dialplan)"
+                   aria-label="Edit Users">
+            <md-tooltip>Edit Dialplan</md-tooltip>
+            <md-icon aria-label="Edit">edit</md-icon>
+        </md-button>
+
+        <md-divider></md-divider>
+    </md-list-item>
 </div>
