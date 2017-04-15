@@ -25,7 +25,6 @@ angular.module('rocketvoip.utility_service', [])
                     hasBackdrop: true,
                     panelClass: panelClass,
                     trapFocus: true,
-                    zIndex: 150,
                     clickOutsideToClose: true,
                     escapeToClose: true,
                     locals: locals,
