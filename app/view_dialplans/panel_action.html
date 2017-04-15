@@ -1,4 +1,4 @@
-<md-card  style="width: 500px;" role="dialog" aria-label="Edit action" layout="column" layout-align="center center">
+<md-card style="width: 600px;" role="dialog" aria-label="Edit action">
     <md-toolbar layout="row" layout-align="none center">
         <div class="md-toolbar-tools">
             <h2 class="plane-action-title" ng-if="isNewDialplan">Add a new Action</h2>
@@ -16,19 +16,64 @@
     </md-toolbar>
 
     <div>
-        <form name="editActionForm" flex layout="row" layout-wrap layout-align="center">
-            <md-input-container layout="row" flex="90">
+        <form name="actionEditForm" flex layout="row" layout-wrap layout-align="center">
+
+            <md-input-container flex="90" layout="column">
                 <label>Action Name</label>
-                <input type="text" ng-model="action.name" ng-required="true"/>
+                <input type="text" name="name" ng-model="action.name" ng-required="true">
             </md-input-container>
+
+            <md-select flex="90" layout="column" ng-if="isNewDialplan && !(action.type)" ng-model="action.type" required
+                       placeholder="Select an action type"
+                       class="view-editAction-select" ng-change="initType()">
+                <md-option ng-value="type.name" ng-repeat="type in types">{{type.text}}
+                </md-option>
+            </md-select>
+
+            <md-input-container ng-if="action.type === 'VOICE_MESSAGE'" flex="90" layout="column">
+                <label>Voice Message</label>
+                <textarea name="voiceMessage" ng-model="action.typeSpecific.voiceMessage" md-maxlength="350" rows="7"
+                          md-select-on-focus ng-required="true">
+                </textarea>
+            </md-input-container>
+
+            <md-input-container ng-if="action.type === 'VOICE_MESSAGE'" flex="90" layout="column">
+                <label>Wait time after voice message</label>
+                <input ng-model="action.typeSpecific.delay" type="number" step="1" ng-required="true"
+                       ng-init="action.typeSpecific.delay=3"
+                       min="0" max="30">
+            </md-input-container>
+
+            <md-input-container ng-if="action.type === 'TEAM'" flex="90" layout="column">
+                <label>Time</label>
+                <input ng-model="action.typeSpecific.time" type="number" step="1" ng-required="true"
+                       ng-init="action.typeSpecific.time=15"
+                       min="0" max="30">
+            </md-input-container>
+
+            <md-contact-chips ng-if="action.type === 'TEAM'" flex="90" layout="column" ng-model="action.team"
+                              md-contacts="sipClients | filterBy: ['name', 'phone']: $query | filter:{company:{id: action.company.id}}"
+                              md-contact-name="name" md-contact-email="phone" md-require-match="true"
+                              md-highlight-flags="i" filter-selected="true" placeholder="Choose members...">
+            </md-contact-chips>
+            <div ng-if="action.type === 'TEAM' && action.team.length < 1">
+                <p class="view-action-error">Please choose at least one sip client.</p>
+            </div>
+
         </form>
-        <div layout="row">
-            <md-button md-auto-focus flex class="md-raised md-primary plane-action-save" ng-click="saveAction()">
+    </div>
+
+    <div layout="column" layout-align="center center">
+        <div>
+            <md-button class="plane-editAction-save" md-autofocus flex class="md-raised md-primary"
+                       ng-click="saveAction()">
                 Save
             </md-button>
-            <md-button class="md-primary plane-action-close" flex ng-click="closeDialog()">
-                Cancel
+
+            <md-button class="plane-editAction-close" flex class="md-primary" ng-click="closeDialog()">
+                Close
             </md-button>
         </div>
     </div>
+
 </md-card>

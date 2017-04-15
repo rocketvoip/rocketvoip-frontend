@@ -12,27 +12,46 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewEditDialplanCtrl', ['$scope', 'DialplanService', 'UtilityService', 'CompanyService', '$routeParams', '$location',
-        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location) {
+    .controller('ViewEditDialplanCtrl', ['$scope', 'DialplanService', 'UtilityService', 'CompanyService',
+        '$routeParams', '$location', 'ActionService',
+        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location, ActionService) {
+            var ctrl = this;
+
+            this.query = function () {
+                //TODO: Filter by company!
+                $scope.dialplan = DialplanService.get({id: dialplanID});
+                $scope.actions = ActionService.query();
+
+                $scope.dialplan = {
+                    id: 55,
+                    name: 'Test Dialplan',
+                    actions: [],
+                    company: {name: "test", id: 10}
+                };
+
+                $scope.actions = [
+                    {id: 3, name: 'Test 1', type: 'VOICE_MESSAGE', company: {name: "test", id: 10}}, {
+                        id: 4,
+                        name: 'Test 2',
+                        type: 'VOICE_MESSAGE',
+                        company: {name: "test", id: 10}
+                    },
+                    {id: 5, name: 'Gugus4', type: 'VOICE_MESSAGE', company: {name: "test", id: 10}}, {
+                        id: 6,
+                        name: 'Gugus5',
+                        type: 'VOICE_MESSAGE',
+                        company: {name: "test", id: 10}
+                    },
+                    {id: 7, name: 'Team Sales', type: 'TEAM', company: {name: "test", id: 10}, team: []}];
+            };
+
             if ($routeParams.id) {
                 var dialplanID = $routeParams.id;
                 if (isNaN(dialplanID)) {
                     $location.path('/view_dialplans/');
                 }
                 $scope.isNewDialplan = false;
-                //TODO: Errorhandling
-                //$scope.dialplan = DialplanService.get({id: dialplanID});
-                $scope.dialplan = {
-                    id: 55,
-                    name: 'Test Dialplan',
-                    actions: []
-                };
-
-                $scope.actions = [
-                    {id: 3, name: 'Test 1'}, {id: 4, name: 'Test 2'}, {id: 5, name: 'Gugus4'}, {
-                        id: 6,
-                        name: 'Gugus5'
-                    }, {id: 7, name: 'Gugus6'}];
+                this.query()
             } else {
                 $scope.isNewDialplan = true;
             }
@@ -61,8 +80,15 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
             };
 
             $scope.edit = function (action) {
-                //TODO
-                console.log('Edit: ' + action);
+                UtilityService.showDialog(
+                    'PanelActionDialogCtrl',
+                    'view_dialplans/panel_action.html',
+                    'action-dialog',
+                    {
+                        'action': action,
+                        'company': $scope.dialplan.company
+                    },
+                    ctrl.queryCompanies);
             };
 
         }]);

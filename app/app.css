@@ -33,7 +33,7 @@
     width: 500px;
 }
 
-form[name="userEditForm"], form[name="companyEditForm"] {
+form[name="userEditForm"], form[name="companyEditForm"], form[name="actionEditForm"] {
     padding-top: 25px;
     padding-bottom: 25px;
 }
@@ -91,4 +91,10 @@ md-input-container .md-errors-spacer {
 .reservespace.ng-hide {
     display: block!important;
     visibility: hidden;
+}
+
+.view-action-error{
+    color: rgb(221,44,0) !important;
+    font-size: 12px !important;
+    font-family: Roboto, "Helvetica Neue", sans-serif !important;
 }

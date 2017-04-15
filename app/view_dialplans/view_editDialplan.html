@@ -2,6 +2,7 @@
     <div ng-show="dialplan">
         <h1 ng-show="isNewDialplan" flex>Create new Dialplan</h1>
         <h1 ng-show="!isNewDialplan" flex>Edit Dialplan "{{dialplan.name}}"</h1>
+        <p>Company: {{dialplan.company.name}}</p>
         <div flex layout="row">
             <div flex="40" layout-align="start center">
                 <div layout="row" layout-align="center center">
@@ -19,6 +20,10 @@
                         <md-divider></md-divider>
                     </md-list-item>
                 </md-list>
+                <div layout="row" layout-align="center center">
+                    <md-button class="md-raised" ng-click="edit(null)">Add Action</md-button>
+                </div>
+
             </div>
             <div flex="20" layout-align="center center" layout="column">
                 <md-button class="view-editDialplan-button-large md-raised"
