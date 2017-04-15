@@ -20,22 +20,28 @@ angular.module('rocketvoip.view_dialplans', ['ngRoute', 'ngResource'])
                 $scope.sipClients = DialplanService.query();
             };
 
-            //TODO: Duplicated Code!
-            CompanyService.query().$promise.then(function (companyies) {
-                $scope.companies = companyies;
-                if (companyies.length > 0) {
-                    $scope.currentCompany = companyies[0];
-                    ctrl.queryDialplans();
-                }
-            });
+            this.queryCompanies = function () {
+                CompanyService.query().$promise.then(function (companyies) {
+                    $scope.companies = companyies;
+                    if (companyies.length > 0) {
+                        $scope.currentCompany = companyies[0];
+                        ctrl.queryDialplans();
+                    }
+                });
+            };
+
+            this.queryCompanies();
 
             $scope.sortType = 'name';
             $scope.sortReverse = false;
 
 
              this.showDialplan = function (sipClient) {
-                 $location.path('/view_editDialplan/');
-
+                 var id = '';
+                 if(sipClient && sipClient.id){
+                     id = sipClient.id;
+                 }
+                 $location.path('/view_editDialplan/' + id);
              };
 
         }]).factory('DialplanService', ['$resource', 'appConfig', function ($resource, appConfig) {
