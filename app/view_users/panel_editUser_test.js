@@ -87,14 +87,12 @@ describe('rocketvoip.view_users module', function () {
             expect(panelDialogCtrl).toBeDefined();
         }));
 
-        it('should set title of panel to "Add a new User"', inject(function () {
-            panelDialogCtrl.setPlaneTitle();
-            expect(scope.title).toEqual("Add a new User");
+        it('should set isNewSipClient to true', inject(function () {
             expect(scope.isNewSipClient).toBeTruthy();
 
         }));
 
-        it('should set title of panel to "Edit User"', inject(function ($controller) {
+        it('should set isNewSipClient to false"', inject(function ($controller) {
             panelDialogCtrl = $controller("PanelDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: _mdPanelRef,
@@ -106,8 +104,6 @@ describe('rocketvoip.view_users module', function () {
                     name: "UnitTestAG"
                 }
             });
-            panelDialogCtrl.setPlaneTitle();
-            expect(scope.title).toEqual("Edit User 'MarcoStuderus'");
             expect(scope.isNewSipClient).toBeFalsy();
         }));
 
