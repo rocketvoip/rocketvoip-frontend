@@ -12,16 +12,6 @@ angular.module('rocketvoip.panel_editUser', ['ngMessages'])
                 mdPanelRef && mdPanelRef.close();
             };
 
-            this.setPlaneTitle = function () {
-                if ($scope.sipClient == null) {
-                    $scope.title = "Add a new User";
-                    $scope.isNewSipClient = true;
-                } else {
-                    $scope.title = "Edit User '" + $scope.sipClient.name + "'";
-                    $scope.isNewSipClient = false;
-                }
-            };
-
             this.saveSipClient = function () {
                 if ($scope.userEditForm.$valid) {
                     if ($scope.sipClient.id == undefined) {
@@ -55,5 +45,11 @@ angular.module('rocketvoip.panel_editUser', ['ngMessages'])
             };
 
             $scope.sipClient = angular.copy(sipClient);
-            this.setPlaneTitle();
+
+            if ($scope.sipClient == null) {
+                $scope.isNewSipClient = true;
+            } else {
+                $scope.sipClientNameCopy = angular.copy(sipClient.name);
+                $scope.isNewSipClient = false;
+            }
         }]);
