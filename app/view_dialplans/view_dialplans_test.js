@@ -18,7 +18,8 @@ describe('rocketvoip.view_dialplan module', function () {
             q = $q;
             deferred = $q.defer();
             location = {
-                path: jasmine.createSpy()
+                path: jasmine.createSpy().and.returnValue({search: jasmine.createSpy()}),
+                search: jasmine.createSpy()
             };
             callbackNgResource = function (obj) {
                 var ret = {};
@@ -35,7 +36,7 @@ describe('rocketvoip.view_dialplan module', function () {
             spyOn(CompanyServiceMock, 'query').and.callThrough();
 
             dialplanService = DialplanService;
-            spyOn(dialplanService,'query');
+            spyOn(dialplanService, 'query');
             scope = $rootScope.$new();
             controller = $controller;
             viewDialplansCtrl = $controller("ViewDialplansCtrl", {
@@ -52,6 +53,10 @@ describe('rocketvoip.view_dialplan module', function () {
         }));
 
         it('should redirect to new Dialplan', inject(function () {
+            scope.currentCompany = {
+                id: 5,
+                name: 'Test'
+            };
             viewDialplansCtrl.showDialplan(null);
             expect(location.path).toHaveBeenCalledWith('/view_editDialplan/');
         }));
@@ -59,6 +64,10 @@ describe('rocketvoip.view_dialplan module', function () {
         it('should redirect to existing Dialplan', inject(function () {
             var dialplan = {
                 id: 55
+            };
+            scope.currentCompany = {
+                id: 5,
+                name: 'Test'
             };
             viewDialplansCtrl.showDialplan(dialplan);
             expect(location.path).toHaveBeenCalledWith('/view_editDialplan/' + dialplan.id);
@@ -70,7 +79,7 @@ describe('rocketvoip.view_dialplan module', function () {
         }));
 
         it('should load Dialplans and query dialplans', inject(function () {
-            spyOn(viewDialplansCtrl,'queryDialplans');
+            spyOn(viewDialplansCtrl, 'queryDialplans');
             viewDialplansCtrl.queryCompanies();
             scope.$apply();
             expect(scope.companies.length).toEqual(testCompanies.length);
@@ -87,7 +96,7 @@ describe('rocketvoip.view_dialplan module', function () {
                 DialplanService: dialplanService,
                 CompanyService: CompanyServiceMock
             });
-            spyOn(ctrl,'queryDialplans');
+            spyOn(ctrl, 'queryDialplans');
             ctrl.queryCompanies();
             scope.$apply();
             expect(scope.companies.length).toEqual(0);

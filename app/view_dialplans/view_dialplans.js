@@ -12,8 +12,8 @@ angular.module('rocketvoip.view_dialplans', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewDialplansCtrl', ['$scope', 'DialplanService', 'UtilityService', 'CompanyService','$location',
-        function ($scope, DialplanService, UtilityService, CompanyService,$location) {
+    .controller('ViewDialplansCtrl', ['$scope', 'DialplanService', 'UtilityService', 'CompanyService', '$location',
+        function ($scope, DialplanService, UtilityService, CompanyService, $location) {
             var ctrl = this;
 
             this.queryDialplans = function () {
@@ -36,16 +36,19 @@ angular.module('rocketvoip.view_dialplans', ['ngRoute', 'ngResource'])
             $scope.sortReverse = false;
 
 
-             this.showDialplan = function (sipClient) {
-                 var id = '';
-                 if(sipClient && sipClient.id){
-                     id = sipClient.id;
-                 }
-                 $location.path('/view_editDialplan/' + id);
-             };
+            this.showDialplan = function (dialplan) {
+                var id = '';
+                if (dialplan && dialplan.id) {
+                    id = dialplan.id;
+                }
+                $location.path('/view_editDialplan/' + id).search({
+                    companyID: $scope.currentCompany.id,
+                    companyName: $scope.currentCompany.name
+                });
+            };
 
         }]).factory('DialplanService', ['$resource', 'appConfig', function ($resource, appConfig) {
-    return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/dialplan/:id', {id: "@id"}, {
+    return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/dialplans/:id', {id: "@id"}, {
             update: {
                 method: 'PUT'
             }

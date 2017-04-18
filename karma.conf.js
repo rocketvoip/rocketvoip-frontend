@@ -48,7 +48,7 @@ module.exports = function (config) {
             'components/**/!(*_test).js': ['coverage'],
             'view*/**/!(*_test).js': ['coverage'],
             'service*/**/!(*_test).js': ['coverage'],
-            '**/**/*.html': 'ng-html2js'
+            '**/*.html': ['ng-html2js']
         },
 
         coverageReporter: {

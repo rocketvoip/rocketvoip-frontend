@@ -4,17 +4,12 @@
  Author: Marco Studerus
  */
 angular.module('rocketvoip.panel_editAction', ['angular.filter'])
-    .controller('PanelActionDialogCtrl', ['$scope', 'mdPanelRef', 'action', 'company', 'ActionService', 'UtilityService', 'SipClientService',
-        function ($scope, mdPanelRef, action, company, ActionService, UtilityService, SipClientService) {
+    .controller('PanelActionDialogCtrl', ['$scope', 'mdPanelRef', 'action', 'UtilityService', 'SipClientService',
+        'callbackUpdate', 'callbackDelete', 'rfc4122',
+        function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackUpdate, callbackDelete, rfc4122) {
             $scope.types = [
-                {
-                    name: 'TEAM',
-                    text: 'Team'
-                },
-                {
-                    name: 'VOICE_MESSAGE',
-                    text: 'Voice Message'
-                }
+                {name: 'TEAM', text: 'Team'},
+                {name: 'VOICE_MESSAGE', text: 'Voice Message'}
             ];
 
             $scope.closeDialog = function () {
@@ -23,19 +18,17 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
 
             $scope.saveAction = function () {
                 if ($scope.actionEditForm.$valid) {
-                    if ($scope.action.id == undefined) {
-                        ActionService.save($scope.action).$promise.then(this.closeDialog);
-                    } else {
-                        ActionService.update($scope.action).$promise.then(this.closeDialog);
-                    }
+                    callbackUpdate($scope.action);
+                    $scope.closeDialog();
                 } else {
                     UtilityService.setAllFieldsTouched($scope.actionEditForm);
                 }
             };
 
             $scope.deleteAction = function () {
-                if ($scope.action.id != null) {
-                    ActionService.delete($scope.action).$promise.then(this.closeDialog);
+                if (!($scope.isNewDialplan)) {
+                    callbackDelete($scope.action);
+                    $scope.closeDialog();
                 }
             };
 
@@ -48,21 +41,16 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
             $scope.action = angular.copy(action);
             if (action && action.name) {
                 $scope.nameCopy = angular.copy(action.name);
+                $scope.isNewDialplan = false;
+
             } else {
                 $scope.isNewDialplan = true;
                 $scope.action = {
                     team: [],
-                    company: company
+                    uuid: rfc4122.v4()
                 };
             }
 
             $scope.initType();
         }
-    ]).factory('ActionService', ['$resource', 'appConfig', function ($resource, appConfig) {
-    return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/action/:id', {id: "@id"}, {
-            update: {
-                method: 'PUT'
-            }
-        }
-    );
-}]);
+    ]);
