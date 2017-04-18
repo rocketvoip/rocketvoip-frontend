@@ -1,7 +1,8 @@
 <md-card  style="width: 500px;" role="dialog" aria-label="Edit Company" layout="column" layout-align="center center">
     <md-toolbar layout="row" layout-align="none center">
         <div class="md-toolbar-tools">
-            <h2 class="plane-editCompany-title">{{title}}</h2>
+            <h2 class="plane-editCompany-title" ng-if="isNewCompany">Add a new Company</h2>
+            <h2 class="plane-editCompany-title" ng-if="!isNewCompany">Edit Company '{{companyNameCopy}}'</h2>
         </div>
 
         <md-button id="plane-editCompany-deleteCompany"

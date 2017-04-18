@@ -10,16 +10,6 @@ angular.module('rocketvoip.panel_editCompany', [])
             this.closeDialog = function() {
                 mdPanelRef && mdPanelRef.close();
             };
-            
-            this.setPlaneTitle = function () {
-                if ($scope.company == null) {
-                    $scope.title = "Add a new Company";
-                    $scope.isNewCompany = true;
-                } else {
-                    $scope.title = "Edit Company '"+$scope.company.name +"'";
-                    $scope.isNewCompany = false;
-                }
-            };
 
             this.saveCompany = function() {
                 if($scope.companyEditForm.$valid) {
@@ -40,6 +30,12 @@ angular.module('rocketvoip.panel_editCompany', [])
             };
 
             $scope.company = angular.copy(company);
-            this.setPlaneTitle();
+
+            if ($scope.company == null) {
+                $scope.isNewCompany = true;
+            } else {
+                $scope.isNewCompany = false;
+                $scope.companyNameCopy = angular.copy(company.name);
+            }
         }
     ]);

@@ -80,14 +80,12 @@ describe('rocketvoip.view_companies module', function () {
             expect(panelCompanyDialogCtrl).toBeDefined();
         }));
 
-        it('should set title of panel to "Add a new Company"', inject(function () {
-            panelCompanyDialogCtrl.setPlaneTitle();
-            expect(scope.title).toEqual("Add a new Company");
+        it('should set isNewCompany to true', inject(function () {
             expect(scope.isNewCompany).toBeTruthy();
 
         }));
 
-        it('should set title of panel to "Edit Company"', inject(function ($controller) {
+        it('should set isNewCompany to false', inject(function ($controller) {
             panelCompanyDialogCtrl = $controller("PanelCompanyDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: _mdPanelRef,
@@ -95,8 +93,6 @@ describe('rocketvoip.view_companies module', function () {
                 updateSipClient: {},
                 deleteSipClient: {}
             });
-            panelCompanyDialogCtrl.setPlaneTitle();
-            expect(scope.title).toEqual("Edit Company 'Testcompany1'");
             expect(scope.isNewCompany).toBeFalsy();
         }));
 
