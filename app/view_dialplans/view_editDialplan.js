@@ -20,6 +20,7 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
 
             this.query = function () {
                 $scope.dialplan = DialplanService.get({id: dialplanID});
+                //TODO: Set uuid property
             };
 
             this.updateAction = function (updatedAction) {

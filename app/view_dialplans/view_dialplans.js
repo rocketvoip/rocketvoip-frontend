@@ -17,7 +17,7 @@ angular.module('rocketvoip.view_dialplans', ['ngRoute', 'ngResource'])
             var ctrl = this;
 
             this.queryDialplans = function () {
-                $scope.sipClients = DialplanService.query();
+                $scope.dialplans = DialplanService.query();
             };
 
             this.queryCompanies = function () {
