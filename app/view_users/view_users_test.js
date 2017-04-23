@@ -36,7 +36,8 @@ describe('rocketvoip.view_users module', function () {
             testCompanies = [
                 {id: 1, name: 'UnitTestAG'},
                 {id: 5, name: 'CleanCode'}
-            ]
+            ];
+
             mdPanel = $mdPanel;
             scope = $rootScope.$new();
             rootScope = $rootScope;

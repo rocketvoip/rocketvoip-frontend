@@ -38,6 +38,7 @@
         <md-nav-bar aria-label="navigation" ng-show="$root.isLoggedIn === true">
             <md-nav-item md-nav-href="#!/dashboard">Dashboard</md-nav-item>
             <md-nav-item md-nav-href="#!/view_users">Users</md-nav-item>
+            <md-nav-item md-nav-href="#!/view_dialplans">Dial Plans</md-nav-item>
             <md-nav-item md-nav-href="#!/view_companies">Companies</md-nav-item>
 
         </md-nav-bar>
@@ -60,6 +61,7 @@
 <script src="bower_components/angular-resource/angular-resource.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/ngstorage/ngStorage.js"></script>
+<script src="bower_components/angular-uuid-service/angular-uuid-service.js"></script>
 <script src="app.js"></script>
 <script src="view_dashboard/view_dashboard.js"></script>
 <script src="view_users/panel_editUser.js"></script>
@@ -68,12 +70,16 @@
 <script src="view_companies/panel_editCompany.js"></script>
 <script src="view_login/view_login.js"></script>
 <script src="view_header/view_header.js"></script>
+<script src="view_dialplans/view_dialplans.js"></script>
+<script src="view_dialplans/view_editDialplan.js"></script>
+<script src="view_dialplans/panel_action.js"></script>
 <script src="services/authentication_service.js"></script>
 <script src="services/utility_service.js"></script>
 <script src="components/version/version.js"></script>
 <script src="components/version/version-directive.js"></script>
 <script src="components/version/interpolate-filter.js"></script>
 <script src="bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="bower_components/angular-filter/dist/angular-filter.js"></script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
  Author: Marco Studerus
  */
 angular.module('rocketvoip.panel_editUser', ['ngMessages'])
-    .controller('PanelDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient','company', 'appConfig',
+    .controller('PanelEditSipClientDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient','company', 'appConfig',
         'SipClientService','UtilityService',
         function ($scope, mdPanelRef, sipClient, company, appConfig, SipClientService,UtilityService) {
 

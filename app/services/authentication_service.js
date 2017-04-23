@@ -32,7 +32,7 @@ angular.module('rocketvoip.login', [])
             },
             Logout: function () {
                 delete $localStorage.currentUser;
-                $http.defaults.headers.common['X-Auth-Token'] = '';
+                delete $http.defaults.headers.common['x-auth-token'];
                 $rootScope.isLoggedIn = false;
                 $location.path('/login');
             }

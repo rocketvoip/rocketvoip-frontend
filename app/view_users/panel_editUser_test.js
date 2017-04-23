@@ -63,7 +63,7 @@ describe('rocketvoip.view_users module', function () {
                 "PASSWORD_LENGTH": 11
             };
 
-            panelDialogCtrl = $controller("PanelDialogCtrl", {
+            panelDialogCtrl = $controller("PanelEditSipClientDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: _mdPanelRef,
                 sipClient: null,
@@ -93,7 +93,7 @@ describe('rocketvoip.view_users module', function () {
         }));
 
         it('should set isNewSipClient to false"', inject(function ($controller) {
-            panelDialogCtrl = $controller("PanelDialogCtrl", {
+            panelDialogCtrl = $controller("PanelEditSipClientDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: _mdPanelRef,
                 sipClient: testSipClient,

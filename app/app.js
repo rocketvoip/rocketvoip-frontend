@@ -5,6 +5,7 @@ angular.module('rocketvoip', [
     'ngRoute',
     'ngMaterial',
     'ngStorage',
+    'uuid',
     'rocketvoip.login',
     'rocketvoip.utility_service',
     'rocketvoip.panel_editUser',
@@ -13,6 +14,9 @@ angular.module('rocketvoip', [
     'rocketvoip.view_users',
     'rocketvoip.view_login',
     'rocketvoip.view_companies',
+    'rocketvoip.view_dialplans',
+    'rocketvoip.view_editDialplan',
+    'rocketvoip.panel_editAction',
     'rocketvoip.panel_editCompany',
     'rocketvoip.view_header'
 ]).constant('appConfig', {
