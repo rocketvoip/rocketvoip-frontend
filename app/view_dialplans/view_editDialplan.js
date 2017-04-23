@@ -13,14 +13,18 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
     }])
 
     .controller('ViewEditDialplanCtrl', ['$scope', 'DialplanService', 'UtilityService', 'CompanyService',
-        '$routeParams', '$location',
-        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location) {
+        '$routeParams', '$location','rfc4122',
+        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location,rfc4122) {
             var ctrl = this;
             var dialplanID;
 
             this.query = function () {
-                $scope.dialplan = DialplanService.get({id: dialplanID});
-                //TODO: Set uuid property
+                DialplanService.get({id: dialplanID}).$promise.then(function (dialplan) {
+                    $scope.dialplan = dialplan;
+                    angular.forEach($scope.dialplan.actions, function(action) {
+                        action.uuid = rfc4122.v4();
+                    });
+                });
             };
 
             this.updateAction = function (updatedAction) {
@@ -52,12 +56,18 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
             };
 
             $scope.saveDialplan = function () {
-                DialplanService.save($scope.dialplan).$promise.then(function (dialplan) {
-                    $scope.dialplan = dialplan;
-                });
+                var callback = function (dialplan) {
+                    dialplanID = dialplan.id;
+                    this.query();
+                };
+
+                if(!($scope.dialplan.id)) {
+                    DialplanService.save($scope.dialplan).$promise.then(callback);
+                }else{
+                    DialplanService.update($scope.dialplan).$promise.then(callback);
+                }
             };
 
-            //TODO: Refactor!
             $scope.swap = function (action, value) {
                 var array = $scope.dialplan.actions;
                 var oldIndex = array.indexOf(action);

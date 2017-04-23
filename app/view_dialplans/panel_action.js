@@ -35,7 +35,19 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
             $scope.initType = function () {
                 if ($scope.action.type === "Dial") {
                     $scope.sipClients = SipClientService.query();
+                    $scope.action.typeSpecific = {
+                        ringingTime: 15,
+                        sipClients: []
+                    };
                 }
+
+                if ($scope.action.type === "SayAlpha") {
+                    $scope.action.typeSpecific = {
+                        sleepTime: 3
+                    };
+                }
+
+                $scope.action.uuid = rfc4122.v4();
             };
 
             $scope.action = angular.copy(action);
@@ -46,10 +58,7 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
             } else {
                 $scope.isNewDialplan = true;
                 $scope.action = {
-                    //uuid: rfc4122.v4()
                 };
             }
-
-            $scope.initType();
         }
     ]);
