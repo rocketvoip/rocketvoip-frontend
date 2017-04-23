@@ -5,7 +5,7 @@
             <h1 ng-show="!isNewDialplan" flex>Edit Dialplan"</h1>
 
             <div layout="column" layout-align=" center">
-                <p>Company: <b>{{dialplan.company.name}}</b></p>
+                <p>Company: <strong>{{dialplan.company.name}}</strong></p>
 
                 <div layout="row">
                     <md-button class="md-fab md-warn md-secondary button-save-dialplan" aria-label="Save Dialplan"
@@ -54,8 +54,8 @@
                     </md-list-item>
                     <md-list-item flex="100" ng-repeat="action in dialplan.actions">
                         <p>
-                            <b ng-if="action.type == 'SayAlpha'">Voice Message:</b>
-                            <b ng-if="action.type == 'Dial'">Team:</b>
+                            <strong ng-if="action.type == 'SayAlpha'">Voice Message:</strong>
+                            <strong ng-if="action.type == 'Dial'">Team:</strong>
                             {{ action.name }}
                         </p>
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit reservespace"
