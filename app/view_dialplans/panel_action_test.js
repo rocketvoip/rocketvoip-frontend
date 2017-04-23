@@ -63,10 +63,10 @@ describe('rocketvoip.panel_editAction module', function () {
 
         it('should save action when form is valid', inject(function () {
             scope.action.name = "Test123";
-            scope.action.type = "VOICE_MESSAGE";
+            scope.action.type = "SayAlpha";
             scope.action.typeSpecific = {
                 voiceMessage: "Test Message",
-                delay: 5
+                sleepTime: 5
             };
             scope.$apply();
             scope.saveAction();
@@ -87,8 +87,8 @@ describe('rocketvoip.panel_editAction module', function () {
             expect(callbackDelete).toHaveBeenCalledTimes(1);
         }));
 
-        it('should load SipClients when selecting TEAM', inject(function () {
-            scope.action.type = "TEAM";
+        it('should load SipClients when selecting Dial', inject(function () {
+            scope.action.type = "Dial";
             scope.initType();
             expect(SipClientService.query).toHaveBeenCalledTimes(1);
         }));

@@ -32,8 +32,13 @@
             <form name="dialplanEditForm" flex="60" layout-align="start center">
 
                 <md-input-container layout="column">
+                    <label>Dialplan name</label>
+                    <input type="text" name="nome" ng-model="dialplan.name" required>
+                </md-input-container>
+
+                <md-input-container layout="column">
                     <label>Phone Number (optional)</label>
-                    <input type="text" name="phone" ng-model="sipClient.phone" ng-pattern='/^((\+[0-9]+)|([0-9]+))$/'>
+                    <input type="text" name="phone" ng-model="dialplan.phone" ng-pattern='/^((\+[0-9]+)|([0-9]+))$/'>
                     <div ng-messages="dialplanEditForm.phone.$error">
                         <div ng-message="pattern">Format: +41711234567, 0711234567 or 123</div>
                     </div>
@@ -49,8 +54,8 @@
                     </md-list-item>
                     <md-list-item flex="100" ng-repeat="action in dialplan.actions">
                         <p>
-                            <b ng-if="action.type == 'VOICE_MESSAGE'">Voice Message:</b>
-                            <b ng-if="action.type == 'TEAM'">Team:</b>
+                            <b ng-if="action.type == 'SayAlpha'">Voice Message:</b>
+                            <b ng-if="action.type == 'Dial'">Team:</b>
                             {{ action.name }}
                         </p>
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit reservespace"

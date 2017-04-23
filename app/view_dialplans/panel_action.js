@@ -8,8 +8,8 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
         'callbackUpdate', 'callbackDelete', 'rfc4122',
         function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackUpdate, callbackDelete, rfc4122) {
             $scope.types = [
-                {name: 'TEAM', text: 'Team'},
-                {name: 'VOICE_MESSAGE', text: 'Voice Message'}
+                {name: 'Dial', text: 'Team'},
+                {name: 'SayAlpha', text: 'Voice Message'}
             ];
 
             $scope.closeDialog = function () {
@@ -33,7 +33,7 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
             };
 
             $scope.initType = function () {
-                if ($scope.action.type === "TEAM") {
+                if ($scope.action.type === "Dial") {
                     $scope.sipClients = SipClientService.query();
                 }
             };
@@ -46,8 +46,7 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
             } else {
                 $scope.isNewDialplan = true;
                 $scope.action = {
-                    team: [],
-                    uuid: rfc4122.v4()
+                    //uuid: rfc4122.v4()
                 };
             }
 
