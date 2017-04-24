@@ -93,6 +93,13 @@ describe('rocketvoip.panel_editAction module', function () {
             expect(SipClientService.query).toHaveBeenCalledTimes(1);
         }));
 
+        it('should initialize type SayAlpha', inject(function () {
+            expect(scope.action.typeSpecific).toBeUndefined()
+            scope.action.type = "SayAlpha";
+            scope.initType();
+            expect(scope.action.typeSpecific.sleepTime).toBeDefined()
+        }));
+
         it('should set isNewDialplan to false for existing actions', inject(function () {
             action.name = "Test";
 
