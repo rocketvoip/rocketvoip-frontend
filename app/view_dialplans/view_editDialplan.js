@@ -58,13 +58,22 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
             $scope.saveDialplan = function () {
                 var callback = function (dialplan) {
                     dialplanID = dialplan.id;
-                    this.query();
+                    ctrl.query();
+                    $scope.isNewDialplan = false;
+                    UtilityService.showToast("Dialplan saved");
                 };
 
                 if(!($scope.dialplan.id)) {
                     DialplanService.save($scope.dialplan).$promise.then(callback);
                 }else{
                     DialplanService.update($scope.dialplan).$promise.then(callback);
+                }
+            };
+            
+            $scope.deleteDialplan = function () {
+                if(!($scope.isNewDialplan)){
+                    DialplanService.delete($scope.dialplan);
+                    $scope.closeDialplan();
                 }
             };
 
@@ -97,7 +106,7 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                     $location.path('/view_dialplans/');
                 }
                 $scope.isNewDialplan = false;
-                this.query()
+                ctrl.query()
             } else {
                 $scope.isNewDialplan = true;
                 $scope.dialplan = {

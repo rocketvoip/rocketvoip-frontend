@@ -22,9 +22,16 @@ describe('rocketvoip.view_editDialplan module', function () {
             DialplanService = {
                 get: function () {
                     return callbackNgResource(testData.dialplan);
+                },
+                delete: jasmine.createSpy(),
+                save: function (data) {
+                    data.id = 4;
+                    return callbackNgResource(data);
+                },
+                update: function(data){
+                    return callbackNgResource(data);
                 }
             };
-
 
             testData = {};
 
@@ -69,7 +76,8 @@ describe('rocketvoip.view_editDialplan module', function () {
             };
 
             UtilityService = {
-                "showDialog": jasmine.createSpy()
+                "showDialog": jasmine.createSpy(),
+                "showToast": jasmine.createSpy()
             };
 
             scope = $rootScope.$new();
@@ -116,6 +124,73 @@ describe('rocketvoip.view_editDialplan module', function () {
             var action = scope.dialplan.actions[0];
             expect(action.uuid.length).toBe(36);
         }));
+
+        it('should not delete new dialplan', inject(function () {
+            scope.deleteDialplan();
+            expect(DialplanService.delete).toHaveBeenCalledTimes(0);
+        }));
+
+        it('should delete existing dialplan', inject(function () {
+            scope.isNewDialplan = false;
+            scope.deleteDialplan();
+            expect(DialplanService.delete).toHaveBeenCalledTimes(1);
+        }));
+
+        it('should update action', inject(function () {
+            ctrl.updateAction(angular.copy(testData.actionSayAlpha));
+            ctrl.updateAction(angular.copy(testData.actionDial));
+            expect(scope.dialplan.actions.length).toBe(2);
+            testData.actionDial.name = "Changed name";
+            ctrl.updateAction(angular.copy(testData.actionDial));
+            var action = scope.dialplan.actions;
+            expect(action[1].name).toEqual(testData.actionDial.name);
+            expect(scope.dialplan.actions.length).toBe(2);
+        }));
+
+        it('should swap actions', inject(function () {
+            ctrl.updateAction(testData.actionSayAlpha);
+            ctrl.updateAction(testData.actionDial);
+            var action = scope.dialplan.actions;
+            expect(action[0].name).toEqual(testData.actionSayAlpha.name);
+            expect(action[1].name).toEqual(testData.actionDial.name);
+            scope.swap(action[1],-1);
+            action = scope.dialplan.actions;
+            expect(action[0].name).toEqual(testData.actionDial.name);
+            expect(action[1].name).toEqual(testData.actionSayAlpha.name);
+        }));
+
+        it('should not swap actions if action not exists', inject(function () {
+            ctrl.updateAction(testData.actionSayAlpha);
+            ctrl.updateAction(testData.actionDial);
+            var action = scope.dialplan.actions;
+            expect(action[0].name).toEqual(testData.actionSayAlpha.name);
+            expect(action[1].name).toEqual(testData.actionDial.name);
+            scope.swap({},-1);
+            action = scope.dialplan.actions;
+            expect(action[0].name).toEqual(testData.actionSayAlpha.name);
+            expect(action[1].name).toEqual(testData.actionDial.name);
+        }));
+
+        it('should POST on new dialplan', inject(function () {
+            delete scope.dialplan.id;
+            scope.dialplan.name = "Test-Name";
+            scope.$apply();
+            ctrl.updateAction(testData.actionSayAlpha);
+            scope.saveDialplan();
+            expect(scope.dialplan.id).toBeDefined();
+        }));
+
+        it('should PUT on existing dialplan', inject(function () {
+            spyOn(DialplanService,'update').and.callThrough();
+            deferred = q.defer();
+            scope.dialplan.id = 5;
+            scope.dialplan.name = "Test-Name";
+            scope.saveDialplan();
+            scope.$apply();
+            expect(DialplanService.update).toHaveBeenCalled();
+            expect(UtilityService.showToast).toHaveBeenCalled();
+        }));
+
 
     });
 });
