@@ -4,6 +4,8 @@ describe('rocketvoip', function () {
 
     describe('view_users', function () {
 
+        var actionSayAlpha, actionDial;
+
         beforeEach(function () {
             browser.get('index.html');
 
@@ -74,12 +76,79 @@ describe('rocketvoip', function () {
                     element(by.id('viewLoginForm-login')).click();
                 }
             });
+
+            actionSayAlpha = {
+                name: "Test-Action-01",
+                message: "Hello World!",
+                sleepTime: 10
+            };
+
+            actionDial = {
+                name: "Test-Action-02",
+                ringingTime: "10",
+                sipClients: ['Marco Studerus','Martin Witt']
+            };
+
             browser.get('index.html#!/view_dialplans');
         });
 
 
         it('should load companies', function () {
             expect(element.all(by.tagName('md-option')).count()).toBe(2);
+        });
+
+        it('should redirect when adding new dialplan', function () {
+            element.all(by.className('view-dialplan-add-dialplan')).first().click();
+            expect(browser.getLocationAbsUrl()).toEqual('/view_editDialplan/?companyID=1&companyName=test1');
+        });
+
+        it('should redirect from view_editDialplan to view_dialplan', function () {
+            element.all(by.className('view-dialplan-add-dialplan')).first().click();
+            element.all(by.id('button-close-dialplan')).first().click();
+            expect(browser.getLocationAbsUrl()).toEqual('/view_dialplans');
+        });
+
+        it('should not show delete button for new dialplans', function () {
+            element.all(by.className('view-dialplan-add-dialplan')).first().click();
+            expect(element(by.css('.button-delete-dialplan')).isPresent()).toBeFalsy();
+        });
+
+        function addActionSayAlpha(action){
+            element(by.id('view-editDialplan-add-action')).click();
+            element(by.model('action.name')).clear().sendKeys(action.name);
+            element(by.tagName('md-select')).click();
+            element.all(by.css('.md-select-menu-container.md-active md-option')).last().click();
+            element(by.model('action.typeSpecific.voiceMessage')).clear().sendKeys(action.message);
+            element(by.model('action.typeSpecific.sleepTime')).clear().sendKeys(action.sleepTime);
+            element(by.id('plane-editAction-save')).click();
+        }
+
+        function addActionDial(action){
+            element(by.id('view-editDialplan-add-action')).click();
+            element(by.model('action.name')).clear().sendKeys(action.name);
+            element(by.tagName('md-select')).click();
+            element.all(by.css('.md-select-menu-container.md-active md-option')).first().click();
+            element(by.model('action.typeSpecific.ringingTime')).clear().sendKeys(action.ringingTime);
+            element(by.id('input-30')).sendKeys(action.sipClients[0]);
+            element(by.className('md-contact-name')).click();
+            element(by.id('input-30')).sendKeys(action.sipClients[1]);
+            element.all(by.className('md-contact-name')).last().click();
+            element(by.id('plane-editAction-save')).click();
+        }
+
+        it('should add dialplan', function () {
+            expect(element.all(by.className('view-dialplans-name')).count()).toEqual(0);
+            element.all(by.className('view-dialplan-add-dialplan')).first().click();
+            element(by.model('dialplan.name')).clear().sendKeys("Test-Dialplan-01");
+            element(by.model('dialplan.phone')).clear().sendKeys("999");
+            expect(element.all(by.repeater('action in dialplan.action')).count()).toEqual(0);
+            addActionSayAlpha(actionSayAlpha);
+            expect(element.all(by.repeater('action in dialplan.actions')).count()).toEqual(1);
+            addActionDial(actionDial);
+            expect(element.all(by.repeater('action in dialplan.actions')).count()).toEqual(2);
+            element(by.id('button-save-dialplan')).click();
+            element(by.id('button-close-dialplan')).click();
+            expect(element.all(by.className('view-dialplans-name')).count()).toEqual(1);
         });
 
     });
