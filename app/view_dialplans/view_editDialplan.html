@@ -8,17 +8,17 @@
                 <p>Company: <strong>{{dialplan.company.name}}</strong></p>
 
                 <div layout="row">
-                    <md-button class="md-fab md-warn md-secondary button-save-dialplan" aria-label="Save Dialplan"
+                    <md-button id="button-save-dialplan" class="md-fab md-warn md-secondary" aria-label="Save Dialplan"
                                ng-click="saveDialplan()">
                         <md-tooltip>Save Dialplan</md-tooltip>
                         <md-icon>save</md-icon>
                     </md-button>
-                    <md-button class="md-fab md-warn md-secondary button-close-dialplan" aria-label="Close"
+                    <md-button id="button-close-dialplan" class="md-fab md-warn md-secondary" aria-label="Close"
                                ng-click="closeDialplan()">
                         <md-tooltip>Back to all dialplans</md-tooltip>
                         <md-icon>reply</md-icon>
                     </md-button>
-                    <md-button ng-if="!isNewDialplan" class="md-fab md-warn md-secondary button-delete-dialplan" aria-label="Close"
+                    <md-button id="view-editDialplan-delete" ng-if="!isNewDialplan" class="md-fab md-warn md-secondary button-delete-dialplan" aria-label="Close"
                                ng-click="deleteDialplan()">
                         <md-tooltip>Delete Dialplan</md-tooltip>
                         <md-icon>delete</md-icon>
@@ -75,7 +75,7 @@
                 </md-list>
 
                 <div layout="row" layout-align="center center">
-                    <md-button class="md-raised" ng-click="edit(null)">Add Action</md-button>
+                    <md-button id="view-editDialplan-add-action" class="md-raised" ng-click="edit(null)">Add Action</md-button>
                 </div>
 
             </form>
