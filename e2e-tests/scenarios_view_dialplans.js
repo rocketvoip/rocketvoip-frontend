@@ -129,9 +129,9 @@ describe('rocketvoip', function () {
             element(by.tagName('md-select')).click();
             element.all(by.css('.md-select-menu-container.md-active md-option')).first().click();
             element(by.model('action.typeSpecific.ringingTime')).clear().sendKeys(action.ringingTime);
-            element(by.id('input-30')).sendKeys(action.sipClients[0]);
+            element(by.css('input[type="search"]')).sendKeys(action.sipClients[0]);
             element(by.className('md-contact-name')).click();
-            element(by.id('input-30')).sendKeys(action.sipClients[1]);
+            element(by.css('input[type="search"]')).sendKeys(action.sipClients[1]);
             element.all(by.className('md-contact-name')).last().click();
             element(by.id('plane-editAction-save')).click();
         }
