@@ -4,6 +4,6 @@
  Author: Marco Studerus
  */
 angular.module('rocketvoip.view_header', [])
-    .controller('HeaderCtrl', ['$scope', 'AuthenticationService', function ($scope, AuthenticationService) {
+    .controller('HeaderCtrl', function ($scope, AuthenticationService) {
         $scope.logout = AuthenticationService.Logout;
-    }]);
+    });

@@ -12,8 +12,7 @@ angular.module('rocketvoip.view_companies', ['ngRoute', 'ngResource'])
     });
 }])
 
-.controller('ViewCompaniesCtrl', ['$scope', '$mdPanel', 'appConfig', 'CompanyService', 'UtilityService',
-    function ($scope, $mdPanel, appConfig, CompanyService, UtilityService) {
+.controller('ViewCompaniesCtrl', function ($scope, $mdPanel, appConfig, CompanyService, UtilityService) {
 
         this.queryCompanies = function () {
             $scope.companies = CompanyService.query();
@@ -33,7 +32,7 @@ angular.module('rocketvoip.view_companies', ['ngRoute', 'ngResource'])
                 ctrl.queryCompanies);
         }
     }
-])
+)
 
 .factory('CompanyService', ['$resource', 'appConfig', function ($resource, appConfig) {
     return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/companies/:id', {id: "@id"} ,{
