@@ -78,7 +78,7 @@ describe('rocketvoip.view_users module', function () {
         if ('should call SipClientService to query clients', inject(function () {
                 spyOn(SipClientServiceMock, 'query');
                 viewUserCtrl.queryUsers();
-                expect(scope.sipClients).toEqual(testSipClients);
+                expect(scope.sipClients).toMatch(testSipClients);
                 expect(SipClientServiceMock.query).toHaveBeenCalledTimes(1);
             }));
 
