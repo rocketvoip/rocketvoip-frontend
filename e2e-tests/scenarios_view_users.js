@@ -254,16 +254,16 @@ describe('rocketvoip', function () {
             addTestSipClient(sipClient1);
             addTestSipClient(sipClient2);
             addTestSipClient(sipClient3);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient3.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toMatch(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toMatch(sipClient1.name);
 
             element(by.id('view-user-sort-phone')).click();
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient2.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toMatch(sipClient2.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toMatch(sipClient1.name);
 
             element(by.id('view-user-sort-phone')).click();
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient1.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient2.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toMatch(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toMatch(sipClient2.name);
 
         });
 
@@ -289,8 +289,8 @@ describe('rocketvoip', function () {
             expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(3);
             element(by.id('view-user-filter-input')).sendKeys('00000');
             expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(2);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient2.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toMatch(sipClient2.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toMatch(sipClient1.name);
             element(by.id('view-user-filter-input')).clear();
             expect(element.all(by.className('view-user-sipUserName')).count()).toEqual(3);
         });
