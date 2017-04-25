@@ -4,8 +4,7 @@
  Author: Marco Studerus
  */
 angular.module('rocketvoip.panel_editUser', ['ngMessages'])
-    .controller('PanelEditSipClientDialogCtrl', ['$scope', 'mdPanelRef', 'sipClient','company', 'appConfig',
-        'SipClientService','UtilityService',
+    .controller('PanelEditSipClientDialogCtrl',
         function ($scope, mdPanelRef, sipClient, company, appConfig, SipClientService,UtilityService) {
 
             this.closeDialog = function() {
@@ -52,4 +51,4 @@ angular.module('rocketvoip.panel_editUser', ['ngMessages'])
                 $scope.sipClientNameCopy = angular.copy(sipClient.name);
                 $scope.isNewSipClient = false;
             }
-        }]);
+        });

@@ -12,8 +12,7 @@ angular.module('rocketvoip.view_login', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewLoginCtrl', ['$scope', '$location', 'AuthenticationService', 'UtilityService',
-        function ($scope, $location, AuthenticationService, UtilityService) {
+    .controller('ViewLoginCtrl', function ($scope, $location, AuthenticationService, UtilityService) {
             var viewLoginCtrl = this;
             this.login = function () {
                 if ($scope.viewLoginForm.$valid) {
@@ -33,4 +32,4 @@ angular.module('rocketvoip.view_login', ['ngRoute', 'ngResource'])
             };
 
             $scope.showToast = UtilityService.showToast;
-        }]);
+        });

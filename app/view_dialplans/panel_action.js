@@ -4,9 +4,7 @@
  Author: Marco Studerus
  */
 angular.module('rocketvoip.panel_editAction', ['angular.filter'])
-    .controller('PanelActionDialogCtrl', ['$scope', 'mdPanelRef', 'action', 'UtilityService', 'SipClientService',
-        'callbackAction', 'ActionIdService',
-        function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackAction, ActionIdService) {
+    .controller('PanelActionDialogCtrl', function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackAction, ActionIdService) {
             $scope.types = [
                 {name: 'Dial', text: 'Ring', description: '(rings on multiple phones)'},
                 {name: 'SayAlpha', text: 'Voice Message', description: '(reads a message aloud)'}
@@ -65,7 +63,7 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
                 $scope.action = {};
             }
         }
-    ]).service("ActionIdService", function () {
+    ).service("ActionIdService", function () {
     var nextId = 1;
     this.getUniqueId = function () {
         return nextId++;

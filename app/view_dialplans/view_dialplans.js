@@ -12,8 +12,7 @@ angular.module('rocketvoip.view_dialplans', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewDialplansCtrl', ['$scope', 'DialplanService', 'UtilityService', 'CompanyService', '$location',
-        function ($scope, DialplanService, UtilityService, CompanyService, $location) {
+    .controller('ViewDialplansCtrl', function ($scope, DialplanService, UtilityService, CompanyService, $location) {
             var ctrl = this;
 
             this.queryDialplans = function () {
@@ -50,11 +49,11 @@ angular.module('rocketvoip.view_dialplans', ['ngRoute', 'ngResource'])
                 $location.path('/view_editDialplan/' + id).search(search);
             };
 
-        }]).factory('DialplanService', ['$resource', 'appConfig', function ($resource, appConfig) {
+        }).factory('DialplanService', function ($resource, appConfig) {
     return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/dialplans/:id', {id: "@id"}, {
             update: {
                 method: 'PUT'
             }
         }
     );
-}]);
+});

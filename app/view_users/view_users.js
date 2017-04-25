@@ -12,8 +12,7 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewUsersCtrl', ['$scope', 'appConfig', 'SipClientService', 'UtilityService', 'CompanyService',
-        function ($scope, appConfig, SipClientService, UtilityService, CompanyService) {
+    .controller('ViewUsersCtrl', function ($scope, appConfig, SipClientService, UtilityService, CompanyService) {
             var ctrl = this;
 
             this.queryUsers = function () {
@@ -42,12 +41,12 @@ angular.module('rocketvoip.view_users', ['ngRoute', 'ngResource'])
                     },
                     ctrl.queryUsers);
             };
-        }])
-    .factory('SipClientService', ['$resource', 'appConfig', function ($resource, appConfig) {
+        })
+    .factory('SipClientService', function ($resource, appConfig) {
         return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/sipclients/:id', {id: "@id"}, {
                 update: {
                     method: 'PUT'
                 }
             }
         );
-    }]);
+    });

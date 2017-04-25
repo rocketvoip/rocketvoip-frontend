@@ -4,9 +4,7 @@
  Author: Martin Wittwer
  */
 angular.module('rocketvoip.panel_editCompany', [])
-    .controller('PanelCompanyDialogCtrl', ['$scope', 'mdPanelRef', 'company', 'appConfig',
-        'CompanyService','UtilityService',
-        function ($scope, mdPanelRef, company, appConfig, CompanyService,UtilityService) {
+    .controller('PanelCompanyDialogCtrl', function ($scope, mdPanelRef, company, appConfig, CompanyService,UtilityService) {
             this.closeDialog = function() {
                 mdPanelRef && mdPanelRef.close();
             };
@@ -38,4 +36,4 @@ angular.module('rocketvoip.panel_editCompany', [])
                 $scope.companyNameCopy = angular.copy(company.name);
             }
         }
-    ]);
+    );
