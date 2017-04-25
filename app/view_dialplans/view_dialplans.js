@@ -38,13 +38,16 @@ angular.module('rocketvoip.view_dialplans', ['ngRoute', 'ngResource'])
 
             this.showDialplan = function (dialplan) {
                 var id = '';
+                var search = {};
                 if (dialplan && dialplan.id) {
                     id = dialplan.id;
+                }else{
+                    search = {
+                        companyID: $scope.currentCompany.id,
+                        companyName: $scope.currentCompany.name
+                    }
                 }
-                $location.path('/view_editDialplan/' + id).search({
-                    companyID: $scope.currentCompany.id,
-                    companyName: $scope.currentCompany.name
-                });
+                $location.path('/view_editDialplan/' + id).search(search);
             };
 
         }]).factory('DialplanService', ['$resource', 'appConfig', function ($resource, appConfig) {

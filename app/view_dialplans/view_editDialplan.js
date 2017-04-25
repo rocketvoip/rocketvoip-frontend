@@ -12,42 +12,88 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
         });
     }])
 
-    .controller('ViewEditDialplanCtrl', ['$scope', 'DialplanService', 'UtilityService', 'CompanyService',
-        '$routeParams', '$location',
-        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location) {
+    .controller('ViewEditDialplanCtrl',
+        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location, $filter) {
             var ctrl = this;
             var dialplanID;
+
+            function findAction(find) {
+                return $filter('filter')($scope.dialplan.actions, function (action) {
+                    return action.id === find.id;
+                })[0];
+            }
+
+            function getIndexOfAction(find){
+                var action = findAction(find);
+                return $scope.dialplan.actions.indexOf(action);
+            }
+
+            function isValidRoute(){
+                return typeof($routeParams.id) == 'undefined' || !isNaN($routeParams.id);
+            }
+
+            function initializeExistingDialplan(){
+                dialplanID = $routeParams.id;
+                $scope.isNewDialplan = false;
+                ctrl.query()
+            }
+
+            function isValidParameter(params){
+                return typeof(params) !== 'undefined' && typeof(params.companyID) !== 'undefined' &&
+                    typeof(params.companyName) !== 'undefined';
+            }
+
+            function redirectToViewDialplans(){
+                $location.search({});
+                $location.path('/view_dialplans/');
+            }
+            
+            function initializeNewDialplan() {
+                $scope.isNewDialplan = true;
+                $scope.dialplan = {
+                    actions: []
+                };
+                var params = $location.search();
+
+                if (isValidParameter(params)) {
+                    $scope.dialplan.company = {
+                        id: params.companyID,
+                        name: params.companyName
+                    }
+                }else{
+                    redirectToViewDialplans();
+                }
+            }
+
+            function initialize(){
+                if(!isValidRoute()){
+                    redirectToViewDialplans();
+                } else if ($routeParams.id) {
+                    initializeExistingDialplan();
+                } else {
+                    initializeNewDialplan();
+                }
+            }
 
             this.query = function () {
                 $scope.dialplan = DialplanService.get({id: dialplanID});
             };
 
-            this.updateAction = function (updatedAction) {
-                var found = 0;
-                angular.forEach($scope.dialplan.actions, function (action, key) {
-                    if (action.id == updatedAction.id) {
-                        $scope.dialplan.actions[key] = updatedAction;
-                        found = 1;
-                    }
-                });
-                if (!found) {
-                    $scope.dialplan.actions.push(updatedAction);
-                }
+            this.updateAction = function (action) {
+                var index = getIndexOfAction(action);
+                $scope.dialplan.actions[index] = action;
             };
 
-            this.deleteAction = function (deletedAction) {
-                var actions = $scope.dialplan.actions;
-                for (var i = actions.length - 1; i >= 0; i--) {
-                    if (actions[i].id == deletedAction.id) {
-                        actions.splice(i, 1);
-                    }
-                }
+            this.createAction = function (action) {
+                $scope.dialplan.actions.push(action);
             };
 
+            this.deleteAction = function (action) {
+                $scope.dialplan.actions.splice(getIndexOfAction(action), 1);
+            };
 
             $scope.closeDialplan = function () {
-                $location.search({});
-                $location.path('/view_dialplans/');
+                redirectToViewDialplans();
             };
 
             $scope.saveDialplan = function () {
@@ -89,35 +135,14 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                     'action-dialog',
                     {
                         'action': action,
-                        'callbackUpdate': ctrl.updateAction,
-                        'callbackDelete': ctrl.deleteAction
+                        'callbackAction': {
+                            "update": ctrl.updateAction,
+                            "delete": ctrl.deleteAction,
+                            "create": ctrl.createAction
+                        }
                     },
                     null);
             };
 
-            if ($routeParams.id) {
-                dialplanID = $routeParams.id;
-                if (isNaN(dialplanID)) {
-                    $location.path('/view_dialplans/');
-                }
-                $scope.isNewDialplan = false;
-                ctrl.query()
-            } else {
-                $scope.isNewDialplan = true;
-                $scope.dialplan = {
-                    actions: []
-                };
-                var params = $location.search();
-
-                if (!(params && params.companyID && params.companyName)) {
-                    $location.search({});
-                    $location.path('/view_dialplans/');
-                }
-
-                $scope.dialplan.company = {
-                    id: params.companyID,
-                    name: params.companyName
-                }
-            }
-
-        }]);
+            initialize();
+        });

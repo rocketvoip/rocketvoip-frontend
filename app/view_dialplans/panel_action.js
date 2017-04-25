@@ -5,8 +5,8 @@
  */
 angular.module('rocketvoip.panel_editAction', ['angular.filter'])
     .controller('PanelActionDialogCtrl', ['$scope', 'mdPanelRef', 'action', 'UtilityService', 'SipClientService',
-        'callbackUpdate', 'callbackDelete', 'ActionIdService',
-        function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackUpdate, callbackDelete, ActionIdService) {
+        'callbackAction', 'ActionIdService',
+        function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackAction, ActionIdService) {
             $scope.types = [
                 {name: 'Dial', text: 'Team'},
                 {name: 'SayAlpha', text: 'Voice Message'}
@@ -18,7 +18,11 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
 
             $scope.saveAction = function () {
                 if ($scope.actionEditForm.$valid) {
-                    callbackUpdate($scope.action);
+                    if($scope.isNewDialplan){
+                        callbackAction.create($scope.action);
+                    }else{
+                        callbackAction.update($scope.action);
+                    }
                     $scope.closeDialog();
                 } else {
                     UtilityService.setAllFieldsTouched($scope.actionEditForm);
@@ -27,7 +31,7 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
 
             $scope.deleteAction = function () {
                 if (!($scope.isNewDialplan)) {
-                    callbackDelete($scope.action);
+                    callbackAction.delete($scope.action);
                     $scope.closeDialog();
                 }
             };

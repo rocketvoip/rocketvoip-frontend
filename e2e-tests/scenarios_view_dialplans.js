@@ -189,5 +189,20 @@ describe('rocketvoip', function () {
             element.all(by.className('view-editDialplan-up')).last().click();
             expect(element.all(by.className('view-editDialplan-action-name')).first().getText()).toEqual("Voice Message: Test-Action-01");
         });
+
+        it('should update dialplan', function () {
+            element.all(by.className('view-dialplan-add-dialplan')).first().click();
+            element(by.model('dialplan.name')).clear().sendKeys("Test-Dialplan-01");
+            element(by.model('dialplan.phone')).clear().sendKeys("999");
+            addActionSayAlpha(actionSayAlpha);
+            addActionDial(actionDial);
+            expect(element.all(by.repeater('action in dialplan.actions')).count()).toEqual(2);
+            element(by.id('button-save-dialplan')).click();
+            element.all(by.className('view-editDialplan-edit')).first().click();
+
+            element(by.model('dialplan.name')).clear().sendKeys("rename");
+            element(by.id('plane-editAction-save')).click();
+            expect(element.all(by.className('view-editDialplan-action-name')).first().getText()).toEqual("Voice Message: rename");
+        });
     });
 });
