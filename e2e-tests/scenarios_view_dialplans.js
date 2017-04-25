@@ -200,7 +200,7 @@ describe('rocketvoip', function () {
             element(by.id('button-save-dialplan')).click();
             element.all(by.className('view-editDialplan-edit')).first().click();
 
-            element(by.model('dialplan.name')).clear().sendKeys("rename");
+            element(by.model('action.name')).clear().sendKeys("rename");
             element(by.id('plane-editAction-save')).click();
             expect(element.all(by.className('view-editDialplan-action-name')).first().getText()).toEqual("Voice Message: rename");
         });
