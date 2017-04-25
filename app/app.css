@@ -102,3 +102,7 @@ md-input-container .md-errors-spacer {
 .center  {
     text-align: center;
 }
+
+h1 {
+    padding-left: 10px;
+}

@@ -216,23 +216,23 @@ describe('rocketvoip', function () {
             addTestSipClient(sipClient1);
             addTestSipClient(sipClient2);
             addTestSipClient(sipClient3);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient3.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toMatch(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toMatch(sipClient1.name);
         });
 
         it('should change sort table by name on change', function () {
             addTestSipClient(sipClient1);
             addTestSipClient(sipClient2);
             addTestSipClient(sipClient3);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient3.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toMatch(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toMatch(sipClient1.name);
 
             element(by.id('view-user-sort-name')).click();
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient3.name);
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toMatch(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toMatch(sipClient1.name);
             element(by.id('view-user-sort-name')).click();
-            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toEqual(sipClient3.name);
-            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toEqual(sipClient1.name);
+            expect(element.all(by.className('view-user-sipUserName')).first().getText()).toMatch(sipClient3.name);
+            expect(element.all(by.className('view-user-sipUserName')).last().getText()).toMatch(sipClient1.name);
         });
 
         it('should change sort table by phone on change', function () {

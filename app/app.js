@@ -20,7 +20,7 @@ angular.module('rocketvoip', [
     'rocketvoip.panel_editCompany',
     'rocketvoip.view_header'
 ]).constant('appConfig', {
-    'BACKEND_BASE_URL': 'http://localhost:8080',
+    'BACKEND_BASE_URL': 'https://rocketvoip-staging.herokuapp.com',
     'API_ENDPOINT': '/v1',
     'PASSWORD_LENGTH': 16
 }).config(function ($locationProvider, $routeProvider, $httpProvider) {

@@ -2,26 +2,26 @@
     <div>
         <div layout="row" layout-wrap layout-align="center">
             <h1 ng-show="isNewDialplan" flex>Create new Dialplan</h1>
-            <h1 ng-show="!isNewDialplan" flex>Edit Dialplan"</h1>
+            <h1 ng-show="!isNewDialplan" flex>Edit Dialplan</h1>
 
             <div layout="column" layout-align=" center">
                 <p>Company: <strong>{{dialplan.company.name}}</strong></p>
 
-                <div layout="row">
-                    <md-button id="button-save-dialplan" class="md-fab md-warn md-secondary" aria-label="Save Dialplan"
+                <div layout="row" layout-align=" center">
+                    <md-button id="button-save-dialplan" class="md-fab md-secondary" md-colors="{background: 'green'}" aria-label="Save Dialplan"
                                ng-click="saveDialplan()">
                         <md-tooltip>Save Dialplan</md-tooltip>
                         <md-icon>save</md-icon>
-                    </md-button>
-                    <md-button id="button-close-dialplan" class="md-fab md-warn md-secondary" aria-label="Close"
-                               ng-click="closeDialplan()">
-                        <md-tooltip>Back to all dialplans</md-tooltip>
-                        <md-icon>reply</md-icon>
                     </md-button>
                     <md-button id="view-editDialplan-delete" ng-if="!isNewDialplan" class="md-fab md-warn md-secondary button-delete-dialplan" aria-label="Close"
                                ng-click="deleteDialplan()">
                         <md-tooltip>Delete Dialplan</md-tooltip>
                         <md-icon>delete</md-icon>
+                    </md-button>
+                    <md-button id="button-close-dialplan" class="md-fab md-mini md-primary md-secondary" aria-label="Close"
+                               ng-click="closeDialplan()">
+                        <md-tooltip>Back to the dialplans</md-tooltip>
+                        <md-icon>reply</md-icon>
                     </md-button>
                 </div>
             </div>
@@ -32,12 +32,12 @@
             <form name="dialplanEditForm" flex="60" layout-align="start center">
 
                 <md-input-container layout="column">
-                    <label>Dialplan name</label>
+                    <label><strong>Dialplan Name</strong></label>
                     <input type="text" name="nome" ng-model="dialplan.name" required>
-                </md-input-container>
+                </md-input-container><br>
 
                 <md-input-container layout="column">
-                    <label>Phone Number (optional)</label>
+                    <label>Internal Phone Number (optional)</label>
                     <input type="text" name="phone" ng-model="dialplan.phone" ng-pattern='/^((\+[0-9]+)|([0-9]+))$/'>
                     <div ng-messages="dialplanEditForm.phone.$error">
                         <div ng-message="pattern">Format: +41711234567, 0711234567 or 123</div>
@@ -53,9 +53,11 @@
                         <p>There are no actions in this dialplan. Please add an action.</p>
                     </md-list-item>
                     <md-list-item flex="100" ng-repeat="action in dialplan.actions">
+                        <small>{{$index+1}}.</small>
+                        <div flex="5"></div>
                         <p>
                             <strong ng-if="action.type == 'SayAlpha'">Voice Message:</strong>
-                            <strong ng-if="action.type == 'Dial'">Team:</strong>
+                            <strong ng-if="action.type == 'Dial'">Ring:</strong>
                             {{ action.name }}
                         </p>
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit reservespace"

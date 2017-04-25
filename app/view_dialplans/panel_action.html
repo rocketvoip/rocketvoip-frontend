@@ -18,44 +18,53 @@
     <div>
         <form name="actionEditForm" flex layout="row" layout-wrap layout-align="center">
 
-            <md-input-container flex="90" layout="column">
-                <label>Action Name</label>
-                <input type="text" name="name" ng-model="action.name" ng-required="true">
-            </md-input-container>
+            <div flex="90">
+                <md-input-container layout="column">
+                    <label>Action Name</label>
+                    <input type="text" name="name" ng-model="action.name" ng-required="true">
+                </md-input-container><br>
 
-            <md-select flex="90" layout="column" ng-if="isNewDialplan && !(action.type)" ng-model="action.type" required
-                       placeholder="Select an action type"
-                       class="view-editAction-select" ng-change="initType()">
-                <md-option ng-value="type.name" ng-repeat="type in types">{{type.text}}
-                </md-option>
-            </md-select>
+                <md-select layout="column" ng-if="isNewDialplan && !(action.type)" ng-model="action.type" required
+                           placeholder="Select an action type"
+                           class="view-editAction-select" ng-change="initType()">
+                    <md-option ng-value="type.name" ng-repeat="type in types">{{type.text}} <small>{{type.description}}</small>
+                    </md-option>
+                </md-select>
+            </div>
 
-            <md-input-container ng-if="action.type === 'SayAlpha'" flex="90" layout="column">
-                <label>Voice Message</label>
-                <textarea name="voiceMessage" ng-model="action.typeSpecific.voiceMessage" md-maxlength="350" rows="7"
-                          md-select-on-focus ng-required="true">
-                </textarea>
-            </md-input-container>
+            <div ng-if="action.type === 'SayAlpha'" flex="90" layout="column">
+                <md-input-container flex layout="column">
+                    <label>Voice Message <small>(to be read)</small></label>
+                    <textarea name="voiceMessage" ng-model="action.typeSpecific.voiceMessage" md-maxlength="350" rows="7"
+                              md-select-on-focus ng-required="true">
+                    </textarea>
+                </md-input-container>
 
-            <md-input-container ng-if="action.type === 'SayAlpha'" flex="90" layout="column">
-                <label>Wait time after voice message</label>
-                <input ng-model="action.typeSpecific.sleepTime" type="number" step="1" ng-required="true"
-                       min="0" max="30">
-            </md-input-container>
+                <md-input-container flex layout="column">
+                    <label>Wait time after voice message <small>(seconds)</small></label>
+                    <input ng-model="action.typeSpecific.sleepTime" type="number" step="1" ng-required="true"
+                           min="0" max="30">
+                </md-input-container>
+            </div>
 
-            <md-input-container ng-if="action.type === 'Dial'" flex="90" layout="column">
-                <label>Time</label>
-                <input ng-model="action.typeSpecific.ringingTime" type="number" step="1" ng-required="true"
-                       min="0" max="30">
-            </md-input-container>
+            <div ng-if="action.type === 'Dial'" flex="90">
+                <md-input-container flex layout="column">
+                    <label>Ringing Time <small>(seconds)</small></label>
+                    <input ng-model="action.typeSpecific.ringingTime" type="number" step="1" ng-required="true"
+                           min="0" max="30">
+                </md-input-container><br>
 
-            <md-contact-chips ng-if="action.type === 'Dial'" flex="90" layout="column" ng-model="action.typeSpecific.sipClients"
-                              md-contacts="sipClients | filterBy: ['name', 'phone']: $query | filter:{company:{id: action.company.id}}"
-                              md-contact-name="name" md-contact-email="phone" md-require-match="true"
-                              md-highlight-flags="i" filter-selected="true" placeholder="Choose members...">
-            </md-contact-chips>
-            <div ng-if="action.type === 'Dial' && action.typeSpecific.sipClients.length < 1">
-                <p class="view-action-error">Please choose at least one sip client.</p>
+                <md-input-container flex layout="column" >
+                    <label>Users to be called</label>
+                    <md-contact-chips ng-model="action.typeSpecific.sipClients"
+                                      md-contacts="sipClients | filterBy: ['name', 'phone']: $query | filter:{company:{id: action.company.id}}"
+                                      md-contact-name="name" md-contact-email="phone" md-require-match="true"
+                                      md-highlight-flags="i" filter-selected="true" placeholder="Choose users to be called">
+                    </md-contact-chips>
+                </md-input-container>
+                <div ng-if="action.typeSpecific.sipClients.length < 1">
+                    <p class="view-action-error">Please choose at least one user.</p>
+                </div>
             </div>
 
         </form>
