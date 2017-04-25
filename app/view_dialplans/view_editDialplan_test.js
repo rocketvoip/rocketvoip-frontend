@@ -13,7 +13,6 @@ describe('rocketvoip.view_editDialplan module', function () {
 
             callbackNgResource = function (obj) {
                 var ret = {};
-                delete obj.uuid;
                 deferred.resolve(obj);
                 ret.$promise = deferred.promise;
                 return ret;
@@ -21,14 +20,14 @@ describe('rocketvoip.view_editDialplan module', function () {
 
             DialplanService = {
                 get: function () {
-                    return callbackNgResource(testData.dialplan);
+                    return testData.dialplan;
                 },
                 delete: jasmine.createSpy(),
                 save: function (data) {
                     data.id = 4;
                     return callbackNgResource(data);
                 },
-                update: function(data){
+                update: function (data) {
                     return callbackNgResource(data);
                 }
             };
@@ -36,7 +35,7 @@ describe('rocketvoip.view_editDialplan module', function () {
             testData = {};
 
             testData.actionDial = {
-                "uuid": "111111",
+                "id": "111111",
                 "name": "Test-Name-1",
                 "type": "Dial",
                 "typeSpecific": {
@@ -52,7 +51,7 @@ describe('rocketvoip.view_editDialplan module', function () {
             };
 
             testData.actionSayAlpha = {
-                "uuid": "555555",
+                "id": "555555",
                 "name": "SayAlphaTest",
                 "type": "SayAlpha",
                 "typeSpecific": {"voiceMessage": "Message", "sleepTime": 5}
@@ -66,7 +65,7 @@ describe('rocketvoip.view_editDialplan module', function () {
             };
 
             location = {
-                path: jasmine.createSpy().and.returnValue({search: jasmine.createSpy()}),
+                path: jasmine.createSpy(),
                 search: jasmine.createSpy().and.returnValue({
                     params: {
                         companyID: 4,
@@ -118,13 +117,6 @@ describe('rocketvoip.view_editDialplan module', function () {
             var action = scope.dialplan.actions[0];
         }));
 
-        it('should set uuid on load', inject(function () {
-            ctrl.query();
-            scope.$apply();
-            var action = scope.dialplan.actions[0];
-            expect(action.uuid.length).toBe(36);
-        }));
-
         it('should not delete new dialplan', inject(function () {
             scope.deleteDialplan();
             expect(DialplanService.delete).toHaveBeenCalledTimes(0);
@@ -137,8 +129,8 @@ describe('rocketvoip.view_editDialplan module', function () {
         }));
 
         it('should update action', inject(function () {
-            ctrl.updateAction(angular.copy(testData.actionSayAlpha));
-            ctrl.updateAction(angular.copy(testData.actionDial));
+            ctrl.createAction(angular.copy(testData.actionSayAlpha));
+            ctrl.createAction(angular.copy(testData.actionDial));
             expect(scope.dialplan.actions.length).toBe(2);
             testData.actionDial.name = "Changed name";
             ctrl.updateAction(angular.copy(testData.actionDial));
@@ -148,24 +140,24 @@ describe('rocketvoip.view_editDialplan module', function () {
         }));
 
         it('should swap actions', inject(function () {
-            ctrl.updateAction(testData.actionSayAlpha);
-            ctrl.updateAction(testData.actionDial);
+            ctrl.createAction(testData.actionSayAlpha);
+            ctrl.createAction(testData.actionDial);
             var action = scope.dialplan.actions;
             expect(action[0].name).toEqual(testData.actionSayAlpha.name);
             expect(action[1].name).toEqual(testData.actionDial.name);
-            scope.swap(action[1],-1);
+            scope.swap(action[1], -1);
             action = scope.dialplan.actions;
             expect(action[0].name).toEqual(testData.actionDial.name);
             expect(action[1].name).toEqual(testData.actionSayAlpha.name);
         }));
 
         it('should not swap actions if action not exists', inject(function () {
-            ctrl.updateAction(testData.actionSayAlpha);
-            ctrl.updateAction(testData.actionDial);
+            ctrl.createAction(testData.actionSayAlpha);
+            ctrl.createAction(testData.actionDial);
             var action = scope.dialplan.actions;
             expect(action[0].name).toEqual(testData.actionSayAlpha.name);
             expect(action[1].name).toEqual(testData.actionDial.name);
-            scope.swap({},-1);
+            scope.swap({}, -1);
             action = scope.dialplan.actions;
             expect(action[0].name).toEqual(testData.actionSayAlpha.name);
             expect(action[1].name).toEqual(testData.actionDial.name);
@@ -181,7 +173,8 @@ describe('rocketvoip.view_editDialplan module', function () {
         }));
 
         it('should PUT on existing dialplan', inject(function () {
-            spyOn(DialplanService,'update').and.callThrough();
+
+            spyOn(DialplanService, 'update').and.callThrough();
             deferred = q.defer();
             scope.dialplan.id = 5;
             scope.dialplan.name = "Test-Name";
@@ -191,6 +184,54 @@ describe('rocketvoip.view_editDialplan module', function () {
             expect(UtilityService.showToast).toHaveBeenCalled();
         }));
 
+        it('should should redirect when route is invalid', inject(function () {
+            var routeParams = {
+                id: 'NotANumber'
+            };
+            ctrl = controller("ViewEditDialplanCtrl", {
+                $scope: scope,
+                $location: location,
+                UtilityService: UtilityService,
+                DialplanService: DialplanService,
+                $routeParams: routeParams
+            });
+            expect(location.path).toHaveBeenCalled();
+        }));
+
+        it('should load existing dialplan', inject(function () {
+            location.path = jasmine.createSpy();
+            var routeParams = {
+                id: 1
+            };
+            ctrl = controller("ViewEditDialplanCtrl", {
+                $scope: scope,
+                $location: location,
+                UtilityService: UtilityService,
+                DialplanService: DialplanService,
+                $routeParams: routeParams
+            });
+            expect(location.path).toHaveBeenCalledTimes(0);
+            expect(scope.isNewDialplan).toBeFalsy();
+        }));
+
+
+        it('should should not redirect when parameters are set', inject(function () {
+            location.path = jasmine.createSpy();
+            location.search = function(){
+                return {
+                        companyID: 2,
+                        companyName: "TestAG"
+                }
+            };
+            ctrl = controller("ViewEditDialplanCtrl", {
+                $scope: scope,
+                $location: location,
+                UtilityService: UtilityService,
+                DialplanService: DialplanService
+            });
+            expect(scope.isNewDialplan).toBeTruthy();
+            expect(location.path).toHaveBeenCalledTimes(0);
+        }));
 
     });
 });

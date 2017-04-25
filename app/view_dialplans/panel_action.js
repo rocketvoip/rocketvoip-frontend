@@ -5,8 +5,8 @@
  */
 angular.module('rocketvoip.panel_editAction', ['angular.filter'])
     .controller('PanelActionDialogCtrl', ['$scope', 'mdPanelRef', 'action', 'UtilityService', 'SipClientService',
-        'callbackUpdate', 'callbackDelete', 'rfc4122',
-        function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackUpdate, callbackDelete, rfc4122) {
+        'callbackAction', 'ActionIdService',
+        function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackAction, ActionIdService) {
             $scope.types = [
                 {name: 'Dial', text: 'Ring', description: '(rings on multiple phones)'},
                 {name: 'SayAlpha', text: 'Voice Message', description: '(reads a message aloud)'}
@@ -18,7 +18,11 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
 
             $scope.saveAction = function () {
                 if ($scope.actionEditForm.$valid) {
-                    callbackUpdate($scope.action);
+                    if($scope.isNewDialplan){
+                        callbackAction.create($scope.action);
+                    }else{
+                        callbackAction.update($scope.action);
+                    }
                     $scope.closeDialog();
                 } else {
                     UtilityService.setAllFieldsTouched($scope.actionEditForm);
@@ -27,12 +31,15 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
 
             $scope.deleteAction = function () {
                 if (!($scope.isNewDialplan)) {
-                    callbackDelete($scope.action);
+                    callbackAction.delete($scope.action);
                     $scope.closeDialog();
                 }
             };
 
             $scope.initType = function () {
+                //Generate Temporary ID for Action. The backend will ignore this property.
+                $scope.action.id = ActionIdService.getUniqueId();
+
                 if ($scope.action.type === "Dial") {
                     $scope.sipClients = SipClientService.query();
                     $scope.action.typeSpecific = {
@@ -46,8 +53,6 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
                         sleepTime: 3
                     };
                 }
-
-                $scope.action.uuid = rfc4122.v4();
             };
 
             $scope.action = angular.copy(action);
@@ -57,8 +62,12 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
 
             } else {
                 $scope.isNewDialplan = true;
-                $scope.action = {
-                };
+                $scope.action = {};
             }
         }
-    ]);
+    ]).service("ActionIdService", function () {
+    var nextId = 1;
+    this.getUniqueId = function () {
+        return nextId++;
+    }
+});

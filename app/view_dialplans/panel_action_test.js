@@ -8,8 +8,7 @@ describe('rocketvoip.panel_editAction module', function () {
 
 
     describe('panel_action controller', function () {
-        var scope, panel, controller, mdPanelRef, action, company, templateCache, compile, callbackUpdate,
-            callbackDelete, SipClientService;
+        var scope, panel, controller, mdPanelRef, action, company, templateCache, compile, callbackAction, SipClientService;
 
         function loadFormHTML() {
             var templateHtml = templateCache.get('view_dialplans/panel_action.html');
@@ -26,8 +25,12 @@ describe('rocketvoip.panel_editAction module', function () {
             scope = $rootScope.$new();
             action = {};
             company = {};
-            callbackUpdate = jasmine.createSpy();
-            callbackDelete = jasmine.createSpy();
+
+            callbackAction = {
+                "update" : jasmine.createSpy(),
+                "delete": jasmine.createSpy(),
+                "create": jasmine.createSpy()
+            };
             controller = $controller;
             loadFormHTML();
             SipClientService = {
@@ -39,8 +42,7 @@ describe('rocketvoip.panel_editAction module', function () {
                 mdPanelRef: mdPanelRef,
                 action: action,
                 company: company,
-                callbackDelete: callbackDelete,
-                callbackUpdate: callbackUpdate,
+                callbackAction: callbackAction,
                 SipClientService: SipClientService
             });
 
@@ -56,12 +58,13 @@ describe('rocketvoip.panel_editAction module', function () {
         }));
 
         it('should not save action when form is invalid', inject(function () {
+            scope.$apply();
             scope.saveAction();
             spyOn(scope, 'closeDialog');
             expect(scope.closeDialog).toHaveBeenCalledTimes(0);
         }));
 
-        it('should save action when form is valid', inject(function () {
+        it('should save new action when form is valid', inject(function () {
             scope.action.name = "Test123";
             scope.action.type = "SayAlpha";
             scope.action.typeSpecific = {
@@ -71,20 +74,36 @@ describe('rocketvoip.panel_editAction module', function () {
             scope.$apply();
             scope.saveAction();
             scope.$apply();
-            expect(callbackUpdate).toHaveBeenCalledTimes(1);
+            expect(callbackAction.create).toHaveBeenCalledTimes(1);
+        }));
+
+
+        it('should update action when form is valid', inject(function () {
+            scope.isNewDialplan = false;
+            scope.action.id = 55;
+            scope.action.name = "Test123";
+            scope.action.type = "SayAlpha";
+            scope.action.typeSpecific = {
+                voiceMessage: "Test Message",
+                sleepTime: 5
+            };
+            scope.$apply();
+            scope.saveAction();
+            scope.$apply();
+            expect(callbackAction.update).toHaveBeenCalledTimes(1);
         }));
 
         it('should not delete new action', inject(function () {
             scope.isNewAction = true;
             scope.deleteAction();
-            expect(callbackDelete).toHaveBeenCalledTimes(0);
+            expect(callbackAction.delete).toHaveBeenCalledTimes(0);
         }));
 
         it('should delete existing action', inject(function () {
             scope.isNewDialplan = false;
             scope.deleteAction();
             scope.$apply();
-            expect(callbackDelete).toHaveBeenCalledTimes(1);
+            expect(callbackAction.delete).toHaveBeenCalledTimes(1);
         }));
 
         it('should load SipClients when selecting Dial', inject(function () {
@@ -94,7 +113,7 @@ describe('rocketvoip.panel_editAction module', function () {
         }));
 
         it('should initialize type SayAlpha', inject(function () {
-            expect(scope.action.typeSpecific).toBeUndefined()
+            expect(scope.action.typeSpecific).toBeUndefined();
             scope.action.type = "SayAlpha";
             scope.initType();
             expect(scope.action.typeSpecific.sleepTime).toBeDefined()
@@ -102,16 +121,13 @@ describe('rocketvoip.panel_editAction module', function () {
 
         it('should set isNewDialplan to false for existing actions', inject(function () {
             action.name = "Test";
-
             panel = controller("PanelActionDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: mdPanelRef,
                 action: action,
                 company: company,
-                callbackDelete: callbackDelete,
-                callbackUpdate: callbackUpdate
+                callbackAction: callbackAction
             });
-
             expect(scope.isNewDialplan).toBeFalsy();
         }));
 

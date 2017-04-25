@@ -33,8 +33,20 @@ describe('rocketvoip', function () {
                         $httpBackend.whenGET(/\/companies/).respond(function () {
                             return [200, [testCompany, {id: 99, name: 'test2'}], {}];
                         });
+                        $httpBackend.whenGET(/\/dialplans\//).respond(function (method, url) {
+                            var split = url.split("/");
+                            var id = split[split.length - 1];
+                            var returnDialplan = {};
+                            angular.forEach(testDialplans, function (dialplan, key) {
+                                if (dialplan.id == id) {
+                                    returnDialplan = testDialplans[key];
+                                }
+                            });
+                            return [200, returnDialplan, {}];
+
+                        });
                         $httpBackend.whenGET(/\/dialplans/).respond(function () {
-                            return [200, testDialplans , {}];
+                            return [200, testDialplans, {}];
                         });
                         $httpBackend.whenPOST(/\/dialplans/).respond(function (method, url, data) {
                             var dialplan = angular.fromJson(data);
@@ -52,8 +64,8 @@ describe('rocketvoip', function () {
                             return [200, updateDialplan, {}];
                         });
                         $httpBackend.whenDELETE(/\/dialplans/).respond(function (method, url) {
-                            var split = url.split("/")
-                            var id = split[split.length - 1].split("?")[0]
+                            var split = url.split("/");
+                            var id = split[split.length - 1].split("?")[0];
                             for (var i = testDialplans.length - 1; i >= 0; i--) {
                                 if (testDialplans[i].id == id) {
                                     testDialplans.splice(i, 1);
@@ -86,7 +98,7 @@ describe('rocketvoip', function () {
             actionDial = {
                 name: "Test-Action-02",
                 ringingTime: "10",
-                sipClients: ['Marco Studerus','Martin Witt']
+                sipClients: ['Marco Studerus', 'Martin Witt']
             };
 
             browser.get('index.html#!/view_dialplans');
@@ -113,7 +125,7 @@ describe('rocketvoip', function () {
             expect(element(by.css('.button-delete-dialplan')).isPresent()).toBeFalsy();
         });
 
-        function addActionSayAlpha(action){
+        function addActionSayAlpha(action) {
             element(by.id('view-editDialplan-add-action')).click();
             element(by.model('action.name')).clear().sendKeys(action.name);
             element(by.tagName('md-select')).click();
@@ -123,7 +135,7 @@ describe('rocketvoip', function () {
             element(by.id('plane-editAction-save')).click();
         }
 
-        function addActionDial(action){
+        function addActionDial(action) {
             element(by.id('view-editDialplan-add-action')).click();
             element(by.model('action.name')).clear().sendKeys(action.name);
             element(by.tagName('md-select')).click();
@@ -151,5 +163,46 @@ describe('rocketvoip', function () {
             expect(element.all(by.className('view-dialplans-name')).count()).toEqual(1);
         });
 
+        it('should delete dialplan', function () {
+            element.all(by.className('view-dialplan-add-dialplan')).first().click();
+            element(by.model('dialplan.name')).clear().sendKeys("Test-Dialplan-01");
+            element(by.model('dialplan.phone')).clear().sendKeys("999");
+            addActionSayAlpha(actionSayAlpha);
+            addActionDial(actionDial);
+            expect(element.all(by.repeater('action in dialplan.actions')).count()).toEqual(2);
+            element(by.id('button-save-dialplan')).click();
+            element.all(by.className('view-editDialplan-edit')).first().click();
+            element(by.id('plane-action-delete')).click();
+            expect(element.all(by.repeater('action in dialplan.actions')).count()).toEqual(1);
+        });
+
+        it('should swap dialplans', function () {
+            element.all(by.className('view-dialplan-add-dialplan')).first().click();
+            element(by.model('dialplan.name')).clear().sendKeys("Test-Dialplan-01");
+            element(by.model('dialplan.phone')).clear().sendKeys("999");
+            addActionSayAlpha(actionSayAlpha);
+            addActionDial(actionDial);
+            expect(element.all(by.repeater('action in dialplan.actions')).count()).toEqual(2);
+            expect(element.all(by.className('view-editDialplan-action-name')).first().getText()).toEqual("Voice Message: Test-Action-01");
+            element.all(by.className('view-editDialplan-down')).first().click();
+            expect(element.all(by.className('view-editDialplan-action-name')).last().getText()).toEqual("Voice Message: Test-Action-01");
+            element.all(by.className('view-editDialplan-up')).last().click();
+            expect(element.all(by.className('view-editDialplan-action-name')).first().getText()).toEqual("Voice Message: Test-Action-01");
+        });
+
+        it('should update dialplan', function () {
+            element.all(by.className('view-dialplan-add-dialplan')).first().click();
+            element(by.model('dialplan.name')).clear().sendKeys("Test-Dialplan-01");
+            element(by.model('dialplan.phone')).clear().sendKeys("999");
+            addActionSayAlpha(actionSayAlpha);
+            addActionDial(actionDial);
+            expect(element.all(by.repeater('action in dialplan.actions')).count()).toEqual(2);
+            element(by.id('button-save-dialplan')).click();
+            element.all(by.className('view-editDialplan-edit')).first().click();
+
+            element(by.model('action.name')).clear().sendKeys("rename");
+            element(by.id('plane-editAction-save')).click();
+            expect(element.all(by.className('view-editDialplan-action-name')).first().getText()).toEqual("Voice Message: rename");
+        });
     });
 });
