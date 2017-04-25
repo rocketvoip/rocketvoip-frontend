@@ -41,7 +41,7 @@
     <md-list>
         <md-list-item flex ng-repeat="company in companies | orderBy:sortType:sortReverse | filter:filter">
             <div flex layout="row">
-                <div class="view-companies-companyName" flex>{{company.name}}</div>
+                <div class="view-companies-companyName" flex><strong>{{company.name}}</strong></div>
             </div>
             <md-button class="md-secondary md-icon-button view-companies-editcompany"
                        ng-click="ctrl.showDialog(company,ctrl)"

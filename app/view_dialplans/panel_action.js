@@ -8,8 +8,8 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
         'callbackAction', 'ActionIdService',
         function ($scope, mdPanelRef, action, UtilityService, SipClientService, callbackAction, ActionIdService) {
             $scope.types = [
-                {name: 'Dial', text: 'Team'},
-                {name: 'SayAlpha', text: 'Voice Message'}
+                {name: 'Dial', text: 'Ring', description: '(rings on multiple phones)'},
+                {name: 'SayAlpha', text: 'Voice Message', description: '(reads a message aloud)'}
             ];
 
             $scope.closeDialog = function () {
