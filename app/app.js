@@ -5,7 +5,6 @@ angular.module('rocketvoip', [
     'ngRoute',
     'ngMaterial',
     'ngStorage',
-    'uuid',
     'rocketvoip.login',
     'rocketvoip.utility_service',
     'rocketvoip.panel_editUser',

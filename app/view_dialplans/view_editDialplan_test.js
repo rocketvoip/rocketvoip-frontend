@@ -13,7 +13,6 @@ describe('rocketvoip.view_editDialplan module', function () {
 
             callbackNgResource = function (obj) {
                 var ret = {};
-                delete obj.uuid;
                 deferred.resolve(obj);
                 ret.$promise = deferred.promise;
                 return ret;
@@ -36,7 +35,7 @@ describe('rocketvoip.view_editDialplan module', function () {
             testData = {};
 
             testData.actionDial = {
-                "uuid": "111111",
+                "id": "111111",
                 "name": "Test-Name-1",
                 "type": "Dial",
                 "typeSpecific": {
@@ -52,7 +51,7 @@ describe('rocketvoip.view_editDialplan module', function () {
             };
 
             testData.actionSayAlpha = {
-                "uuid": "555555",
+                "id": "555555",
                 "name": "SayAlphaTest",
                 "type": "SayAlpha",
                 "typeSpecific": {"voiceMessage": "Message", "sleepTime": 5}
@@ -116,13 +115,6 @@ describe('rocketvoip.view_editDialplan module', function () {
             scope.$apply();
             expect(scope.dialplan.name).toEqual(testData.dialplan.name);
             var action = scope.dialplan.actions[0];
-        }));
-
-        it('should set uuid on load', inject(function () {
-            ctrl.query();
-            scope.$apply();
-            var action = scope.dialplan.actions[0];
-            expect(action.uuid.length).toBe(36);
         }));
 
         it('should not delete new dialplan', inject(function () {

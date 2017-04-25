@@ -13,24 +13,21 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
     }])
 
     .controller('ViewEditDialplanCtrl', ['$scope', 'DialplanService', 'UtilityService', 'CompanyService',
-        '$routeParams', '$location','rfc4122',
-        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location,rfc4122) {
+        '$routeParams', '$location',
+        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location) {
             var ctrl = this;
             var dialplanID;
 
             this.query = function () {
                 DialplanService.get({id: dialplanID}).$promise.then(function (dialplan) {
                     $scope.dialplan = dialplan;
-                    angular.forEach($scope.dialplan.actions, function(action) {
-                        action.uuid = rfc4122.v4();
-                    });
                 });
             };
 
             this.updateAction = function (updatedAction) {
                 var found = 0;
                 angular.forEach($scope.dialplan.actions, function (action, key) {
-                    if (action.uuid == updatedAction.uuid) {
+                    if (action.id == updatedAction.id) {
                         $scope.dialplan.actions[key] = updatedAction;
                         found = 1;
                     }
@@ -43,7 +40,7 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
             this.deleteAction = function (deletedAction) {
                 var actions = $scope.dialplan.actions;
                 for (var i = actions.length - 1; i >= 0; i--) {
-                    if (actions[i].uuid == deletedAction.uuid) {
+                    if (actions[i].id == deletedAction.id) {
                         actions.splice(i, 1);
                     }
                 }
@@ -123,7 +120,6 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                     id: params.companyID,
                     name: params.companyName
                 }
-
             }
 
         }]);
