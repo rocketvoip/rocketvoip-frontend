@@ -20,14 +20,14 @@ describe('rocketvoip.view_editDialplan module', function () {
 
             DialplanService = {
                 get: function () {
-                    return callbackNgResource(testData.dialplan);
+                    return testData.dialplan;
                 },
                 delete: jasmine.createSpy(),
                 save: function (data) {
                     data.id = 4;
                     return callbackNgResource(data);
                 },
-                update: function(data){
+                update: function (data) {
                     return callbackNgResource(data);
                 }
             };
@@ -145,7 +145,7 @@ describe('rocketvoip.view_editDialplan module', function () {
             var action = scope.dialplan.actions;
             expect(action[0].name).toEqual(testData.actionSayAlpha.name);
             expect(action[1].name).toEqual(testData.actionDial.name);
-            scope.swap(action[1],-1);
+            scope.swap(action[1], -1);
             action = scope.dialplan.actions;
             expect(action[0].name).toEqual(testData.actionDial.name);
             expect(action[1].name).toEqual(testData.actionSayAlpha.name);
@@ -157,7 +157,7 @@ describe('rocketvoip.view_editDialplan module', function () {
             var action = scope.dialplan.actions;
             expect(action[0].name).toEqual(testData.actionSayAlpha.name);
             expect(action[1].name).toEqual(testData.actionDial.name);
-            scope.swap({},-1);
+            scope.swap({}, -1);
             action = scope.dialplan.actions;
             expect(action[0].name).toEqual(testData.actionSayAlpha.name);
             expect(action[1].name).toEqual(testData.actionDial.name);
@@ -173,7 +173,7 @@ describe('rocketvoip.view_editDialplan module', function () {
         }));
 
         it('should PUT on existing dialplan', inject(function () {
-            spyOn(DialplanService,'update').and.callThrough();
+            spyOn(DialplanService, 'update').and.callThrough();
             deferred = q.defer();
             scope.dialplan.id = 5;
             scope.dialplan.name = "Test-Name";

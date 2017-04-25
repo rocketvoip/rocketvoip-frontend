@@ -53,16 +53,16 @@
                         <p>There are no actions in this dialplan. Please add an action.</p>
                     </md-list-item>
                     <md-list-item flex="100" ng-repeat="action in dialplan.actions">
-                        <p>
+                        <p class="view-editDialplan-action-name">
                             <strong ng-if="action.type == 'SayAlpha'">Voice Message:</strong>
                             <strong ng-if="action.type == 'Dial'">Team:</strong>
                             {{ action.name }}
                         </p>
-                        <md-button class="md-secondary md-icon-button view-editDialplan-edit reservespace"
+                        <md-button class="md-secondary md-icon-button view-editDialplan-down reservespace"
                                    ng-hide="$last" ng-click="swap(action,+1)" aria-label="Edit">
                             <md-icon aria-label="Edit">expand_more</md-icon>
                         </md-button>
-                        <md-button class="md-secondary md-icon-button view-editDialplan-edit reservespace"
+                        <md-button class="md-secondary md-icon-button view-editDialplan-up reservespace"
                                    ng-hide="$first" ng-click="swap(action,-1)" aria-label="Edit">
                             <md-icon aria-label="Edit">expand_less</md-icon>
                         </md-button>
