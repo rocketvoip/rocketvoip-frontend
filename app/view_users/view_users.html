@@ -3,11 +3,15 @@
     <div flex layout="row" layout-align=" center">
         <h1 flex>Manage Users</h1>
 
+        <md-input-container>
+            <label>Current company</label>
+
         <md-select ng-model="currentCompany" required placeholder="Select a company" ng-change="ctrl.queryUsers()"
                    style="min-width: 300px;" class="view-users-select">
             <md-option ng-value="company" ng-repeat="company in companies | orderBy:name:true">{{company.name}}
             </md-option>
         </md-select>
+        </md-input-container>
 
         <div flex="5"></div>
 

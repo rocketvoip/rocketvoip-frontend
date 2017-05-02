@@ -58,6 +58,8 @@
                         <p class="view-editDialplan-action-name">
                             <strong ng-if="action.type == 'SayAlpha'">Voice Message:</strong>
                             <strong ng-if="action.type == 'Dial'">Ring:</strong>
+                            <strong ng-if="action.type == 'Goto'">Goto:</strong>
+                            <strong ng-if="action.type == 'Branch'">Branch:</strong>
                             {{ action.name }}
                         </p>
                         <md-button class="md-secondary md-icon-button view-editDialplan-down reservespace"
