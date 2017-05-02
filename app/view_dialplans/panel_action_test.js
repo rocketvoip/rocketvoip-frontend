@@ -8,7 +8,8 @@ describe('rocketvoip.panel_editAction module', function () {
 
 
     describe('panel_action controller', function () {
-        var scope, panel, controller, mdPanelRef, action, company, templateCache, compile, callbackAction, SipClientService;
+        var scope, panel, controller, mdPanelRef, action, company, templateCache, compile, callbackAction,
+            SipClientService, DialplanService;
 
         function loadFormHTML() {
             var templateHtml = templateCache.get('view_dialplans/panel_action.html');
@@ -27,7 +28,7 @@ describe('rocketvoip.panel_editAction module', function () {
             company = {};
 
             callbackAction = {
-                "update" : jasmine.createSpy(),
+                "update": jasmine.createSpy(),
                 "delete": jasmine.createSpy(),
                 "create": jasmine.createSpy()
             };
@@ -37,13 +38,18 @@ describe('rocketvoip.panel_editAction module', function () {
                 query: jasmine.createSpy()
             };
 
+            DialplanService = {
+                query: jasmine.createSpy()
+            };
+
             panel = $controller("PanelActionDialogCtrl", {
                 $scope: scope,
                 mdPanelRef: mdPanelRef,
                 action: action,
                 company: company,
                 callbackAction: callbackAction,
-                SipClientService: SipClientService
+                SipClientService: SipClientService,
+                DialplanService: DialplanService
             });
 
         }));
@@ -106,11 +112,14 @@ describe('rocketvoip.panel_editAction module', function () {
             expect(callbackAction.delete).toHaveBeenCalledTimes(1);
         }));
 
-        it('should load SipClients when selecting Dial', inject(function () {
-            scope.action.type = "Dial";
-            scope.initType();
+        it('should load SipClients', inject(function () {
             expect(SipClientService.query).toHaveBeenCalledTimes(1);
         }));
+
+        it('should load Dialplans', inject(function () {
+            expect(DialplanService.query).toHaveBeenCalledTimes(1);
+        }));
+
 
         it('should initialize type SayAlpha', inject(function () {
             expect(scope.action.typeSpecific).toBeUndefined();
@@ -129,6 +138,119 @@ describe('rocketvoip.panel_editAction module', function () {
                 callbackAction: callbackAction
             });
             expect(scope.isNewDialplan).toBeFalsy();
+        }));
+
+        it('should remove last empty dialplanID (Type: Branch)', inject(function () {
+            scope.action.type = "Branch";
+            scope.action.typeSpecific = {
+                nextDialPlanIds: [1, 2, undefined]
+            };
+            scope.actionEditForm.$valid = true;
+            scope.saveAction();
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanIds).toEqual([1, 2]);
+        }));
+
+        it('should not remove last empty dialplanID (Type: Branch)', inject(function () {
+            scope.action.type = "Branch";
+            scope.action.typeSpecific = {
+                nextDialPlanIds: [1, 2]
+            };
+            scope.actionEditForm.$valid = true;
+            scope.saveAction();
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanIds).toEqual([1, 2]);
+        }));
+
+        it('should remove dialplanID (Type: Branch)', inject(function () {
+            scope.action.typeSpecific = {
+                nextDialPlanIds: [1, 2, 3, undefined]
+            };
+            scope.deleteBranchOption(1)
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanIds).toEqual([1, 3, undefined]);
+        }));
+
+        it('should not add empty branch option', inject(function () {
+            scope.action.typeSpecific = {
+                nextDialPlanIds: [1, 2, 3, undefined]
+            };
+            scope.branchOptionChange();
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanIds).toEqual([1, 2, 3, undefined]);
+        }));
+
+        it('should add empty branch option', inject(function () {
+            scope.action.typeSpecific = {
+                nextDialPlanIds: [1, 2, 3]
+            };
+            scope.branchOptionChange();
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanIds).toEqual([1, 2, 3, undefined]);
+        }));
+
+        it('should not add empty branch option if there are already 9', inject(function () {
+            scope.action.typeSpecific = {
+                nextDialPlanIds: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            };
+            scope.branchOptionChange();
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanIds).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        }));
+
+        it('should init Type Dial', inject(function () {
+            scope.action.type = "Dial";
+            scope.initType();
+            scope.$apply();
+            expect(scope.action.typeSpecific.ringingTime).toEqual(15);
+        }));
+
+        it('should init Type SayAlpha', inject(function () {
+            scope.action.type = "SayAlpha";
+            scope.initType();
+            scope.$apply();
+            expect(scope.action.typeSpecific.sleepTime).toEqual(3);
+        }));
+
+        it('should init Type Goto', inject(function () {
+            scope.action.type = "Goto";
+            scope.initType();
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanId).toBeDefined();
+        }));
+
+        it('should init Type Branch', inject(function () {
+            scope.action.type = "Branch";
+            scope.initType();
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanIds).toBeDefined();
+        }));
+
+        it('should not init unknown Type', inject(function () {
+            scope.action.type = "Test";
+            scope.initType();
+            scope.$apply();
+            expect(scope.action.typeSpecific).toBeUndefined();
+        }));
+
+        it('should set isNewDialplan to false for existing actions', inject(function () {
+            action.name = "Test";
+            action.type = "Branch";
+            action.typeSpecific = {
+                nextDialPlanIds: [1, 2, 3]
+            };
+            panel = controller("PanelActionDialogCtrl", {
+                $scope: scope,
+                mdPanelRef: mdPanelRef,
+                action: action,
+                company: company,
+                callbackAction: callbackAction,
+                DialplanService: DialplanService,
+                SipClientService: SipClientService
+            });
+            scope.$apply();
+            expect(scope.action.typeSpecific.nextDialPlanIds).toEqual([1, 2, 3, undefined]);
+
         }));
 
     });

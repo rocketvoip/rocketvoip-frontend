@@ -19,9 +19,9 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
 
             $scope.saveAction = function () {
                 if ($scope.actionEditForm.$valid) {
-                    if ($scope.action.type === "Branch"){
+                    if ($scope.action.type === "Branch") {
                         var options = $scope.action.typeSpecific.nextDialPlanIds;
-                        if(options[options.length-1] == undefined){
+                        if (options[options.length - 1] == undefined) {
                             options.pop();
                         }
                     }
@@ -86,14 +86,14 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
 
             $scope.branchOptionChange = function () {
                 var options = $scope.action.typeSpecific.nextDialPlanIds;
-                if(options[options.length-1]){
+                if (options[options.length - 1]) {
                     addEmptyBranchOption();
                 }
             };
 
-            function addEmptyBranchOption(){
+            function addEmptyBranchOption() {
                 var options = $scope.action.typeSpecific.nextDialPlanIds;
-                if(options.length < 9) {
+                if (options.length < 9) {
                     options.push(undefined);
                 }
             }
@@ -104,7 +104,7 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
             if (action && action.name) {
                 $scope.nameCopy = angular.copy(action.name);
                 $scope.isNewDialplan = false;
-                if ($scope.action.type === "Branch"){
+                if ($scope.action.type === "Branch") {
                     addEmptyBranchOption()
                 }
 
@@ -114,11 +114,7 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
             }
         }
     ).service("ActionIdService", function () {
-    var nextId = 1;
     this.getUniqueId = function () {
-        return nextId++;
+        return Math.floor(Math.random() * (20000 - 1000 + 1));
     };
-    this.setNextUniqueId = function (int) {
-        nextId = int;
-    }
 });

@@ -13,7 +13,7 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
     }])
 
     .controller('ViewEditDialplanCtrl',
-        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location, $filter,ActionIdService) {
+        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location, $filter) {
             var ctrl = this;
             var dialplanID;
 
@@ -23,31 +23,31 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                 })[0];
             }
 
-            function getIndexOfAction(find){
+            function getIndexOfAction(find) {
                 var action = findAction(find);
                 return $scope.dialplan.actions.indexOf(action);
             }
 
-            function isValidRoute(){
+            function isValidRoute() {
                 return typeof($routeParams.id) == 'undefined' || !isNaN($routeParams.id);
             }
 
-            function initializeExistingDialplan(){
+            function initializeExistingDialplan() {
                 dialplanID = $routeParams.id;
                 $scope.isNewDialplan = false;
                 ctrl.query()
             }
 
-            function isValidParameter(params){
+            function isValidParameter(params) {
                 return typeof(params) !== 'undefined' && typeof(params.companyID) !== 'undefined' &&
                     typeof(params.companyName) !== 'undefined';
             }
 
-            function redirectToViewDialplans(){
+            function redirectToViewDialplans() {
                 $location.search({});
                 $location.path('/view_dialplans/');
             }
-            
+
             function initializeNewDialplan() {
                 $scope.isNewDialplan = true;
                 $scope.dialplan = {
@@ -60,13 +60,13 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                         id: params.companyID,
                         name: params.companyName
                     }
-                }else{
+                } else {
                     redirectToViewDialplans();
                 }
             }
 
-            function initialize(){
-                if(!isValidRoute()){
+            function initialize() {
+                if (!isValidRoute()) {
                     redirectToViewDialplans();
                 } else if ($routeParams.id) {
                     initializeExistingDialplan();
