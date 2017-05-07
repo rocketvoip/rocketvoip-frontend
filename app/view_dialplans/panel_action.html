@@ -104,7 +104,7 @@
                 <h3>Branch Conditions:</h3>
                 <p>You can select up to 9 options for a branch.</p>
 
-                <div ng-repeat="branchDialplan in action.typeSpecific.nextDialPlanIds track by $index">
+                <div ng-repeat="branchDialplan in action.typeSpecific.nextDialPlanIds track by $index" style="height: 40px;">
                     <div layout="row" layout-align="center center" max-height="50px">
                         <md-icon flex="10" class="panel-action-branch-option-icon">filter_{{$index+1}}</md-icon>
                         <md-input-container flex="80">
