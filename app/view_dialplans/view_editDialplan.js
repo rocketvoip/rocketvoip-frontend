@@ -17,17 +17,6 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
             var ctrl = this;
             var dialplanID;
 
-            function findAction(find) {
-                return $filter('filter')($scope.dialplan.actions, function (action) {
-                    return action.id === find.id;
-                })[0];
-            }
-
-            function getIndexOfAction(find) {
-                var action = findAction(find);
-                return $scope.dialplan.actions.indexOf(action);
-            }
-
             function isValidRoute() {
                 return typeof($routeParams.id) == 'undefined' || !isNaN($routeParams.id);
             }
@@ -81,17 +70,16 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
             };
 
             this.updateAction = function (action) {
-                var index = getIndexOfAction(action);
-                $scope.dialplan.actions[index] = action;
+                $scope.dialplan.actions[action.position] = action;
             };
 
             this.createAction = function (action) {
+                action.position = $scope.dialplan.actions.length;
                 $scope.dialplan.actions.push(action);
-                //TODO: Branch or Goto should be the last actions!
             };
 
             this.deleteAction = function (action) {
-                $scope.dialplan.actions.splice(getIndexOfAction(action), 1);
+                $scope.dialplan.actions.splice(action.position, 1);
             };
 
             $scope.closeDialplan = function () {
@@ -130,8 +118,10 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                 }
             };
 
-            $scope.edit = function (action) {
-                //TODO: Set next ID (ActionIdService.setNextUniqueId(int))
+            $scope.edit = function (action,index) {
+                if(action != null){
+                    action.position = index;
+                }
                 UtilityService.showDialog(
                     'PanelActionDialogCtrl',
                     'view_dialplans/panel_action.html',
@@ -146,6 +136,5 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                     },
                     null);
             };
-
             initialize();
         });

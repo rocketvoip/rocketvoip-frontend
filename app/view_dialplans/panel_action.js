@@ -5,7 +5,7 @@
  */
 angular.module('rocketvoip.panel_editAction', ['angular.filter'])
     .controller('PanelActionDialogCtrl', function ($scope, mdPanelRef, action, UtilityService, SipClientService,
-                                                   callbackAction, ActionIdService, DialplanService) {
+                                                   callbackAction, DialplanService) {
             $scope.types = [
                 {name: 'Dial', text: 'Ring', description: '(rings on multiple phones)'},
                 {name: 'SayAlpha', text: 'Voice Message', description: '(reads a message aloud)'},
@@ -45,8 +45,6 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
             };
 
             $scope.initType = function () {
-                //Generate Temporary ID for Action. The backend will ignore this property.
-                $scope.action.id = ActionIdService.getUniqueId();
 
                 if ($scope.action.type === "Dial") {
                     $scope.loadData();
@@ -113,8 +111,4 @@ angular.module('rocketvoip.panel_editAction', ['angular.filter'])
                 $scope.action = {};
             }
         }
-    ).service("ActionIdService", function () {
-    this.getUniqueId = function () {
-        return Math.floor(Math.random() * (20000 - 1000 + 1));
-    };
-});
+    );

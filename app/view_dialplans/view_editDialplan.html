@@ -71,7 +71,7 @@
                             <md-icon aria-label="Edit">expand_less</md-icon>
                         </md-button>
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit"
-                                   ng-click="edit(action)" aria-label="Edit">
+                                   ng-click="edit(action,$index)" aria-label="Edit">
                             <md-icon aria-label="Edit">edit</md-icon>
                         </md-button>
                         <md-divider></md-divider>
@@ -79,7 +79,7 @@
                 </md-list>
 
                 <div layout="row" layout-align="center center">
-                    <md-button id="view-editDialplan-add-action" class="md-raised" ng-click="edit(null)">Add Action</md-button>
+                    <md-button id="view-editDialplan-add-action" class="md-raised" ng-click="edit(null,null)">Add Action</md-button>
                 </div>
 
             </form>
