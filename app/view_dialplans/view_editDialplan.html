@@ -58,6 +58,8 @@
                         <p class="view-editDialplan-action-name">
                             <strong ng-if="action.type == 'SayAlpha'">Voice Message:</strong>
                             <strong ng-if="action.type == 'Dial'">Ring:</strong>
+                            <strong ng-if="action.type == 'Goto'">Goto:</strong>
+                            <strong ng-if="action.type == 'Branch'">Branch:</strong>
                             {{ action.name }}
                         </p>
                         <md-button class="md-secondary md-icon-button view-editDialplan-down reservespace"
@@ -69,7 +71,7 @@
                             <md-icon aria-label="Edit">expand_less</md-icon>
                         </md-button>
                         <md-button class="md-secondary md-icon-button view-editDialplan-edit"
-                                   ng-click="edit(action)" aria-label="Edit">
+                                   ng-click="edit(action,$index)" aria-label="Edit">
                             <md-icon aria-label="Edit">edit</md-icon>
                         </md-button>
                         <md-divider></md-divider>
@@ -77,7 +79,7 @@
                 </md-list>
 
                 <div layout="row" layout-align="center center">
-                    <md-button id="view-editDialplan-add-action" class="md-raised" ng-click="edit(null)">Add Action</md-button>
+                    <md-button id="view-editDialplan-add-action" class="md-raised" ng-click="edit(null,null)">Add Action</md-button>
                 </div>
 
             </form>

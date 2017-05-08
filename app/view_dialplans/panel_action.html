@@ -15,33 +15,41 @@
         </md-button>
     </md-toolbar>
 
-    <div>
+
+    <md-content>
         <form name="actionEditForm" flex layout="row" layout-wrap layout-align="center">
 
             <div flex="90">
                 <md-input-container layout="column">
                     <label>Action Name</label>
                     <input type="text" name="name" ng-model="action.name" ng-required="true">
-                </md-input-container><br>
+                </md-input-container>
+                <br>
 
                 <md-select layout="column" ng-if="isNewDialplan && !(action.type)" ng-model="action.type" required
                            placeholder="Select an action type"
                            class="view-editAction-select" ng-change="initType()">
-                    <md-option ng-value="type.name" ng-repeat="type in types">{{type.text}} <small>{{type.description}}</small>
+                    <md-option ng-value="type.name" ng-repeat="type in types">{{type.text}}
+                        <small>{{type.description}}</small>
                     </md-option>
                 </md-select>
             </div>
 
             <div ng-if="action.type === 'SayAlpha'" flex="90" layout="column">
                 <md-input-container flex layout="column">
-                    <label>Voice Message <small>(to be read)</small></label>
-                    <textarea name="voiceMessage" ng-model="action.typeSpecific.voiceMessage" md-maxlength="350" rows="7"
+                    <label>Voice Message
+                        <small>(to be read)</small>
+                    </label>
+                    <textarea name="voiceMessage" ng-model="action.typeSpecific.voiceMessage" md-maxlength="350"
+                              rows="7"
                               md-select-on-focus ng-required="true">
                     </textarea>
                 </md-input-container>
 
                 <md-input-container flex layout="column">
-                    <label>Wait time after voice message <small>(seconds)</small></label>
+                    <label>Wait time after voice message
+                        <small>(seconds)</small>
+                    </label>
                     <input ng-model="action.typeSpecific.sleepTime" type="number" step="1" ng-required="true"
                            min="0" max="30">
                 </md-input-container>
@@ -49,17 +57,21 @@
 
             <div ng-if="action.type === 'Dial'" flex="90">
                 <md-input-container flex layout="column">
-                    <label>Ringing Time <small>(seconds)</small></label>
+                    <label>Ringing Time
+                        <small>(seconds)</small>
+                    </label>
                     <input ng-model="action.typeSpecific.ringingTime" type="number" step="1" ng-required="true"
                            min="0" max="30">
-                </md-input-container><br>
+                </md-input-container>
+                <br>
 
-                <md-input-container flex layout="column" >
+                <md-input-container flex layout="column">
                     <label>Users to be called</label>
                     <md-contact-chips ng-model="action.typeSpecific.sipClients"
                                       md-contacts="sipClients | filterBy: ['name', 'phone']: $query | filter:{company:{id: action.company.id}}"
                                       md-contact-name="name" md-contact-email="phone" md-require-match="true"
-                                      md-highlight-flags="i" filter-selected="true" placeholder="Choose users to be called">
+                                      md-highlight-flags="i" filter-selected="true"
+                                      placeholder="Choose users to be called">
                     </md-contact-chips>
                 </md-input-container>
                 <div ng-if="action.typeSpecific.sipClients.length < 1">
@@ -67,8 +79,55 @@
                 </div>
             </div>
 
+            <div ng-if="action.type === 'Goto'" flex="90" layout="column">
+                <md-input-container flex layout="column">
+                    <label>Dialplan to forward</label>
+                    <md-select flex layout="column" required placeholder="Select a dialplan to forward."
+                               class="view-editAction-goto-select" ng-model="action.typeSpecific.nextDialPlanId"
+                               md-on-open="loadDialplans()">
+                        <md-option ng-value="dialplan.id" ng-repeat="dialplan in dialplans">{{dialplan.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+            <div ng-if="action.type === 'Branch'" flex="90" layout="column">
+
+                <md-input-container flex layout="column">
+                    <label>Wait for input time
+                        <small>(seconds)</small>
+                    </label>
+                    <input ng-model="action.typeSpecific.hangupTime" type="number" step="1" ng-required="true"
+                           min="0" max="30">
+                </md-input-container>
+
+                <h3>Branch Conditions:</h3>
+                <p>You can select up to 9 options for a branch.</p>
+
+                <div ng-repeat="branchDialplan in action.typeSpecific.nextDialPlanIds track by $index" style="height: 40px;">
+                    <div layout="row" layout-align="center center" max-height="50px">
+                        <md-icon flex="10" class="panel-action-branch-option-icon">filter_{{$index+1}}</md-icon>
+                        <md-input-container flex="80">
+                            <md-select flex layout="column" ng-required="$first || !$last"
+                                       placeholder="Select a dialplan for input '{{$index+1}}'"
+                                       class="view-editAction-branch-select"
+                                       ng-model="action.typeSpecific.nextDialPlanIds[$index]"
+                                       md-on-open="loadDialplans()" ng-change="branchOptionChange()">
+                                <md-option ng-value="dialplan.id" ng-repeat="dialplan in dialplans">{{dialplan.name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-button felx="10" class="panel-action-branch-option-delete" class="md-fab"
+                                   aria-label="Delete"
+                                   ng-click="deleteBranchOption($index)">
+                            <md-tooltip>Delete this option</md-tooltip>
+                            <md-icon>delete</md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
         </form>
-    </div>
+    </md-content>
 
     <div layout="column" layout-align="center center">
         <div>

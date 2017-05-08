@@ -2,7 +2,7 @@
 
 describe('rocketvoip', function () {
 
-    describe('view_users', function () {
+    describe('view_dialplans', function () {
 
         var actionSayAlpha, actionDial;
 
@@ -129,7 +129,7 @@ describe('rocketvoip', function () {
             element(by.id('view-editDialplan-add-action')).click();
             element(by.model('action.name')).clear().sendKeys(action.name);
             element(by.tagName('md-select')).click();
-            element.all(by.css('.md-select-menu-container.md-active md-option')).last().click();
+            element.all(by.css('.md-select-menu-container.md-active md-option')).get(1).click();
             element(by.model('action.typeSpecific.voiceMessage')).clear().sendKeys(action.message);
             element(by.model('action.typeSpecific.sleepTime')).clear().sendKeys(action.sleepTime);
             element(by.id('plane-editAction-save')).click();
@@ -139,7 +139,7 @@ describe('rocketvoip', function () {
             element(by.id('view-editDialplan-add-action')).click();
             element(by.model('action.name')).clear().sendKeys(action.name);
             element(by.tagName('md-select')).click();
-            element.all(by.css('.md-select-menu-container.md-active md-option')).first().click();
+            element.all(by.css('.md-select-menu-container.md-active md-option')).get(0).click();
             element(by.model('action.typeSpecific.ringingTime')).clear().sendKeys(action.ringingTime);
             element(by.css('input[type="search"]')).sendKeys(action.sipClients[0]);
             element(by.className('md-contact-name')).click();

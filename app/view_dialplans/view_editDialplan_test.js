@@ -35,7 +35,6 @@ describe('rocketvoip.view_editDialplan module', function () {
             testData = {};
 
             testData.actionDial = {
-                "id": "111111",
                 "name": "Test-Name-1",
                 "type": "Dial",
                 "typeSpecific": {
@@ -51,7 +50,6 @@ describe('rocketvoip.view_editDialplan module', function () {
             };
 
             testData.actionSayAlpha = {
-                "id": "555555",
                 "name": "SayAlphaTest",
                 "type": "SayAlpha",
                 "typeSpecific": {"voiceMessage": "Message", "sleepTime": 5}
@@ -129,13 +127,14 @@ describe('rocketvoip.view_editDialplan module', function () {
         }));
 
         it('should update action', inject(function () {
-            ctrl.createAction(angular.copy(testData.actionSayAlpha));
-            ctrl.createAction(angular.copy(testData.actionDial));
+            ctrl.createAction(testData.actionSayAlpha);
+            ctrl.createAction(testData.actionDial);
             expect(scope.dialplan.actions.length).toBe(2);
-            testData.actionDial.name = "Changed name";
-            ctrl.updateAction(angular.copy(testData.actionDial));
+            var copy = angular.copy(testData.actionDial);
+            copy.name = "Changed name";
+            ctrl.updateAction(copy);
             var action = scope.dialplan.actions;
-            expect(action[1].name).toEqual(testData.actionDial.name);
+            expect(action[1].name).toEqual(copy.name);
             expect(scope.dialplan.actions.length).toBe(2);
         }));
 
@@ -214,7 +213,6 @@ describe('rocketvoip.view_editDialplan module', function () {
             expect(scope.isNewDialplan).toBeFalsy();
         }));
 
-
         it('should should not redirect when parameters are set', inject(function () {
             location.path = jasmine.createSpy();
             location.search = function(){
@@ -231,6 +229,15 @@ describe('rocketvoip.view_editDialplan module', function () {
             });
             expect(scope.isNewDialplan).toBeTruthy();
             expect(location.path).toHaveBeenCalledTimes(0);
+        }));
+
+        it('should set position of action', inject(function () {
+            var existingAction = {
+                name: "Test"
+            };
+            scope.edit(existingAction,1);
+            expect(existingAction.position).toBe(1);
+
         }));
 
     });

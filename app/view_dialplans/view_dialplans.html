@@ -3,12 +3,17 @@
     <div flex layout="row" layout-align=" center">
         <h1 flex>Manage Dialplans</h1>
 
-        <md-select class="view-dialplan-selectCompany" ng-model="currentCompany" required placeholder="Select a company"
-                   ng-change="ctrl.queryDialplans()"
-                   style="min-width: 300px;" class="view-dialplans-select">
-            <md-option ng-value="company" ng-repeat="company in companies | orderBy:name:true">{{company.name}}
-            </md-option>
-        </md-select>
+
+        <md-input-container>
+            <label>Current company</label>
+            <md-select class="view-dialplan-selectCompany" ng-model="currentCompany" required placeholder="Select a company"
+                       ng-change="ctrl.queryDialplans()"
+                       style="min-width: 300px;" class="view-dialplans-select">
+                <md-option ng-value="company" ng-repeat="company in companies | orderBy:name:true">{{company.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
         <div flex="5"></div>
 
         <md-input-container class="md-errors-spacer md-icon-float view-dialplans-filter">
