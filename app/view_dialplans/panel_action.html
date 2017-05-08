@@ -107,7 +107,7 @@
                 <div ng-repeat="branchDialplan in action.typeSpecific.nextDialPlanIds track by $index" style="height: 40px;">
                     <div layout="row" layout-align="center center" max-height="50px">
                         <md-icon flex="10" class="panel-action-branch-option-icon">filter_{{$index+1}}</md-icon>
-                        <md-input-container flex="80">
+                        <md-input-container flex="70">
                             <md-select flex layout="column" ng-required="$first || !$last"
                                        placeholder="Select a dialplan for input '{{$index+1}}'"
                                        class="view-editAction-branch-select"
@@ -117,12 +117,13 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
-                        <md-button felx="10" class="panel-action-branch-option-delete" class="md-fab"
+                        <md-button ng-show="!$last" felx="20" class="panel-action-branch-option-delete" class="md-fab"
                                    aria-label="Delete"
                                    ng-click="deleteBranchOption($index)">
                             <md-tooltip>Delete this option</md-tooltip>
                             <md-icon>delete</md-icon>
                         </md-button>
+                        <div ng-show="$last" flex="20"></div>
                     </div>
                 </div>
             </div>
