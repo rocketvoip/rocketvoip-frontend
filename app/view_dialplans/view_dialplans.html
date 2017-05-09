@@ -9,19 +9,18 @@
         <md-input-container>
             <label>Current company</label>
             <md-select ng-model="currentCompany" required placeholder="Select a company" ng-change="ctrl.queryUsers()"
-                       style="min-width: 300px;" class="view-users-select">
+                       style="min-width: 300px;" class="view-dialplans-select">
                 <md-option ng-value="company" ng-repeat="company in companies | orderBy:name:true">{{company.name}}
                 </md-option>
             </md-select>
         </md-input-container>
 
-        <md-input-container class="md-errors-spacer md-icon-float view-user-filter">
+        <md-input-container class="rocketvoip-filter">
             <label>Search</label>
-            <input id="view-user-filter-input" ng-model="filter" type="text">
+            <input id="view-dialplans-filter-input" ng-model="filter" type="text">
         </md-input-container>
 
-        <md-button md-colors="::{background: 'primary-900'}"
-                   class="md-fab md-secondary view-dialplan-add-dialplan"
+        <md-button md-colors="::{background: 'primary-900'}" class="md-fab md-secondary view-dialplan-add-dialplan"
                    aria-label="Add Users"
                    ng-click="ctrl.showDialplan(null)">
             <md-tooltip>Add Dialplan</md-tooltip>
