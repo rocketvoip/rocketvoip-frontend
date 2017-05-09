@@ -110,3 +110,18 @@ h1 {
 md-list {
     padding: 0;
 }
+
+.view_admin_toolbar {
+    margin: 10px;
+}
+
+/* http://stackoverflow.com/questions/9222487/selected-div-appears-with-a-border-on-selected-on-chrome-and-safari */
+*:focus {
+    outline: none;
+}
+
+
+#view-admins .md-subheader-inner{
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
