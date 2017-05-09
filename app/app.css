@@ -42,7 +42,7 @@ md-input-container {
     margin: 9px 0;
 }
 
-.view-user-filter {
+.view-user-filter, .view-companies-filter, .rocketvoip-filter {
     margin: 0 40px 0 40px;
 }
 

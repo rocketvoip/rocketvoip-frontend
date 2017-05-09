@@ -1,17 +1,15 @@
 <div ng-controller="ViewCompaniesCtrl as ctrl">
 
-    <div flex layout="row">
-        <h1 flex>Manage Companies</h1>
+    <div layout="row" layout-align="start center">
+        <h1>Manage Companies</h1>
+        <span flex></span>
 
-        <md-input-container class="md-icon-float md-block view-companies-filter">
+        <md-input-container class="view-companies-filter">
             <label>Search</label>
-            <md-icon aria-label="Filter">search</md-icon>
             <input id="view-companies-filter-input" ng-model="filter" type="text"/>
         </md-input-container>
 
-        <md-button md-colors="::{background: 'primary-900'}"
-                   class="md-fab md-secondary button-add-company"
-                   aria-label="Add Company"
+        <md-button md-colors="::{background: 'primary-900'}" class="md-fab button-add-company" aria-label="Add Company"
                    ng-click="ctrl.showDialog(null,ctrl)">
             <md-tooltip>Add Company</md-tooltip>
             <md-icon md-colors="::{color: 'primary-50'}">add</md-icon>
