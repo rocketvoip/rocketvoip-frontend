@@ -14,6 +14,7 @@
     "angular-mocks": "^1.6.3",
     "angular-resource": "^1.6.3",
     "ngstorage": "^0.3.11",
-    "angular-filter": "^0.5.16"
+    "angular-filter": "^0.5.16",
+    "angular-jwt": "^0.1.9"
   }
 }

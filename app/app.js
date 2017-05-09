@@ -5,6 +5,7 @@ angular.module('rocketvoip', [
     'ngRoute',
     'ngMaterial',
     'ngStorage',
+    'angular-jwt',
     'rocketvoip.login',
     'rocketvoip.utility_service',
     'rocketvoip.panel_editUser',
@@ -17,6 +18,7 @@ angular.module('rocketvoip', [
     'rocketvoip.view_editDialplan',
     'rocketvoip.panel_editAction',
     'rocketvoip.panel_editCompany',
+    'rocketvoip.view_admins',
     'rocketvoip.view_header'
 ]).constant('appConfig', {
     'BACKEND_BASE_URL': 'http://localhost:8080',
@@ -38,10 +40,26 @@ angular.module('rocketvoip', [
             }
         };
     });
-}).run(function ($rootScope, $http, $location, $localStorage) {
+}).run(function ($rootScope, $http, $location, $localStorage, jwtHelper, $injector, $timeout) {
     if ($localStorage.currentUser) {
-        $http.defaults.headers.common['x-auth-token'] = $localStorage.currentUser.token;
-        $rootScope.isLoggedIn = true;
+
+        var token = $localStorage.currentUser.token;
+        if (jwtHelper.isTokenExpired(token)) {
+            //Token is not valid
+            var AuthenticationService = $injector.get('AuthenticationService');
+            AuthenticationService.Logout();
+        } else {
+            $rootScope.isLoggedIn = true;
+            $rootScope.isGlobalAdmin = false;
+            $http.defaults.headers.common['x-auth-token'] = token;
+            var expirationTime = jwtHelper.getTokenExpirationDate(token) - new Date();
+
+            //Register timer for token expiration
+            $timeout(function () {
+                var AuthenticationService = $injector.get('AuthenticationService');
+                AuthenticationService.Logout();
+            }, expirationTime);
+        }
     }
     $rootScope.$on('$locationChangeStart', function () {
         var publicPages = ['/login'];
