@@ -1,9 +1,7 @@
 <div ng-controller="ViewUsersCtrl as ctrl" id="view-users">
 
     <div layout="row" layout-align="start center">
-        <div>
-            <h1>Manage Users</h1>
-        </div>
+        <h1>Manage Users</h1>
         <span flex></span>
 
         <md-input-container>
@@ -15,7 +13,7 @@
             </md-select>
         </md-input-container>
 
-        <md-input-container class="md-errors-spacer md-icon-float view-user-filter">
+        <md-input-container class="view-user-filter">
             <label>Search</label>
             <input id="view-user-filter-input" ng-model="filter" type="text">
         </md-input-container>
