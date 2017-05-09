@@ -4,13 +4,13 @@
             <h1>Manage Administrators</h1>
         </div>
         <span flex></span>
-        <div class="view_admin_toolbar">
+        <div>
             <md-input-container class="md-errors-spacer md-icon-float view-admins-filter">
                 <label>Search</label>
                 <input id="view-admin-filter-input" ng-model="filter" type="text">
             </md-input-container>
         </div>
-        <div class="view_admin_toolbar">
+        <div id="view_admin_toolbar">
             <md-button md-colors="::{background: 'primary-900'}" class="md-fab" aria-label="Add Administrator"
                        ng-click="ctrl.showDialog(null,ctrl)">
                 <md-tooltip>Add Addministrator</md-tooltip>
