@@ -1,19 +1,19 @@
-<div ng-controller="ViewUsersCtrl as ctrl">
+<div ng-controller="ViewUsersCtrl as ctrl" id="view-users">
 
-    <div flex layout="row" layout-align=" center">
-        <h1 flex>Manage Users</h1>
+    <div layout="row" layout-align="start center">
+        <div>
+            <h1>Manage Users</h1>
+        </div>
+        <span flex></span>
 
         <md-input-container>
             <label>Current company</label>
-
-        <md-select ng-model="currentCompany" required placeholder="Select a company" ng-change="ctrl.queryUsers()"
-                   style="min-width: 300px;" class="view-users-select">
-            <md-option ng-value="company" ng-repeat="company in companies | orderBy:name:true">{{company.name}}
-            </md-option>
-        </md-select>
+            <md-select ng-model="currentCompany" required placeholder="Select a company" ng-change="ctrl.queryUsers()"
+                       style="min-width: 300px;" class="view-users-select">
+                <md-option ng-value="company" ng-repeat="company in companies | orderBy:name:true">{{company.name}}
+                </md-option>
+            </md-select>
         </md-input-container>
-
-        <div flex="5"></div>
 
         <md-input-container class="md-errors-spacer md-icon-float view-user-filter">
             <label>Search</label>
@@ -28,12 +28,11 @@
             <md-icon md-colors="::{color: 'primary-50'}">person_add</md-icon>
         </md-button>
     </div>
-
     <md-subheader>
         <div flex layout="row" layout-align="none center">
             <div flex="30">
                 <a id="view-user-sort-name" ng-click="sortType = 'name'; sortReverse = !sortReverse">
-                    Name
+                    Username
                     <span ng-show="sortType == 'name' && !sortReverse">
                         <md-icon aria-label="Sort Down">keyboard_arrow_down</md-icon>
                     </span>
@@ -68,28 +67,23 @@
 
     <md-divider></md-divider>
 
-    <md-list-item flex layout="row"
-                  ng-repeat="sipClient in sipClients | orderBy:sortType:sortReverse | filter:filter | filter:{company:{id: currentCompany.id}}"
-                  layout-align="none center">
-
-        <div flex layout="row" layout-align=" center">
-            <div class="view-user-sipUserName" flex="30"><strong>{{ sipClient.name }}</strong><small>-{{sipClient.company.name}}</small></div>
+    <md-list>
+        <md-list-item
+                ng-repeat="sipClient in sipClients | orderBy:sortType:sortReverse | filter:filter | filter:{company:{id: currentCompany.id}}">
+            <div class="view-user-sipUserName" flex="30" layout="">
+                <strong>{{ sipClient.name }}</strong>
+                <small>-{{sipClient.company.name}}</small>
+            </div>
             <div class="view-user-sipUserPhone" flex="30">{{ sipClient.phone }}</div>
             <div ng-show="showSecrets" class="view-user-sipUserSecret" flex="30">{{ sipClient.secret }}</div>
-            <div flex layout="row" layout-align="end">
-                <md-button class="md-icon-button view-user-edituser"
-                           ng-click="ctrl.showDialog(sipClient)"
-                           aria-label="Edit Users">
-                    <md-tooltip>Edit User</md-tooltip>
-                    <md-icon aria-label="Edit">edit</md-icon>
-                </md-button>
-            </div>
-        </div>
-
-        <div>
+            <span flex></span>
+            <md-button class="md-icon-button view-user-edituser"
+                       ng-click="ctrl.showDialog(sipClient)"
+                       aria-label="Edit Users">
+                <md-tooltip>Edit User</md-tooltip>
+                <md-icon aria-label="Edit">edit</md-icon>
+            </md-button>
             <md-divider></md-divider>
-        </div>
-
-    </md-list-item>
-
+        </md-list-item>
+    </md-list>
 </div>
