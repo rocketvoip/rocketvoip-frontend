@@ -13,6 +13,7 @@ module.exports = function (config) {
             'bower_components/angular-loader/angular-loader.js',
             'bower_components/angular-material/modules/js/**/*.js',
             'bower_components/ngstorage/ngStorage.js',
+            'bower_components/angular-jwt/dist/angular-jwt.js',
             'bower_components/angular-filter/dist/angular-filter.js',
             'app.js',
             'components/**/*.js',
