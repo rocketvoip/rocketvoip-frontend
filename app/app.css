@@ -121,7 +121,7 @@ md-list {
 }
 
 
-#view-admins .md-subheader-inner{
+#view-admins .md-subheader-inner, #view-users .md-subheader-inner{
     padding-top: 10px;
     padding-bottom: 5px;
 }

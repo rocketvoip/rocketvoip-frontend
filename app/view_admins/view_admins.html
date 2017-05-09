@@ -18,27 +18,27 @@
             </md-button>
         </div>
     </div>
-    <md-content>
-        <md-subheader>
-            <div layout="row">
-                <div flex="30" ng-click="sortReverse = !sortReverse">
-                    <a>Email Address</a>
-                    <span ng-show="!sortReverse">
+    <md-subheader>
+        <div layout="row">
+            <div flex="30" ng-click="sortReverse = !sortReverse">
+                <a>Email Address</a>
+                <span ng-show="!sortReverse">
                         <md-icon aria-label="Sort Down">keyboard_arrow_down</md-icon>
                     </span>
-                    <span ng-show="sortReverse">
+                <span ng-show="sortReverse">
                         <md-icon aria-label="Sort Up">keyboard_arrow_up</md-icon>
                     </span>
-                </div>
-                <div flex="60" layout="row" layout-align="start center">
-                    <a>Companies</a>
-                </div>
-                <span flex></span>
-                <div layout="row" layout-align="start center">
-                    <a>Actions</a>
-                </div>
             </div>
-        </md-subheader>
+            <div flex="60" layout="row" layout-align="start center">
+                <a>Companies</a>
+            </div>
+            <span flex></span>
+            <div layout="row" layout-align="start center">
+                <a>Actions</a>
+            </div>
+        </div>
+    </md-subheader>
+    <md-content>
         <md-divider></md-divider>
         <md-list>
             <md-list-item ng-repeat="admin in admins | orderBy:sortType:sortReverse | filter:filter">
