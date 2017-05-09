@@ -5,18 +5,20 @@
  */
 angular.module('rocketvoip.view_admins', ['ngRoute'])
 
-.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/view_admins', {
-        templateUrl: 'view_admins/view_admins.html',
-        controller: 'ViewAdminsCtrl'
-    });
-}])
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.when('/view_admins', {
+            templateUrl: 'view_admins/view_admins.html',
+            controller: 'ViewAdminsCtrl'
+        });
+    }])
 
-.controller('ViewAdminsCtrl', function ($scope, $mdPanel, appConfig, CompanyService, UtilityService) {
-
-    }
-).factory('AdminService', ['$resource', 'appConfig', function ($resource, appConfig) {
-    return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/admins/:id', {id: "@id"} ,{
+    .controller('ViewAdminsCtrl', function ($scope, AdminService) {
+            $scope.sortType = 'username';
+            $scope.sortReverse = false;
+            $scope.admins = AdminService.query();
+        }
+    ).factory('AdminService', ['$resource', 'appConfig', function ($resource, appConfig) {
+    return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/admins/:id', {id: "@id"}, {
         update: {
             method: 'PUT'
         }
