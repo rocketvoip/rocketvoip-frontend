@@ -15,9 +15,15 @@ angular.module('rocketvoip.login', [])
                 }).then(function successCallback(response) {
                     if (response.headers('x-auth-token')) {
                         var token = response.headers('x-auth-token');
-                        $localStorage.currentUser = {username: username, token: token};
+                        $localStorage.currentUser = {
+                            username: username,
+                            token: token,
+                            //TODO: set correct from body!
+                            isGlobalAdmin: true
+                        };
                         $http.defaults.headers.common['X-Auth-Token'] = token;
                         $rootScope.isLoggedIn = true;
+                        $rootScope.isGlobalAdmin = $localStorage.currentUser.isGlobalAdmin;
                         callback(true);
                     } else {
                         callback('Server Error...');

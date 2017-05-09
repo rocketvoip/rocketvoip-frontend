@@ -54,7 +54,7 @@ angular.module('rocketvoip', [
             AuthenticationService.Logout();
         } else {
             $rootScope.isLoggedIn = true;
-            $rootScope.isGlobalAdmin = false;
+            $rootScope.isGlobalAdmin = $localStorage.currentUser.isGlobalAdmin;
             $http.defaults.headers.common['x-auth-token'] = token;
             var expirationTime = jwtHelper.getTokenExpirationDate(token) - new Date();
 
