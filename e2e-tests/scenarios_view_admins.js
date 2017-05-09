@@ -36,7 +36,7 @@ describe('rocketvoip', function () {
         });
 
         it('should diaplay site', function () {
-            expect(element(by.id('view_admin_toolbar')).isPresent()).toBeTruthy();
+            expect(element(by.id('view-admins')).isPresent()).toBeTruthy();
         });
 
     });
