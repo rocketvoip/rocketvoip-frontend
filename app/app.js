@@ -18,6 +18,7 @@ angular.module('rocketvoip', [
     'rocketvoip.view_editDialplan',
     'rocketvoip.panel_editAction',
     'rocketvoip.panel_editCompany',
+    'rocketvoip.panel_editAdmin',
     'rocketvoip.view_admins',
     'rocketvoip.view_header'
 ]).constant('appConfig', {
@@ -44,7 +45,7 @@ angular.module('rocketvoip', [
     if ($localStorage.currentUser) {
 
         var token = $localStorage.currentUser.token;
-        if (token === 'Test-Token'){
+        if (token === 'Test-Token') {
             // For E2E Tests
             $rootScope.isLoggedIn = true;
             $rootScope.isGlobalAdmin = true;

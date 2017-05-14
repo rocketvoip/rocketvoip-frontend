@@ -18,8 +18,7 @@ angular.module('rocketvoip.login', [])
                         $localStorage.currentUser = {
                             username: username,
                             token: token,
-                            //TODO: set correct from body!
-                            isGlobalAdmin: true
+                            isGlobalAdmin: response.data.isOperator
                         };
                         $http.defaults.headers.common['X-Auth-Token'] = token;
                         $rootScope.isLoggedIn = true;

@@ -24,7 +24,7 @@
     padding-right: 0.3em;
 }
 
-.user-dialog {
+.user-dialog, .admin-dialog {
     background: white;
     border-radius: 4px;
     box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
@@ -33,7 +33,7 @@
     width: 500px;
 }
 
-form[name="userEditForm"], form[name="companyEditForm"], form[name="actionEditForm"] {
+form[name$="EditForm"] {
     padding-top: 25px;
     padding-bottom: 25px;
 }
@@ -75,7 +75,7 @@ md-input-container .md-errors-spacer {
     font-size: 48px;
 }
 
-.view-editDialplan-button-large{
+.view-editDialplan-button-large {
     min-width: 1%;
     width: 60px;
     height: 50px;
@@ -83,23 +83,23 @@ md-input-container .md-errors-spacer {
     display: inline-block;
 }
 
-.view-editDialplan-button-large md-icon{
+.view-editDialplan-button-large md-icon {
     width: 48px;
     height: 48px;
 }
 
 .reservespace.ng-hide {
-    display: block!important;
+    display: block !important;
     visibility: hidden;
 }
 
-.view-action-error{
-    color: rgb(221,44,0) !important;
+.view-action-error {
+    color: rgb(221, 44, 0) !important;
     font-size: 12px !important;
     font-family: Roboto, "Helvetica Neue", sans-serif !important;
 }
 
-.center  {
+.center {
     text-align: center;
 }
 
@@ -120,8 +120,7 @@ md-list {
     outline: none;
 }
 
-
-#view-admins .md-subheader-inner, #view-users .md-subheader-inner{
+#view-admins .md-subheader-inner, #view-users .md-subheader-inner {
     padding-top: 10px;
     padding-bottom: 5px;
 }

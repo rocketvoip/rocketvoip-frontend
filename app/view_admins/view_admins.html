@@ -7,7 +7,7 @@
             <input id="view-admin-filter-input" ng-model="filter" type="text">
         </md-input-container>
         <md-button md-colors="::{background: 'primary-900'}" class="md-fab" aria-label="Add Administrator"
-                   ng-click="ctrl.showDialog(null,ctrl)">
+                   ng-click="showDialog(null)">
             <md-tooltip>Add Addministrator</md-tooltip>
             <md-icon md-colors="::{color: 'primary-50'}">add</md-icon>
         </md-button>
@@ -37,11 +37,11 @@
         <md-list>
             <md-list-item ng-repeat="admin in admins | orderBy:sortType:sortReverse | filter:filter">
                 <div class="view-admins-adminName" flex="30">
-                    <strong>{{admin.username}}</strong>
+                    <strong>{{admin.userName}}</strong>
                 </div>
                 <div flex="60">
                     <p>
-                        <span ng-repeat="company in admin.companies | orderBy:'name':false">
+                        <span ng-repeat="company in admin.companyDtoList | orderBy:'name':false">
                             <span ng-show="!$last">{{company.name}}, </span>
                             <span ng-show="$last">{{company.name}}</span>
                         </span>
@@ -49,7 +49,7 @@
                 </div>
                 <span flex></span>
                 <div>
-                    <md-button class="md-icon-button view-admins-editAdmin" ng-click="ctrl.showDialog(admin)"
+                    <md-button class="md-icon-button view-admins-editAdmin" ng-click="showDialog(admin)"
                                aria-label="Edit Administrator">
                         <md-tooltip>Edit Administrator</md-tooltip>
                         <md-icon aria-label="Edit Administrator">edit</md-icon>
