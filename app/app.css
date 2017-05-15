@@ -124,3 +124,28 @@ md-list {
     padding-top: 10px;
     padding-bottom: 5px;
 }
+
+#dashboard {
+    padding: 20px;
+}
+
+#dashboard a{
+    text-decoration: none !important;
+}
+
+.dashboard-item{
+    height: 150px;
+    width: 200px;
+    margin: 20px;
+    background-color: #3949ab;
+    color: white !important;
+}
+
+.dashboard-item p {
+    font-size: 2em;
+    margin: 10px;
+}
+
+.dashboard-item margin {
+    margin: 5px;
+}
