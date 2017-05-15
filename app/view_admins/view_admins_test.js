@@ -7,16 +7,20 @@ describe('rocketvoip.view_admins module', function () {
     beforeEach(module('rocketvoip'));
 
     describe('view_admins controller', function () {
-        var scope, ctrl, AdminServiceMock;
+        var scope, ctrl, AdminServiceMock, UtilityService;
         beforeEach(inject(function ($rootScope, AdminService, $controller) {
 
             scope = $rootScope.$new();
+            UtilityService = {
+                showDialog: jasmine.createSpy()
+            };
 
             AdminServiceMock = {
                 query: jasmine.createSpy("AdminServiceMock.query")
             };
 
             ctrl = $controller("ViewAdminsCtrl", {
+                UtilityService: UtilityService,
                 AdminService: AdminServiceMock,
                 $scope: scope
             });
@@ -24,6 +28,12 @@ describe('rocketvoip.view_admins module', function () {
 
         it('should be Defined', inject(function () {
             expect(ctrl).toBeDefined();
+        }));
+
+        it('should open panel', inject(function () {
+            scope.showDialog();
+            scope.$apply();
+            expect(UtilityService.showDialog).toHaveBeenCalledTimes(1);
         }));
     });
 });

@@ -37,11 +37,11 @@ angular.module('rocketvoip.panel_editAdmin', ['ngMessages'])
             };
 
             $scope.delete = function () {
-                AdminService.delete($scope.admin).$promise.then(this.closeDialog);
+                AdminService.delete($scope.admin).$promise.then(this.close);
             };
 
             $scope.save = function () {
-                if ($scope.adminEditForm.$valid) {
+                if ($scope.adminEditForm.$valid && $scope.admin.companyDtoList.length > 0) {
                     if ($scope.admin.id == undefined) {
                         AdminService.save($scope.admin).$promise.then(this.close);
                     } else {
@@ -54,11 +54,6 @@ angular.module('rocketvoip.panel_editAdmin', ['ngMessages'])
 
             };
 
-
-
-            $scope.close = function () {
-                mdPanelRef && mdPanelRef.close();
-            };
-
+            $scope.close = mdPanelRef.close;
             controller.initialize();
         });
