@@ -1,2 +1,42 @@
-<h1>Dashboard</h1>
-<p>This is the first version of the dashboard</p>
+<div>
+    <h1>Dashboard</h1>
+    <div id="dashboard" layout="row" layout-wrap>
+
+        <a href="#!/view_companies">
+        <span layout="column" class="dashboard-item" layout="row" layout-align="center center">
+            <h2>Companies</h2>
+            <div>
+                <p>{{companies.length}}</p>
+            </div>
+        </span>
+        </a>
+
+        <a href="#!/view_users">
+        <span layout="column" class="dashboard-item" layout="row" layout-align="center center">
+            <h2>Users</h2>
+            <div>
+                <p>{{sipClients.length}}</p>
+            </div>
+        </span>
+        </a>
+
+        <a href="#!/view_dialplans">
+        <span layout="column" class="dashboard-item" layout="row" layout-align="center center">
+            <h2>Dialplans</h2>
+            <div>
+                <p>{{dialplans.length}}</p>
+            </div>
+        </span>
+        </a>
+
+        <a href="#!/view_admins" ng-if="$root.isGlobalAdmin === true">
+        <span layout="column" class="dashboard-item" layout="row" layout-align="center center">
+            <h2>Admins</h2>
+            <div>
+                <p>{{admins.length}}</p>
+            </div>
+        </span>
+        </a>
+    </div>
+</div>
+
