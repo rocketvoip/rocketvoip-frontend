@@ -19,8 +19,23 @@ describe('rocketvoip.view_editDialplan module', function () {
             };
 
             DialplanService = {
-                get: function () {
-                    return testData.dialplan;
+                get: function (data) {
+                    if(data.id == 999){
+                        return {
+                            $promise: {
+                                then: function (success,error) {
+                                    error();
+                                }
+                            }
+                        };
+                    }
+                    return {
+                        $promise: {
+                            then: function (success,error) {
+                                success(testData.dialplan);
+                            }
+                        }
+                    };
                 },
                 delete: jasmine.createSpy(),
                 save: function (data) {
@@ -112,7 +127,6 @@ describe('rocketvoip.view_editDialplan module', function () {
             ctrl.query();
             scope.$apply();
             expect(scope.dialplan.name).toEqual(testData.dialplan.name);
-            var action = scope.dialplan.actions[0];
         }));
 
         it('should not delete new dialplan', inject(function () {
@@ -186,6 +200,20 @@ describe('rocketvoip.view_editDialplan module', function () {
         it('should should redirect when route is invalid', inject(function () {
             var routeParams = {
                 id: 'NotANumber'
+            };
+            ctrl = controller("ViewEditDialplanCtrl", {
+                $scope: scope,
+                $location: location,
+                UtilityService: UtilityService,
+                DialplanService: DialplanService,
+                $routeParams: routeParams
+            });
+            expect(location.path).toHaveBeenCalled();
+        }));
+
+        it('should should redirect on 404', inject(function () {
+            var routeParams = {
+                id: '999'
             };
             ctrl = controller("ViewEditDialplanCtrl", {
                 $scope: scope,
