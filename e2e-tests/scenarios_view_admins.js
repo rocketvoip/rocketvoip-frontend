@@ -2,7 +2,7 @@
 
 describe('rocketvoip', function () {
 
-    describe('view_users', function () {
+    describe('view_admins', function () {
 
         beforeEach(function () {
             browser.get('index.html');
