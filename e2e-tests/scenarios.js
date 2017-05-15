@@ -10,13 +10,4 @@ describe('rocketvoip', function () {
         browser.get('index.html#!/fdgdfgdfghngdfg');
         expect(browser.getLocationAbsUrl()).toMatch("/dashboard");
     });
-
-    describe('dashboard', function () {
-        beforeEach(function () {
-            browser.get('index.html#!/dashboard');
-        });
-        it('should render dashboard when user navigates to /dashboard', function () {
-            expect(element.all(by.css('[ng-view] p')).first().getText()).toMatch(/version of the dashboard/);
-        });
-    });
 });
