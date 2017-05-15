@@ -1,16 +1,30 @@
 'use strict';
 
-describe('rocketvoip.view_dashboard module', function() {
+describe('rocketvoip.view_dashboard module', function () {
 
-  beforeEach(module('rocketvoip.view_dashboard'));
+    beforeEach(module('rocketvoip.view_dashboard'));
 
-  describe('dashboard controller', function(){
+    describe('dashboard controller', function () {
+        var scope, httpMock, ctrl;
 
-    it('should ....', inject(function($controller) {
-      //spec body
-      var dashboardCtrl = $controller('DashboardCtrl');
-      expect(dashboardCtrl).toBeDefined();
-    }));
+        beforeEach(inject(function ($rootScope, $controller) {
+            scope = $rootScope.$new();
+            httpMock = {
+                query: jasmine.createSpy()
+            };
 
-  });
+            ctrl = $controller("DashboardCtrl", {
+                $scope: scope,
+                AdminService: httpMock,
+                SipClientService: httpMock,
+                CompanyService: httpMock,
+                DialplanService: httpMock
+            });
+        }));
+
+        it('should be defined', inject(function ($controller) {
+            expect(ctrl).toBeDefined();
+        }));
+
+    });
 });
