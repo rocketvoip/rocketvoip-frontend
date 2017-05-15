@@ -13,7 +13,7 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
     }])
 
     .controller('ViewEditDialplanCtrl',
-        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location, $filter) {
+        function ($scope, DialplanService, UtilityService, CompanyService, $routeParams, $location) {
             var ctrl = this;
             var dialplanID;
 
@@ -65,8 +65,11 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
             }
 
             this.query = function () {
-                //TODO: If not exists (404) redirect!
-                $scope.dialplan = DialplanService.get({id: dialplanID});
+                DialplanService.get({id: dialplanID}).$promise.then(function (dialplan) {
+                    $scope.dialplan = dialplan;
+                }, function () {
+                    redirectToViewDialplans();
+                });
             };
 
             this.updateAction = function (action) {
@@ -118,8 +121,8 @@ angular.module('rocketvoip.view_editDialplan', ['ngRoute', 'ngResource'])
                 }
             };
 
-            $scope.edit = function (action,index) {
-                if(action != null){
+            $scope.edit = function (action, index) {
+                if (action != null) {
                     action.position = index;
                 }
                 UtilityService.showDialog(
