@@ -1,0 +1,65 @@
+<div role="dialog" aria-label="Edit Admin" layout="column" layout-align="center center">
+    <md-toolbar layout="row" layout-align="none center">
+        <div class="md-toolbar-tools">
+            <h2 class="plane-editAdmin-title" ng-if="isNewAdmin">Add a new Admin</h2>
+            <h2 class="plane-editAdmin-title" ng-if="!isNewAdmin">Edit Admin '{{nameCopy}}'</h2>
+        </div>
+
+        <md-button id="plane-editAdmin-delete" ng-show="!isNewCompany" class="md-raised md-warn md-mini"
+                   aria-label="Delete Admin" ng-click="delete()">
+            delete
+        </md-button>
+    </md-toolbar>
+
+    <form name="adminEditForm" layout="row" layout-wrap layout-align="center">
+
+        <md-input-container layout="column" flex="90">
+            <label>Email Address</label>
+            <input type="email" name="userName" ng-model="admin.userName" required>
+        </md-input-container>
+
+        <md-input-container layout="column" flex="90">
+            <label>First name</label>
+            <input type="text" name="firstName" ng-model="admin.firstName" required ng-minlength="2">
+            <div ng-messages="adminEditForm.firstName.$error">
+                <div ng-message="minlength">The first name must contain at least 2 characters.</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container layout="column" flex="90">
+            <label>Last name</label>
+            <input type="text" name="lastName" ng-model="admin.lastName" required ng-minlength="2">
+            <div ng-messages="adminEditForm.lastName.$error">
+                <div ng-message="minlength">The last name must contain at least 2 characters.</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container layout="column" flex="90">
+            <label>Password</label>
+            <input type="password" name="password" ng-model="admin.password" required ng-minlength="8">
+            <div ng-messages="adminEditForm.password.$error">
+                <div ng-message="minlength">The last name must contain at least 8 characters.</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container layout="column" flex="90">
+            <label>Manageable companies</label>
+            <md-contact-chips ng-model="admin.companyDtoList" md-contacts="companies | filterBy: ['name']: $query"
+                              md-contact-name="name" md-require-match="true" md-highlight-flags="i"
+                              filter-selected="true" placeholder="Choose at least one company...">
+            </md-contact-chips>
+        </md-input-container>
+        <div ng-if="admin.companyDtoList.length < 1">
+            <p class="view-action-error">Please choose at least one company.</p>
+        </div>
+    </form>
+
+    <div layout="row">
+        <md-button md-auto-focus class="md-raised md-primary plane-editAdmin-save" ng-click="save()">
+            Save
+        </md-button>
+        <md-button class="md-primary plane-editAdmin-close" flex ng-click="close()">
+            Cancel
+        </md-button>
+    </div>
+</div>

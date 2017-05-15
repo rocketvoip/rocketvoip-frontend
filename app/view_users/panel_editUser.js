@@ -1,13 +1,13 @@
 'use strict';
 /*
- Module panel_edit is a dialog for adding oder editing a Sip Client
+ Module panel_editUser is a dialog for adding oder editing a Sip Client
  Author: Marco Studerus
  */
 angular.module('rocketvoip.panel_editUser', ['ngMessages'])
     .controller('PanelEditSipClientDialogCtrl',
-        function ($scope, mdPanelRef, sipClient, company, appConfig, SipClientService,UtilityService) {
+        function ($scope, mdPanelRef, sipClient, company, appConfig, SipClientService, UtilityService) {
 
-            this.closeDialog = function() {
+            this.closeDialog = function () {
                 mdPanelRef && mdPanelRef.close();
             };
 
