@@ -10,7 +10,6 @@ angular.module('rocketvoip', [
     'rocketvoip.utility_service',
     'rocketvoip.panel_editUser',
     'rocketvoip.view_dashboard',
-    'rocketvoip.version',
     'rocketvoip.view_users',
     'rocketvoip.view_login',
     'rocketvoip.view_companies',
@@ -20,7 +19,8 @@ angular.module('rocketvoip', [
     'rocketvoip.panel_editCompany',
     'rocketvoip.panel_editAdmin',
     'rocketvoip.view_admins',
-    'rocketvoip.view_header'
+    'rocketvoip.view_header',
+    'rocketvoip.dialog_resetPassword'
 ]).constant('appConfig', {
     'BACKEND_BASE_URL': 'http://localhost:8080',
     'API_ENDPOINT': '/v1',

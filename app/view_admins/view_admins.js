@@ -12,7 +12,7 @@ angular.module('rocketvoip.view_admins', ['ngRoute'])
         });
     }])
 
-    .controller('ViewAdminsCtrl', function ($scope, UtilityService, AdminService) {
+    .controller('ViewAdminsCtrl', function ($scope, UtilityService, AdminService, $mdDialog) {
 
             $scope.updateAdmins = function () {
                 $scope.admins = AdminService.query();
@@ -32,7 +32,14 @@ angular.module('rocketvoip.view_admins', ['ngRoute'])
                 );
             };
 
-
+            $scope.changeAdminPassword = function (admin){
+                $mdDialog.show({
+                    controller: 'ResetPasswordDialogCtrl',
+                    templateUrl: 'view_admins/dialog_resetPassword.html',
+                    clickOutsideToClose:true,
+                    admin: admin
+                })
+            };
         }
     ).factory('AdminService', ['$resource', 'appConfig', function ($resource, appConfig) {
     return $resource(appConfig.BACKEND_BASE_URL + appConfig.API_ENDPOINT + '/admins/:id', {id: "@id"}, {
