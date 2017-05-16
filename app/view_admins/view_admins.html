@@ -6,7 +6,7 @@
             <label>Search</label>
             <input id="view-admin-filter-input" ng-model="filter" type="text">
         </md-input-container>
-        <md-button md-colors="::{background: 'primary-900'}" class="md-fab" id=view-admin-add-admin" aria-label="Add Admin"
+        <md-button md-colors="::{background: 'primary-900'}" class="md-fab" id="view-admin-add-admin" aria-label="Add Admin"
                    ng-click="showDialog(null)">
             <md-tooltip>Add Addministrator</md-tooltip>
             <md-icon md-colors="::{color: 'primary-50'}">add</md-icon>
@@ -64,7 +64,7 @@
                 </div>
                 <span flex></span>
                 <div>
-                    <md-button class="md-icon-button view-admins-editAdmin" ng-click="changeAdminPassword(admin)"
+                    <md-button class="md-icon-button view-admins-resetPassword" ng-click="changeAdminPassword(admin)"
                                aria-label="Edit Administrator">
                         <md-tooltip>Reset Admin Password</md-tooltip>
                         <md-icon aria-label="Edit Administrator">vpn_key</md-icon>
