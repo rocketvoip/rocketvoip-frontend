@@ -14,7 +14,8 @@ describe('rocketvoip.view_login module', function () {
                 $scope: scope,
                 AuthenticationService: {
                     Logout: jasmine.createSpy()
-                }
+                },
+                $localStorage: null
             });
         }));
 
