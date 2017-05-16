@@ -14,7 +14,7 @@
     </div>
     <md-subheader>
         <div layout="row">
-            <div flex="30" ng-click="sortReverse = !sortReverse">
+            <div flex="20" ng-click="sortReverse = !sortReverse">
                 <a>Email Address</a>
                 <span ng-show="!sortReverse">
                         <md-icon aria-label="Sort Down">keyboard_arrow_down</md-icon>
@@ -23,7 +23,16 @@
                         <md-icon aria-label="Sort Up">keyboard_arrow_up</md-icon>
                     </span>
             </div>
-            <div flex="60" layout="row" layout-align="start center">
+
+            <div flex="15" layout="row" layout-align="start center">
+                <a>First name</a>
+            </div>
+
+            <div flex="15" layout="row" layout-align="start center">
+                <a>Last name</a>
+            </div>
+
+            <div flex="50" layout="row" layout-align="start center">
                 <a>Companies</a>
             </div>
             <span flex></span>
@@ -36,10 +45,16 @@
         <md-divider></md-divider>
         <md-list>
             <md-list-item ng-repeat="admin in admins | orderBy:sortType:sortReverse | filter:filter">
-                <div class="view-admins-adminName" flex="30">
+                <div class="view-admins-adminName" flex="20">
                     <strong>{{admin.userName}}</strong>
                 </div>
-                <div flex="60">
+                <div class="view-admins-firstName" flex="15">
+                    <strong>{{admin.firstName}}</strong>
+                </div>
+                <div class="view-admins-lastName" flex="15">
+                    <strong>{{admin.lastName}}</strong>
+                </div>
+                <div flex="50">
                     <p>
                         <span ng-repeat="company in admin.companyDtoList | orderBy:'name':false">
                             <span ng-show="!$last">{{company.name}}, </span>

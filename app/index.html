@@ -25,7 +25,11 @@
             <h1><em>RocketVoIP</em>
                 <small>Phone Management</small>
             </h1>
-            <div ng-show="$root.isLoggedIn === true" id="header-right" flex layout="column" layout-align="end end">
+            <span flex></span>
+            <div ng-show="$root.isLoggedIn === true" id="header-right" flex layout="row" layout-align="end center">
+                <div class="view-header-current-user" hide show-gt-sm>
+                    <p>{{localStorage.currentUser.username}}</p>
+                </div>
                 <md-button id="logout" class="md-warn md-mini md-fab md-icon-button" ng-click="logout()"
                            aria-label="Logout">
                     <md-tooltip>Logout</md-tooltip>
