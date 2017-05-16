@@ -10,7 +10,6 @@ angular.module('rocketvoip', [
     'rocketvoip.utility_service',
     'rocketvoip.panel_editUser',
     'rocketvoip.view_dashboard',
-    'rocketvoip.version',
     'rocketvoip.view_users',
     'rocketvoip.view_login',
     'rocketvoip.view_companies',
