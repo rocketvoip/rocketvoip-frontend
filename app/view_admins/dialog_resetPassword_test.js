@@ -24,7 +24,7 @@ describe('rocketvoip.dialog_resetPassword module', function () {
             ctrl = $controller("ResetPasswordDialogCtrl", {
                 $scope: scope,
                 admin: admin,
-                AdminService: AdminServiceMock
+                AdminPasswordService: AdminServiceMock
             });
             var templateHtml = $templateCache.get('view_admins/dialog_resetPassword.html');
             var formElement = angular.element(templateHtml);
