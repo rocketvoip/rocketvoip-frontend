@@ -42,8 +42,8 @@ angular.module('rocketvoip', [
         };
     });
 }).run(function ($rootScope, $http, $location, $localStorage, jwtHelper, $injector, $timeout) {
-    if ($localStorage.currentUser) {
 
+    if ($localStorage.currentUser) {
         var token = $localStorage.currentUser.token;
         if (token === 'Test-Token') {
             // For E2E Tests
