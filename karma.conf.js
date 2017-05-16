@@ -15,7 +15,7 @@ module.exports = function (config) {
             'bower_components/ngstorage/ngStorage.js',
             'bower_components/angular-jwt/dist/angular-jwt.js',
             'bower_components/angular-filter/dist/angular-filter.js',
-            'app.js',
+            '*.js',
             'view*/**/*.js',
             'services/**/*.js',
             'view*/**/*.html'
@@ -46,6 +46,7 @@ module.exports = function (config) {
 
         preprocessors: {
             'components/**/!(*_test).js': ['coverage'],
+            'app.js': ['coverage'],
             'view*/**/!(*_test).js': ['coverage'],
             'service*/**/!(*_test).js': ['coverage'],
             '**/*.html': ['ng-html2js']
@@ -53,7 +54,7 @@ module.exports = function (config) {
 
         coverageReporter: {
             type: 'lcov',
-            dir: 'coverage/',
+            dir: '../coverage/',
             subdir: '.'
         }
 
