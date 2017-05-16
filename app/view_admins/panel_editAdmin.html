@@ -42,6 +42,15 @@
             </div>
         </md-input-container>
 
+        <md-input-container ng-if="isNewAdmin" layout="column" flex="90">
+            <label>Confirm password</label>
+            <input match-password="password" type="password" name="confirmPassword" ng-model="confirmPassword"
+                   required ng-minlength="8">
+            <div ng-messages="adminEditForm.confirmPassword.$error">
+                <div ng-message="passwordMatch">Your passwords did not match.</div>
+            </div>
+        </md-input-container>
+
         <md-input-container layout="column" flex="90">
             <label>Manageable companies</label>
             <md-contact-chips ng-model="admin.companyDtoList" md-contacts="companies | filterBy: ['name']: $query"

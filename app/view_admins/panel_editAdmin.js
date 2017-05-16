@@ -3,7 +3,7 @@
  Module panel_editAdmin is a dialog for adding oder editing an Admin
  Author: Marco Studerus
  */
-angular.module('rocketvoip.panel_editAdmin', ['ngMessages'])
+angular.module('rocketvoip.panel_editAdmin', ['ngMessages', 'ngPassword'])
     .controller('PanelEditAdminDialogCtrl',
         function ($scope, mdPanelRef, admin, CompanyService, AdminService, UtilityService) {
             var controller = this;

@@ -9,7 +9,7 @@ describe('rocketvoip.Panel_editAdmin module', function () {
     describe('PanelEditAdminDialogCtrl ', function () {
         var scope, panelDialogCtrl, CompanyServiceMock, testCompanies, AdminService, mdPanelRef, testAdmin;
 
-        beforeEach(inject(function ($rootScope, $compile, $controller, $templateCache) {
+        beforeEach(inject(function ($rootScope, $compile, AdminPasswordService, $controller, $templateCache) {
             testAdmin = {
                 "id": 55,
                 "userName": "good@good.ch",
@@ -26,7 +26,7 @@ describe('rocketvoip.Panel_editAdmin module', function () {
 
             var callbackNgResource = jasmine.createSpy().and.returnValue({
                 $promise: {
-                    then: function(callback){
+                    then: function (callback) {
                         callback();
                     }
                 }
@@ -67,12 +67,14 @@ describe('rocketvoip.Panel_editAdmin module', function () {
                 "lastName": "User",
                 "companyDtoList": [{"name": "testcompany01", "id": 2}]
             };
+            scope.confirmPassword = scope.admin.password;
             scope.$apply();
             scope.save();
             expect(AdminService.save).toHaveBeenCalledTimes(1);
         }));
 
         it('should update existing admin', inject(function () {
+            scope.isNewAdmin = false;
             scope.admin = {
                 "id": 55,
                 "userName": "good@good.ch",

@@ -1,4 +1,4 @@
-<div ng-controller="ViewAdminsCtrl as ctrl" id="view-admins">
+<div ng-controller="ViewAdminsCtrl as ctrl" id="view-admins" ng-show="$root.isGlobalAdmin === true">
     <div layout="row" layout-align="start center">
         <h1>Manage Administrators</h1>
         <span flex></span>
@@ -6,7 +6,7 @@
             <label>Search</label>
             <input id="view-admin-filter-input" ng-model="filter" type="text">
         </md-input-container>
-        <md-button md-colors="::{background: 'primary-900'}" class="md-fab" aria-label="Add Administrator"
+        <md-button md-colors="::{background: 'primary-900'}" class="md-fab" id=view-admin-add-admin" aria-label="Add Admin"
                    ng-click="showDialog(null)">
             <md-tooltip>Add Addministrator</md-tooltip>
             <md-icon md-colors="::{color: 'primary-50'}">add</md-icon>

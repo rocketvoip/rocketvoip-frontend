@@ -13,7 +13,7 @@ describe('rocketvoip.dialog_resetPassword module', function () {
             scope = $rootScope.$new();
             AdminServiceMock = {
                 update: jasmine.createSpy()
-            }
+            };
             admin = {
                 CompanyDtoList: [{name: "test01", id: 2}],
                 firstName: "test@test.test",
