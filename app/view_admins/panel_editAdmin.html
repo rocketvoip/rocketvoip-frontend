@@ -34,7 +34,7 @@
             </div>
         </md-input-container>
 
-        <md-input-container layout="column" flex="90">
+        <md-input-container ng-if="isNewAdmin" layout="column" flex="90">
             <label>Password</label>
             <input type="password" name="password" ng-model="admin.password" required ng-minlength="8">
             <div ng-messages="adminEditForm.password.$error">

@@ -13,7 +13,7 @@ angular.module('rocketvoip.panel_editAdmin', ['ngMessages'])
                 }
                 return false;
             };
-            
+
             controller.initializeNewAdmin = function () {
                 $scope.admin = {
                     userName: undefined,
@@ -26,13 +26,12 @@ angular.module('rocketvoip.panel_editAdmin', ['ngMessages'])
 
             controller.initialize = function () {
                 $scope.isNewAdmin = controller.isNewAdmin();
-                if($scope.isNewAdmin){
+                if ($scope.isNewAdmin) {
                     controller.initializeNewAdmin();
-                }else{
+                } else {
                     $scope.nameCopy = admin.firstName + ' ' + admin.lastName;
                     $scope.admin = admin;
                 }
-
                 $scope.companies = CompanyService.query();
             };
 
@@ -47,13 +46,14 @@ angular.module('rocketvoip.panel_editAdmin', ['ngMessages'])
                     } else {
                         AdminService.update($scope.admin).$promise.then(this.close);
                     }
-
                 } else {
                     UtilityService.setAllFieldsTouched($scope.adminEditForm);
                 }
-
             };
 
-            $scope.close = mdPanelRef.close;
+            $scope.close = function () {
+                mdPanelRef && mdPanelRef.close();
+            };
+
             controller.initialize();
         });
