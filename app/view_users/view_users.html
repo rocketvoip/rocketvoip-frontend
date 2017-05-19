@@ -68,7 +68,7 @@
     <md-list>
         <md-list-item
                 ng-repeat="sipClient in sipClients | orderBy:sortType:sortReverse | filter:filter | filter:{company:{id: currentCompany.id}}">
-            <div class="view-user-sipUserName" flex="30" layout="">
+            <div class="view-user-sipUserName" flex="30" layout="row" layout-align="start center">
                 <strong>{{ sipClient.name }}</strong>
                 <small>-{{sipClient.company.name}}</small>
             </div>
