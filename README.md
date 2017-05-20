@@ -25,6 +25,10 @@ Coverage: [Coveralls](https://coveralls.io/github/rocketvoip/rocketvoip-frontend
 ## Heroku
 Deployment: [Heroku](https://rocketvoip-frontend.herokuapp.com/app)
 
+## Operations Manual
+[Operations Manual](https://github.com/rocketvoip/rocketvoip/blob/master/OPERATIONS.md)
+
+
 ## Build Status
 Master: [![Build Status](https://travis-ci.org/rocketvoip/rocketvoip-frontend.svg?branch=master)](https://travis-ci.org/rocketvoip/rocketvoip-frontend)
  [![Quality Gate](https://sonarqube.com/api/badges/gate?key=ch.zhaw.psit4:rocketvoip-frontend)](https://sonarqube.com/dashboard/index/ch.zhaw.psit4:rocketvoip-frontend)
