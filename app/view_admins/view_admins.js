@@ -18,7 +18,7 @@ angular.module('rocketvoip.view_admins', ['ngRoute'])
                 $scope.admins = AdminService.query();
             };
 
-            $scope.sortType = 'username';
+            $scope.sortType = 'userName';
             $scope.sortReverse = false;
             $scope.updateAdmins();
 

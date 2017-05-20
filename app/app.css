@@ -24,7 +24,7 @@
     padding-right: 0.3em;
 }
 
-.user-dialog, .admin-dialog {
+.user-dialog, .admin-dialog, .action-dialog {
     background: white;
     border-radius: 4px;
     box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2),
@@ -157,4 +157,8 @@ md-list {
 .view-header-current-user p {
     margin-right: 20px;
     font-size: 18px;
+}
+
+.action-dialog md-content {
+    max-height:70vh; overflow-y: auto;
 }
