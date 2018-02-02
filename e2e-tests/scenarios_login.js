@@ -38,7 +38,7 @@ describe('rocketvoip', function () {
             element(by.id('username')).clear().sendKeys("good@good.ch");
             element(by.id('password')).clear().sendKeys("password");
             element(by.id('viewLoginForm-login')).click();
-            expect(browser.getLocationAbsUrl()).toMatch("/dashboard");
+            expect(browser.getCurrentUrl()).toMatch("/dashboard");
         });
 
         it('should display dashboard after logout', function () {
@@ -46,9 +46,9 @@ describe('rocketvoip', function () {
             element(by.id('username')).clear().sendKeys("good@good.ch");
             element(by.id('password')).clear().sendKeys("password");
             element(by.id('viewLoginForm-login')).click();
-            expect(browser.getLocationAbsUrl()).toMatch("/dashboard");
+            expect(browser.getCurrentUrl()).toMatch("/dashboard");
             element(by.id('logout')).click();
-            expect(browser.getLocationAbsUrl()).toMatch("/login");
+            expect(browser.getCurrentUrl()).toMatch("/login");
         });
 
     });

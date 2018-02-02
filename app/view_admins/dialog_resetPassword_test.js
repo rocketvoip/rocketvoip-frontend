@@ -4,6 +4,8 @@ describe('rocketvoip.dialog_resetPassword module', function () {
 
     beforeEach(module('rocketvoip.dialog_resetPassword'));
     beforeEach(module('view_admins/dialog_resetPassword.html'));
+	beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
     beforeEach(module('rocketvoip'));
 
     describe('ResetPasswordDialogCtrl ', function () {

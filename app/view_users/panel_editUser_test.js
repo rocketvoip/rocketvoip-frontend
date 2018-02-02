@@ -5,6 +5,8 @@ describe('rocketvoip.view_users module', function () {
     beforeEach(module('rocketvoip.panel_editUser'));
     beforeEach(module('ngMaterial'));
     beforeEach(module('view_users/panel_editUser.html'));
+    beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
     beforeEach(module('rocketvoip'));
 
     describe('PanelDialog controller', function () {

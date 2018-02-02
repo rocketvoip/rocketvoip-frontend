@@ -47,7 +47,7 @@ describe('rocketvoip', function () {
             };
             browser.addMockModule('httpBackendMock', mockFunction);
             browser.get('index.html#!/view_companies');
-            browser.driver.isElementPresent(by.id('username')).then(function (isPresent) {
+            element(by.id('username')).isPresent().then(function (isPresent) {
                 if (isPresent) {
                     element(by.id('username')).clear().sendKeys("test@test.ch");
                     element(by.id('password')).clear().sendKeys("password");

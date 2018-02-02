@@ -6,6 +6,7 @@ describe('rocketvoip.view_login module', function () {
     beforeEach(module('ngMaterial'));
     beforeEach(module('rocketvoip'));
     beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
 
     describe('ViewLoginCtrl', function () {
 

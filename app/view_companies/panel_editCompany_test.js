@@ -5,6 +5,8 @@ describe('rocketvoip.view_companies module', function () {
     beforeEach(module('rocketvoip.panel_editCompany'));
     beforeEach(module('ngMaterial'));
     beforeEach(module('view_companies/panel_editCompany.html'));
+    beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
     beforeEach(module('rocketvoip'));
 
     describe('PanelCompanyDialog controller', function () {

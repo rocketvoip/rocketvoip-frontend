@@ -3,6 +3,8 @@
 describe('rocketvoip.view_dialplan module', function () {
 
     beforeEach(module('rocketvoip.view_dialplans'));
+    beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
     beforeEach(module('rocketvoip'));
 
     describe('view_dialplan controller', function () {

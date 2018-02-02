@@ -5,6 +5,8 @@ describe('rocketvoip.panel_editAction module', function () {
     beforeEach(module('rocketvoip.panel_editAction'));
     beforeEach(module('rocketvoip'));
     beforeEach(module('view_dialplans/panel_action.html'));
+    beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
 
 
     describe('panel_action controller', function () {
