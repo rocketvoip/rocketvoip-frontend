@@ -30,7 +30,7 @@ angular.module('rocketvoip.panel_editAdmin', ['ngMessages', 'ngPassword'])
                     controller.initializeNewAdmin();
                 } else {
                     $scope.nameCopy = admin.firstName + ' ' + admin.lastName;
-                    $scope.admin = admin;
+                    $scope.admin = angular.copy(admin);
                 }
                 $scope.companies = CompanyService.query();
             };
