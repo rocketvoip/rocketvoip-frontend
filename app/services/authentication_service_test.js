@@ -3,6 +3,8 @@
 describe('rocketvoip.login module', function () {
 
     beforeEach(module('rocketvoip.login'));
+    beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
     beforeEach(module('rocketvoip'));
 
     describe('AuthenticationService', function () {

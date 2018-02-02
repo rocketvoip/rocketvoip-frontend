@@ -4,6 +4,8 @@ describe('rocketvoip.Panel_editAdmin module', function () {
 
     beforeEach(module('rocketvoip.panel_editAdmin'));
     beforeEach(module('view_admins/panel_editAdmin.html'));
+    beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
     beforeEach(module('rocketvoip'));
 
     describe('PanelEditAdminDialogCtrl ', function () {

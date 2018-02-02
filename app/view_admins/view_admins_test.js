@@ -4,6 +4,8 @@ describe('rocketvoip.view_admins module', function () {
 
     beforeEach(angular.mock.module('rocketvoip.view_admins'));
     beforeEach(module('ngMaterial'));
+    beforeEach(module('view_login/view_login.html'));
+	beforeEach(module('view_dashboard/view_dashboard.html'));
     beforeEach(module('rocketvoip'));
 
     describe('view_admins controller', function () {

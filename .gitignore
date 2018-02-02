@@ -8,3 +8,4 @@ tmp
 .sonar
 coverage/
 *.iml
+.scannerwork/

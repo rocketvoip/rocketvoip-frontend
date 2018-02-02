@@ -81,7 +81,7 @@ describe('rocketvoip', function () {
             };
             browser.addMockModule('httpBackendMock', mockFunction);
 
-            browser.driver.isElementPresent(by.id('username')).then(function (isPresent) {
+            element(by.id('username')).isPresent().then(function (isPresent) {
                 if (isPresent) {
                     element(by.id('username')).clear().sendKeys("test@test.ch");
                     element(by.id('password')).clear().sendKeys("password");
@@ -109,15 +109,10 @@ describe('rocketvoip', function () {
             expect(element.all(by.tagName('md-option')).count()).toBe(2);
         });
 
-        it('should redirect when adding new dialplan', function () {
-            element.all(by.className('view-dialplan-add-dialplan')).first().click();
-            expect(browser.getLocationAbsUrl()).toEqual('/view_editDialplan/?companyID=1&companyName=test1');
-        });
-
         it('should redirect from view_editDialplan to view_dialplan', function () {
             element.all(by.className('view-dialplan-add-dialplan')).first().click();
             element.all(by.id('button-close-dialplan')).first().click();
-            expect(browser.getLocationAbsUrl()).toEqual('/view_dialplans');
+            expect(browser.getCurrentUrl()).toMatch('/view_dialplans');
         });
 
         it('should not show delete button for new dialplans', function () {
